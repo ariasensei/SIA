@@ -189,25 +189,31 @@
   <script src="/_sdk/b19ec5e9a6bcccbf.editing_sdk.js" type="text/javascript" integrity="sha512-zBJgQuXCQdyGFqXgZwfp8p9NowwbyuWhOK/NGHf9nps+IMSAyeeSyv3qhtfcnKWA9sWownxUevRqEhsjnjL55w=="></script>
   <script src="/_sdk/9432170dbd2ae0df.resizing_sdk.js" type="text/javascript" integrity="sha512-FeT+58sb1f9ejWPWFjCbJvTT+SDwGV+ngrHUnlO7TWEOoqwOLj6p256kO3vOL7DIWl1cIgrobiof8v2bOigwPg=="></script>
  </head>
- <body>
+ <body data-template-id="__page-root">
   <div class="app-shell">
-   <header class="relative overflow-hidden"><img src="https://images.pexels.com/photos/8102693/pexels-photo-8102693.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="Two colleagues collaborating on a project in low light, using computers." loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-70">
+   <header class="relative overflow-hidden">
+    <img data-template-id="hero-banner-image" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-70">
     <div class="hero-overlay absolute inset-0"></div>
     <div class="relative mx-auto w-full max-w-7xl px-5 py-5 md:px-8">
-     <nav aria-label="Primary navigation" class="glass flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3"><a href="#overview" class="flex items-center gap-3 rounded-lg"> <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-300 text-slate-950"> <i data-lucide="boxes" class="h-5 w-5"></i> </span> <span class="font-semibold text-cyan-50">System Integration &amp; Architecture</span> </a>
-      <div class="flex flex-wrap gap-1 text-sm font-semibold"><a href="#examples" class="rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950">Examples</a> <a href="#activity" class="rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950">Individual activity</a> <a href="#quiz" class="rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950">Quick check</a>
+     <nav aria-label="Primary navigation" class="glass flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3">
+      <a href="#overview" class="flex items-center gap-3 rounded-lg"> <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-300 text-slate-950"> <i data-lucide="boxes" class="h-5 w-5"></i> </span> <span class="font-semibold text-cyan-50">System Integration &amp; Architecture</span> </a>
+      <div class="flex flex-wrap gap-1 text-sm font-semibold">
+       <a href="#examples" class="rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950">Examples</a> <a href="#activity" class="rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950">Individual activity</a> <a href="#quiz" class="rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950">Quick check</a>
       </div>
      </nav>
      <div id="overview" class="hero-copy section-anchor grid min-h-[540px] items-end gap-10 py-16 lg:grid-cols-[1.18fr_.82fr]">
       <section class="reveal">
        <p class="eyebrow mb-4 text-cyan-300">Prelims • Week 1</p>
        <h1 class="heading-font max-w-4xl text-4xl font-bold leading-tight text-white md:text-5xl">System integration in gaming: making separate parts play as one.</h1>
-       <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-200">A two-hour introduction to how artwork, input, code, audio, physics, interface, and save data become one playable game experience.</p>
-       <div class="mt-8 flex flex-wrap gap-3"><span class="rounded-full bg-cyan-300 px-4 py-2 text-sm font-bold text-slate-950">120-minute lesson</span> <span class="rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur"> Concepts • Diagrams • Individual activity </span>
+       <div class="mt-6 flex flex-wrap items-center gap-4"><span class="text-sm leading-6 text-slate-200">Instructor: MKDB</span>
+       </div>
+       <div class="mt-8 flex flex-wrap gap-3">
+        <span class="rounded-full bg-cyan-300 px-4 py-2 text-sm font-bold text-slate-950">120-minute lesson</span>
        </div>
       </section>
       <aside class="glass reveal rounded-3xl p-6 md:p-7" style="animation-delay:140ms">
-       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-amber-300 text-slate-950"> <i data-lucide="target" class="h-5 w-5"></i> </span>
+       <div class="flex items-center gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-amber-300 text-slate-950"> <i data-lucide="target" class="h-5 w-5"></i> </span>
         <h2 class="heading-font text-2xl font-bold text-white">By the end of Week 1, you can…</h2>
        </div>
        <ul class="mt-5 space-y-3 text-sm leading-6 text-slate-200">
@@ -266,11 +272,14 @@
        <h3 class="text-lg font-bold text-amber-300">Diagram: one player action, many connected systems</h3>
        <p class="mt-2 text-sm leading-6 text-slate-300">Use a jump button as a simple example. A player sees only one action, but the game coordinates several systems behind the screen.</p>
        <div class="mt-6 flex flex-col items-stretch gap-3 md:flex-row md:items-center">
-        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-cyan-300"><i data-lucide="gamepad-2" class="h-6 w-6"></i></span> <strong class="mt-2 text-white">Input</strong> <span class="mt-1 text-xs leading-5 text-slate-300">Player presses Space or a controller button.</span>
+        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4">
+         <span class="text-cyan-300"><i data-lucide="gamepad-2" class="h-6 w-6"></i></span> <strong class="mt-2 text-white">Input</strong> <span class="mt-1 text-xs leading-5 text-slate-300">Player presses Space or a controller button.</span>
         </div><span class="flow-arrow text-center">→</span>
-        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-amber-300"><i data-lucide="code-2" class="h-6 w-6"></i></span> <strong class="mt-2 text-white">Gameplay code</strong> <span class="mt-1 text-xs leading-5 text-slate-300">The movement script checks whether jumping is allowed.</span>
+        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4">
+         <span class="text-amber-300"><i data-lucide="code-2" class="h-6 w-6"></i></span> <strong class="mt-2 text-white">Gameplay code</strong> <span class="mt-1 text-xs leading-5 text-slate-300">The movement script checks whether jumping is allowed.</span>
         </div><span class="flow-arrow text-center">→</span>
-        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-lime-300"><i data-lucide="sparkles" class="h-6 w-6"></i></span> <strong class="mt-2 text-white">Game feedback</strong> <span class="mt-1 text-xs leading-5 text-slate-300">Physics moves the player while animation and sound play.</span>
+        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4">
+         <span class="text-lime-300"><i data-lucide="sparkles" class="h-6 w-6"></i></span> <strong class="mt-2 text-white">Game feedback</strong> <span class="mt-1 text-xs leading-5 text-slate-300">Physics moves the player while animation and sound play.</span>
         </div>
        </div>
        <p class="mt-5 text-sm leading-6 text-slate-200">If the input map is missing, the script never receives the command. If the animation is not linked, the player may move but look frozen. Every connection matters.</p>
@@ -290,19 +299,26 @@
       <div class="relative rounded-2xl border border-cyan-200/20 bg-slate-950/35 p-5">
        <h3 class="text-lg font-bold text-amber-300">Diagram: systems surrounding the game engine</h3>
        <div class="mt-5 grid grid-cols-3 gap-3 text-center text-xs">
-        <div class="system-node rounded-xl p-3"><i data-lucide="palette" class="mx-auto h-5 w-5 text-cyan-300"></i> <span class="mt-2 block">Art &amp; animation</span>
+        <div class="system-node rounded-xl p-3">
+         <i data-lucide="palette" class="mx-auto h-5 w-5 text-cyan-300"></i> <span class="mt-2 block">Art &amp; animation</span>
         </div>
-        <div class="system-node rounded-xl p-3"><i data-lucide="volume-2" class="mx-auto h-5 w-5 text-amber-300"></i> <span class="mt-2 block">Audio</span>
+        <div class="system-node rounded-xl p-3">
+         <i data-lucide="volume-2" class="mx-auto h-5 w-5 text-amber-300"></i> <span class="mt-2 block">Audio</span>
         </div>
-        <div class="system-node rounded-xl p-3"><i data-lucide="keyboard" class="mx-auto h-5 w-5 text-lime-300"></i> <span class="mt-2 block">Input</span>
+        <div class="system-node rounded-xl p-3">
+         <i data-lucide="keyboard" class="mx-auto h-5 w-5 text-lime-300"></i> <span class="mt-2 block">Input</span>
         </div>
-        <div class="system-core col-span-3 rounded-xl p-4"><i data-lucide="cpu" class="mx-auto h-6 w-6 text-cyan-200"></i> <span class="mt-2 block font-bold">Game engine / scene</span>
+        <div class="system-core col-span-3 rounded-xl p-4">
+         <i data-lucide="cpu" class="mx-auto h-6 w-6 text-cyan-200"></i> <span class="mt-2 block font-bold">Game engine / scene</span>
         </div>
-        <div class="system-node rounded-xl p-3"><i data-lucide="layout-dashboard" class="mx-auto h-5 w-5 text-amber-300"></i> <span class="mt-2 block">User interface</span>
+        <div class="system-node rounded-xl p-3">
+         <i data-lucide="layout-dashboard" class="mx-auto h-5 w-5 text-amber-300"></i> <span class="mt-2 block">User interface</span>
         </div>
-        <div class="system-node rounded-xl p-3"><i data-lucide="circle-dot" class="mx-auto h-5 w-5 text-cyan-300"></i> <span class="mt-2 block">Physics &amp; collision</span>
+        <div class="system-node rounded-xl p-3">
+         <i data-lucide="circle-dot" class="mx-auto h-5 w-5 text-cyan-300"></i> <span class="mt-2 block">Physics &amp; collision</span>
         </div>
-        <div class="system-node rounded-xl p-3"><i data-lucide="save" class="mx-auto h-5 w-5 text-lime-300"></i> <span class="mt-2 block">Save data</span>
+        <div class="system-node rounded-xl p-3">
+         <i data-lucide="save" class="mx-auto h-5 w-5 text-lime-300"></i> <span class="mt-2 block">Save data</span>
         </div>
        </div>
        <p class="mt-5 text-sm leading-6 text-slate-300">The arrows are invisible to players, but they are the logic links developers must plan, test, and maintain.</p>
@@ -317,28 +333,32 @@
      </div>
      <div class="grid gap-5 md:grid-cols-2">
       <article class="example-card rounded-3xl p-6">
-       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-300 text-slate-950"><i data-lucide="move" class="h-5 w-5"></i></span>
+       <div class="flex items-center gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-300 text-slate-950"><i data-lucide="move" class="h-5 w-5"></i></span>
         <h3 class="text-lg font-bold text-white">Example 1: Player movement</h3>
        </div>
        <p class="mt-4 text-sm leading-7 text-slate-100">A player pushes a joystick to the right. The input system sends a direction value to the movement script. The script updates velocity, physics checks collisions, the animation controller selects a run animation, and the camera follows.</p>
        <p class="mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100">Integration question: If the player slides through walls, is the issue likely in the character art, the movement script, or the collision setup?</p>
       </article>
       <article class="example-card rounded-3xl p-6">
-       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-300 text-slate-950"><i data-lucide="gift" class="h-5 w-5"></i></span>
+       <div class="flex items-center gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-300 text-slate-950"><i data-lucide="gift" class="h-5 w-5"></i></span>
         <h3 class="text-lg font-bold text-white">Example 2: Opening a treasure chest</h3>
        </div>
        <p class="mt-4 text-sm leading-7 text-slate-100">The player enters an interaction area and presses a key. The script checks whether the chest is already open, plays an opening animation and sound, creates a reward, updates the inventory interface, and saves the new chest state.</p>
        <p class="mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100">Integration question: If the chest opens but no reward appears in the inventory, which hand-off should you test first?</p>
       </article>
       <article class="example-card rounded-3xl p-6">
-       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-lime-300 text-slate-950"><i data-lucide="swords" class="h-5 w-5"></i></span>
+       <div class="flex items-center gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-lime-300 text-slate-950"><i data-lucide="swords" class="h-5 w-5"></i></span>
         <h3 class="text-lg font-bold text-white">Example 3: Enemy takes damage</h3>
        </div>
        <p class="mt-4 text-sm leading-7 text-slate-100">A projectile hits an enemy collider. The combat script verifies the target, subtracts health, triggers a hit animation and sound, updates the enemy health bar, and removes the enemy when health reaches zero.</p>
        <p class="mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100">Integration question: If the health bar changes but the enemy remains active at zero health, where might the final rule be missing?</p>
       </article>
       <article class="example-card rounded-3xl p-6">
-       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-300 text-slate-950"><i data-lucide="trophy" class="h-5 w-5"></i></span>
+       <div class="flex items-center gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-300 text-slate-950"><i data-lucide="trophy" class="h-5 w-5"></i></span>
         <h3 class="text-lg font-bold text-white">Example 4: Completing a level</h3>
        </div>
        <p class="mt-4 text-sm leading-7 text-slate-100">The player reaches the finish zone. The level script checks the win condition, stops player input, plays a celebration sequence, calculates a score, updates unlock data, shows the result screen, and saves progress.</p>
@@ -359,19 +379,20 @@
       <div>
        <h3 class="text-lg font-bold text-amber-300">Diagram: tracing a missing jump sound</h3>
        <div class="mt-5 grid gap-3">
-        <div class="trace-step rounded-xl p-4"><span class="inline-flex rounded-full bg-cyan-300 px-3 py-1 text-xs font-bold text-slate-950">1. Trigger</span>
+        <div class="trace-step rounded-xl p-4">
+         <span class="inline-flex rounded-full bg-cyan-300 px-3 py-1 text-xs font-bold text-slate-950">1. Trigger</span>
          <p class="mt-3 text-sm leading-6 text-slate-200">Does the player actually jump? If not, test the input mapping and movement script first.</p>
         </div>
-        <div class="flex justify-center text-cyan-300">
-         <i data-lucide="arrow-down" class="h-5 w-5"></i>
+        <div class="flex justify-center text-cyan-300"><i data-lucide="arrow-down" class="h-5 w-5"></i>
         </div>
-        <div class="trace-step rounded-xl p-4"><span class="inline-flex rounded-full bg-amber-300 px-3 py-1 text-xs font-bold text-slate-950">2. Connection</span>
+        <div class="trace-step rounded-xl p-4">
+         <span class="inline-flex rounded-full bg-amber-300 px-3 py-1 text-xs font-bold text-slate-950">2. Connection</span>
          <p class="mt-3 text-sm leading-6 text-slate-200">If the jump works, check whether the jump event calls the correct audio player or sound function.</p>
         </div>
-        <div class="flex justify-center text-cyan-300">
-         <i data-lucide="arrow-down" class="h-5 w-5"></i>
+        <div class="flex justify-center text-cyan-300"><i data-lucide="arrow-down" class="h-5 w-5"></i>
         </div>
-        <div class="trace-step rounded-xl p-4"><span class="inline-flex rounded-full bg-lime-300 px-3 py-1 text-xs font-bold text-slate-950">3. Output</span>
+        <div class="trace-step rounded-xl p-4">
+         <span class="inline-flex rounded-full bg-lime-300 px-3 py-1 text-xs font-bold text-slate-950">3. Output</span>
          <p class="mt-3 text-sm leading-6 text-slate-200">If the call exists, check the sound file, volume settings, output device, and whether the audio player is enabled in the scene.</p>
         </div>
        </div>
@@ -379,7 +400,8 @@
      </div>
     </section>
     <section class="lesson-panel mb-8 overflow-hidden rounded-3xl">
-     <div class="grid lg:grid-cols-[.95fr_1.05fr]"><img src="https://images.pexels.com/photos/17485657/pexels-photo-17485657.png?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="3D render abstract digital visualization depicting neural networks and AI technology." loading="lazy" class="h-full min-h-[300px] w-full object-cover">
+     <div class="grid lg:grid-cols-[.95fr_1.05fr]">
+      <img data-template-id="case-study-image" loading="lazy" class="h-full min-h-[300px] w-full object-cover">
       <div class="p-6 md:p-9">
        <p class="eyebrow text-cyan-300">Guided case study</p>
        <h2 class="heading-font mt-3 text-3xl font-bold text-white">Case: Add a collectible coin to a platform game.</h2>
@@ -412,9 +434,11 @@
         <p class="text-sm font-semibold leading-6 text-cyan-100">Success criteria: Your plan should show a clear trigger, at least four connected parts, a logical event order, and two realistic checks for errors.</p>
        </div>
       </div>
-      <div><label for="activity-response" class="mb-3 block font-bold text-white">Write your integration plan</label> <textarea id="activity-response" class="activity-input" aria-describedby="activity-response-help" placeholder="Start with the trigger, then map the systems and event order..."></textarea>
+      <div>
+       <label for="activity-response" class="mb-3 block font-bold text-white">Write your integration plan</label> <textarea id="activity-response" class="activity-input" aria-describedby="activity-response-help" placeholder="Start with the trigger, then map the systems and event order..."></textarea>
        <p id="activity-response-help" class="mt-2 text-sm leading-6 text-slate-300">Your notes remain available while this page stays open. Use headings, arrows, or numbered steps to make your logic easy to review.</p>
-       <div class="mt-4 flex flex-wrap gap-3"><button id="clear-response" type="button" class="rounded-xl bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/20"> Clear my notes </button> <button id="toggle-model-answer" type="button" aria-expanded="false" class="rounded-xl bg-amber-300 px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-amber-200"> Reveal model answer </button>
+       <div class="mt-4 flex flex-wrap gap-3">
+        <button id="clear-response" type="button" class="rounded-xl bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/20"> Clear my notes </button> <button id="toggle-model-answer" type="button" aria-expanded="false" class="rounded-xl bg-amber-300 px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-amber-200"> Reveal model answer </button>
        </div>
        <div id="model-answer" class="mt-6 hidden rounded-2xl border border-cyan-200/25 bg-cyan-300/10 p-5">
         <p class="eyebrow text-cyan-200">Model answer</p>
@@ -439,22 +463,26 @@
      <div class="mt-8 grid gap-5">
       <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q1">
        <h3 class="font-bold leading-7 text-white">1. What is the main purpose of system integration in a game?</h3>
-       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false">To make every game file larger</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="true">To make separate components work together as one experience</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false">To avoid testing the game</button>
+       <div class="mt-4 grid gap-3 md:grid-cols-3">
+        <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false">To make every game file larger</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="true">To make separate components work together as one experience</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false">To avoid testing the game</button>
        </div>
       </article>
       <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q2">
        <h3 class="font-bold leading-7 text-white">2. A player moves but passes through walls. Which system connection should be checked first?</h3>
-       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false">The colour palette and menu layout</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false">The background music and volume settings</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="true">The movement logic and collision/physics setup</button>
+       <div class="mt-4 grid gap-3 md:grid-cols-3">
+        <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false">The colour palette and menu layout</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false">The background music and volume settings</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="true">The movement logic and collision/physics setup</button>
        </div>
       </article>
       <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q3">
        <h3 class="font-bold leading-7 text-white">3. Which order best describes collecting a coin?</h3>
-       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="true">Collision detects player → score updates → feedback plays → coin is removed</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false">Delete coin → restart game → play music</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false">Show result screen → create player → check collision</button>
+       <div class="mt-4 grid gap-3 md:grid-cols-3">
+        <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="true">Collision detects player → score updates → feedback plays → coin is removed</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false">Delete coin → restart game → play music</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false">Show result screen → create player → check collision</button>
        </div>
       </article>
       <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q4">
        <h3 class="font-bold leading-7 text-white">4. Why is it useful to trace a feature from trigger to output?</h3>
-       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false">It guarantees there will be no bugs</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="true">It helps identify the exact connection where a feature fails</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false">It removes the need for a game engine</button>
+       <div class="mt-4 grid gap-3 md:grid-cols-3">
+        <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false">It guarantees there will be no bugs</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="true">It helps identify the exact connection where a feature fails</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false">It removes the need for a game engine</button>
        </div>
       </article>
      </div>
