@@ -23,6 +23,7 @@
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       width: 100%;
       margin: 0;
@@ -33,7 +34,7 @@
 
     .app-shell {
       width: 100%;
-      min-height: calc(100 * min(var(--vh, 1vh), 1vh));
+      min-height: 100vh;
       overflow-x: hidden;
       background-image:
         linear-gradient(rgba(84, 228, 233, .035) 1px, transparent 1px),
@@ -43,6 +44,7 @@
 
     .heading-font { font-family: "Fraunces", serif; }
     .section-anchor { scroll-margin-top: 96px; }
+
     .eyebrow {
       letter-spacing: .16em;
       text-transform: uppercase;
@@ -165,12 +167,15 @@
     }
 
     .reveal { animation: rise 650ms ease both; }
+
     @keyframes rise {
       from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    button:focus-visible, a:focus-visible, textarea:focus-visible {
+    button:focus-visible,
+    a:focus-visible,
+    textarea:focus-visible {
       outline: 3px solid var(--amber);
       outline-offset: 3px;
     }
@@ -181,34 +186,35 @@
     }
   </style>
   <script src="/_sdk/e3937a0574eb2d69.data_sdk.js" type="text/javascript" integrity="sha512-xbp/ACqEQy1aDxYMtXTrR3y5MUbzxuggRR/9sD48Gl4VhLMMCiAHsxMaFV6DTdeBpR6ymF+t2zhPKYkWM3+Jfw=="></script>
+  <script src="/_sdk/b19ec5e9a6bcccbf.editing_sdk.js" type="text/javascript" integrity="sha512-zBJgQuXCQdyGFqXgZwfp8p9NowwbyuWhOK/NGHf9nps+IMSAyeeSyv3qhtfcnKWA9sWownxUevRqEhsjnjL55w=="></script>
   <script src="/_sdk/9432170dbd2ae0df.resizing_sdk.js" type="text/javascript" integrity="sha512-FeT+58sb1f9ejWPWFjCbJvTT+SDwGV+ngrHUnlO7TWEOoqwOLj6p256kO3vOL7DIWl1cIgrobiof8v2bOigwPg=="></script>
  </head>
- <body data-template-id="__page-root">
+ <body>
   <div class="app-shell">
-   <header class="relative overflow-hidden"><img data-template-id="hero-image" loading="lazy" class="canva-image absolute inset-0 h-full w-full object-cover opacity-70">
+   <header class="relative overflow-hidden"><img src="https://images.pexels.com/photos/8102693/pexels-photo-8102693.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="Two colleagues collaborating on a project in low light, using computers." loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-70">
     <div class="hero-overlay absolute inset-0"></div>
     <div class="relative mx-auto w-full max-w-7xl px-5 py-5 md:px-8">
-     <nav aria-label="Primary navigation" class="glass flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3"><a href="#overview" class="flex items-center gap-3 rounded-lg"> <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-300 text-slate-950"> <i data-lucide="boxes" class="h-5 w-5"></i> </span> <span data-template-id="nav-course" class="canva-text font-semibold"></span> </a>
-      <div class="flex flex-wrap gap-1 text-sm font-semibold"><a href="#examples" data-template-id="nav-examples" class="canva-link rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950"></a> <a href="#activity" data-template-id="nav-activity" class="canva-link rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950"></a> <a href="#quiz" data-template-id="nav-quiz" class="canva-link rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950"></a>
+     <nav aria-label="Primary navigation" class="glass flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3"><a href="#overview" class="flex items-center gap-3 rounded-lg"> <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-300 text-slate-950"> <i data-lucide="boxes" class="h-5 w-5"></i> </span> <span class="font-semibold text-cyan-50">System Integration &amp; Architecture</span> </a>
+      <div class="flex flex-wrap gap-1 text-sm font-semibold"><a href="#examples" class="rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950">Examples</a> <a href="#activity" class="rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950">Individual activity</a> <a href="#quiz" class="rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950">Quick check</a>
       </div>
      </nav>
      <div id="overview" class="hero-copy section-anchor grid min-h-[540px] items-end gap-10 py-16 lg:grid-cols-[1.18fr_.82fr]">
       <section class="reveal">
-       <p data-template-id="hero-eyebrow" class="canva-text eyebrow mb-4 text-cyan-300"></p>
-       <h1 data-template-id="hero-title" class="canva-text heading-font max-w-4xl text-white"></h1>
-       <p data-template-id="hero-description" class="canva-text mt-6 max-w-2xl text-lg leading-8 text-slate-200"></p>
-       <div class="mt-8 flex flex-wrap gap-3"><span data-template-id="hero-badge-duration" class="canva-tag rounded-full px-4 py-2 text-sm font-bold"></span> <span data-template-id="hero-badge-format" class="canva-tag rounded-full border border-white/30 px-4 py-2 text-sm font-semibold backdrop-blur"></span>
+       <p class="eyebrow mb-4 text-cyan-300">Prelims • Week 1</p>
+       <h1 class="heading-font max-w-4xl text-4xl font-bold leading-tight text-white md:text-5xl">System integration in gaming: making separate parts play as one.</h1>
+       <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-200">A two-hour introduction to how artwork, input, code, audio, physics, interface, and save data become one playable game experience.</p>
+       <div class="mt-8 flex flex-wrap gap-3"><span class="rounded-full bg-cyan-300 px-4 py-2 text-sm font-bold text-slate-950">120-minute lesson</span> <span class="rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur"> Concepts • Diagrams • Individual activity </span>
        </div>
       </section>
-      <aside data-template-id="outcomes-card" class="canva-card glass reveal rounded-3xl p-6 md:p-7" style="animation-delay:140ms">
+      <aside class="glass reveal rounded-3xl p-6 md:p-7" style="animation-delay:140ms">
        <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-amber-300 text-slate-950"> <i data-lucide="target" class="h-5 w-5"></i> </span>
-        <h2 data-template-id="outcomes-title" class="canva-text heading-font"></h2>
+        <h2 class="heading-font text-2xl font-bold text-white">By the end of Week 1, you can…</h2>
        </div>
        <ul class="mt-5 space-y-3 text-sm leading-6 text-slate-200">
-        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span data-template-id="outcome-1" class="canva-text"></span></li>
-        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span data-template-id="outcome-2" class="canva-text"></span></li>
-        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span data-template-id="outcome-3" class="canva-text"></span></li>
-        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span data-template-id="outcome-4" class="canva-text"></span></li>
+        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span>Define system integration using a game-development example.</span></li>
+        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span>Identify the systems that must connect for a feature to work.</span></li>
+        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span>Trace a broken feature through its likely dependencies.</span></li>
+        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span>Create a simple integration plan for a game interaction.</span></li>
        </ul>
       </aside>
      </div>
@@ -218,178 +224,171 @@
     <section aria-labelledby="agenda-title" class="mb-12">
      <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div>
-       <p data-template-id="agenda-eyebrow" class="canva-text eyebrow text-amber-300"></p>
-       <h2 id="agenda-title" data-template-id="agenda-title" class="canva-text heading-font mt-2 text-white"></h2>
+       <p class="eyebrow text-amber-300">Lesson roadmap</p>
+       <h2 id="agenda-title" class="heading-font mt-2 text-3xl font-bold text-white">A complete two-hour learning flow.</h2>
       </div>
-      <p data-template-id="agenda-note" class="canva-text max-w-xl text-sm leading-6 text-slate-300"></p>
+      <p class="max-w-xl text-sm leading-6 text-slate-300">Move through the sections in order. The individual activity is designed for approximately 35 minutes.</p>
      </div>
      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       <article class="agenda-item rounded-2xl p-5">
-       <p data-template-id="agenda-1-time" class="canva-text text-sm font-bold text-cyan-300"></p>
-       <h3 data-template-id="agenda-1-title" class="canva-text mt-2 font-bold text-white"></h3>
-       <p data-template-id="agenda-1-text" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+       <p class="text-sm font-bold text-cyan-300">0–25 min</p>
+       <h3 class="mt-2 text-lg font-bold text-white">Foundation</h3>
+       <p class="mt-2 text-sm leading-6 text-slate-300">Define integration and follow a simple player-action flow.</p>
       </article>
       <article class="agenda-item rounded-2xl p-5">
-       <p data-template-id="agenda-2-time" class="canva-text text-sm font-bold text-cyan-300"></p>
-       <h3 data-template-id="agenda-2-title" class="canva-text mt-2 font-bold text-white"></h3>
-       <p data-template-id="agenda-2-text" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+       <p class="text-sm font-bold text-cyan-300">25–55 min</p>
+       <h3 class="mt-2 text-lg font-bold text-white">Connected systems</h3>
+       <p class="mt-2 text-sm leading-6 text-slate-300">Map the engine, art, audio, UI, physics, input, and save systems.</p>
       </article>
       <article class="agenda-item rounded-2xl p-5">
-       <p data-template-id="agenda-3-time" class="canva-text text-sm font-bold text-cyan-300"></p>
-       <h3 data-template-id="agenda-3-title" class="canva-text mt-2 font-bold text-white"></h3>
-       <p data-template-id="agenda-3-text" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+       <p class="text-sm font-bold text-cyan-300">55–85 min</p>
+       <h3 class="mt-2 text-lg font-bold text-white">Examples and debugging</h3>
+       <p class="mt-2 text-sm leading-6 text-slate-300">Compare four feature examples and practise fault tracing.</p>
       </article>
       <article class="agenda-item rounded-2xl p-5">
-       <p data-template-id="agenda-4-time" class="canva-text text-sm font-bold text-cyan-300"></p>
-       <h3 data-template-id="agenda-4-title" class="canva-text mt-2 font-bold text-white"></h3>
-       <p data-template-id="agenda-4-text" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+       <p class="text-sm font-bold text-cyan-300">85–120 min</p>
+       <h3 class="mt-2 text-lg font-bold text-white">Individual activity + check</h3>
+       <p class="mt-2 text-sm leading-6 text-slate-300">Plan a feature integration, then complete the quick knowledge check.</p>
       </article>
      </div>
     </section>
-    <section class="section-anchor lesson-panel mb-8 rounded-3xl p-6 md:p-9">
+    <section class="lesson-panel mb-8 rounded-3xl p-6 md:p-9">
      <div class="grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
       <div>
-       <p data-template-id="definition-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
-       <h2 data-template-id="definition-title" class="canva-text heading-font mt-3 text-white"></h2>
-       <p data-template-id="definition-text" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <p class="eyebrow text-cyan-300">Part 1 • Foundations</p>
+       <h2 class="heading-font mt-3 text-3xl font-bold text-white">What does system integration mean?</h2>
+       <p class="mt-4 leading-7 text-slate-200">System integration is the process of connecting separate software, assets, devices, services, and rules so they operate together as one complete system. In a game, it is the work that turns individual files and scripts into a player experience that responds correctly.</p>
        <div class="callout mt-6 rounded-r-2xl px-5 py-4">
-        <p data-template-id="definition-key-point" class="canva-text text-sm font-semibold leading-6 text-cyan-100"></p>
+        <p class="text-sm font-semibold leading-6 text-cyan-100">Integration is not simply putting files in one project folder. The parts must exchange the right information, in the right order, with the right settings.</p>
        </div>
       </div>
       <div class="rounded-2xl border border-white/10 bg-slate-950/25 p-5">
-       <h3 data-template-id="flow-title" class="canva-text text-lg font-bold text-amber-300"></h3>
-       <p data-template-id="flow-intro" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+       <h3 class="text-lg font-bold text-amber-300">Diagram: one player action, many connected systems</h3>
+       <p class="mt-2 text-sm leading-6 text-slate-300">Use a jump button as a simple example. A player sees only one action, but the game coordinates several systems behind the screen.</p>
        <div class="mt-6 flex flex-col items-stretch gap-3 md:flex-row md:items-center">
-        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-cyan-300"><i data-lucide="gamepad-2" class="h-6 w-6"></i></span> <strong data-template-id="flow-node-1-title" class="canva-text mt-2 text-white"></strong> <span data-template-id="flow-node-1-text" class="canva-text mt-1 text-xs leading-5 text-slate-300"></span>
+        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-cyan-300"><i data-lucide="gamepad-2" class="h-6 w-6"></i></span> <strong class="mt-2 text-white">Input</strong> <span class="mt-1 text-xs leading-5 text-slate-300">Player presses Space or a controller button.</span>
         </div><span class="flow-arrow text-center">→</span>
-        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-amber-300"><i data-lucide="code-2" class="h-6 w-6"></i></span> <strong data-template-id="flow-node-2-title" class="canva-text mt-2 text-white"></strong> <span data-template-id="flow-node-2-text" class="canva-text mt-1 text-xs leading-5 text-slate-300"></span>
+        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-amber-300"><i data-lucide="code-2" class="h-6 w-6"></i></span> <strong class="mt-2 text-white">Gameplay code</strong> <span class="mt-1 text-xs leading-5 text-slate-300">The movement script checks whether jumping is allowed.</span>
         </div><span class="flow-arrow text-center">→</span>
-        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-lime-300"><i data-lucide="sparkles" class="h-6 w-6"></i></span> <strong data-template-id="flow-node-3-title" class="canva-text mt-2 text-white"></strong> <span data-template-id="flow-node-3-text" class="canva-text mt-1 text-xs leading-5 text-slate-300"></span>
+        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-lime-300"><i data-lucide="sparkles" class="h-6 w-6"></i></span> <strong class="mt-2 text-white">Game feedback</strong> <span class="mt-1 text-xs leading-5 text-slate-300">Physics moves the player while animation and sound play.</span>
         </div>
        </div>
-       <p data-template-id="flow-caption" class="canva-text mt-5 text-sm leading-6 text-slate-200"></p>
+       <p class="mt-5 text-sm leading-6 text-slate-200">If the input map is missing, the script never receives the command. If the animation is not linked, the player may move but look frozen. Every connection matters.</p>
       </div>
      </div>
     </section>
-    <section class="section-anchor lesson-panel mb-8 rounded-3xl p-6 md:p-9">
+    <section class="lesson-panel mb-8 rounded-3xl p-6 md:p-9">
      <div class="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
       <div>
-       <p data-template-id="systems-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
-       <h2 data-template-id="systems-title" class="canva-text heading-font mt-3 text-white"></h2>
-       <p data-template-id="systems-intro" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <p class="eyebrow text-cyan-300">Part 2 • The game as a connected system</p>
+       <h2 class="heading-font mt-3 text-3xl font-bold text-white">A game engine is the meeting point—not the whole game.</h2>
+       <p class="mt-4 leading-7 text-slate-200">A game engine such as Godot or Unity provides the place where the game is assembled. However, the engine needs correctly prepared assets, clear scripts, settings, and testing to make those parts communicate. The central engine coordinates the systems around it.</p>
        <div class="amber-callout mt-6 rounded-r-2xl px-5 py-4">
-        <p data-template-id="systems-warning" class="canva-text text-sm font-semibold leading-6 text-amber-100"></p>
+        <p class="text-sm font-semibold leading-6 text-amber-100">A feature can fail even when every individual part looks correct on its own. The problem may exist in the connection between two parts.</p>
        </div>
       </div>
       <div class="relative rounded-2xl border border-cyan-200/20 bg-slate-950/35 p-5">
-       <h3 data-template-id="systems-diagram-title" class="canva-text text-lg font-bold text-amber-300"></h3>
+       <h3 class="text-lg font-bold text-amber-300">Diagram: systems surrounding the game engine</h3>
        <div class="mt-5 grid grid-cols-3 gap-3 text-center text-xs">
-        <div data-template-id="system-art" class="canva-panel system-node rounded-xl p-3">
-         <i data-lucide="palette" class="mx-auto h-5 w-5 text-cyan-300"></i><span class="canva-text mt-2 block"></span>
+        <div class="system-node rounded-xl p-3"><i data-lucide="palette" class="mx-auto h-5 w-5 text-cyan-300"></i> <span class="mt-2 block">Art &amp; animation</span>
         </div>
-        <div data-template-id="system-audio" class="canva-panel system-node rounded-xl p-3">
-         <i data-lucide="volume-2" class="mx-auto h-5 w-5 text-amber-300"></i><span class="canva-text mt-2 block"></span>
+        <div class="system-node rounded-xl p-3"><i data-lucide="volume-2" class="mx-auto h-5 w-5 text-amber-300"></i> <span class="mt-2 block">Audio</span>
         </div>
-        <div data-template-id="system-input" class="canva-panel system-node rounded-xl p-3">
-         <i data-lucide="keyboard" class="mx-auto h-5 w-5 text-lime-300"></i><span class="canva-text mt-2 block"></span>
+        <div class="system-node rounded-xl p-3"><i data-lucide="keyboard" class="mx-auto h-5 w-5 text-lime-300"></i> <span class="mt-2 block">Input</span>
         </div>
-        <div data-template-id="system-engine" class="canva-panel system-core col-span-3 rounded-xl p-4">
-         <i data-lucide="cpu" class="mx-auto h-6 w-6 text-cyan-200"></i><span class="canva-text mt-2 block font-bold"></span>
+        <div class="system-core col-span-3 rounded-xl p-4"><i data-lucide="cpu" class="mx-auto h-6 w-6 text-cyan-200"></i> <span class="mt-2 block font-bold">Game engine / scene</span>
         </div>
-        <div data-template-id="system-ui" class="canva-panel system-node rounded-xl p-3">
-         <i data-lucide="layout-dashboard" class="mx-auto h-5 w-5 text-amber-300"></i><span class="canva-text mt-2 block"></span>
+        <div class="system-node rounded-xl p-3"><i data-lucide="layout-dashboard" class="mx-auto h-5 w-5 text-amber-300"></i> <span class="mt-2 block">User interface</span>
         </div>
-        <div data-template-id="system-physics" class="canva-panel system-node rounded-xl p-3">
-         <i data-lucide="circle-dot" class="mx-auto h-5 w-5 text-cyan-300"></i><span class="canva-text mt-2 block"></span>
+        <div class="system-node rounded-xl p-3"><i data-lucide="circle-dot" class="mx-auto h-5 w-5 text-cyan-300"></i> <span class="mt-2 block">Physics &amp; collision</span>
         </div>
-        <div data-template-id="system-save" class="canva-panel system-node rounded-xl p-3">
-         <i data-lucide="save" class="mx-auto h-5 w-5 text-lime-300"></i><span class="canva-text mt-2 block"></span>
+        <div class="system-node rounded-xl p-3"><i data-lucide="save" class="mx-auto h-5 w-5 text-lime-300"></i> <span class="mt-2 block">Save data</span>
         </div>
        </div>
-       <p data-template-id="systems-caption" class="canva-text mt-5 text-sm leading-6 text-slate-300"></p>
+       <p class="mt-5 text-sm leading-6 text-slate-300">The arrows are invisible to players, but they are the logic links developers must plan, test, and maintain.</p>
       </div>
      </div>
     </section>
     <section id="examples" class="section-anchor mb-8">
      <div class="mb-6">
-      <p data-template-id="examples-eyebrow" class="canva-text eyebrow text-amber-300"></p>
-      <h2 data-template-id="examples-title" class="canva-text heading-font mt-2 text-white"></h2>
-      <p data-template-id="examples-intro" class="canva-text mt-3 max-w-4xl leading-7 text-slate-300"></p>
+      <p class="eyebrow text-amber-300">Part 3 • Gaming examples</p>
+      <h2 class="heading-font mt-2 text-3xl font-bold text-white">Four moments where integration creates the experience.</h2>
+      <p class="mt-3 max-w-4xl leading-7 text-slate-300">Read each situation like a system integrator. Ask: what starts the feature, what systems respond, and what could break between them?</p>
      </div>
      <div class="grid gap-5 md:grid-cols-2">
       <article class="example-card rounded-3xl p-6">
        <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-300 text-slate-950"><i data-lucide="move" class="h-5 w-5"></i></span>
-        <h3 data-template-id="example-1-title" class="canva-text text-lg font-bold text-white"></h3>
+        <h3 class="text-lg font-bold text-white">Example 1: Player movement</h3>
        </div>
-       <p data-template-id="example-1-text" class="canva-text mt-4 text-sm leading-7 text-slate-100"></p>
-       <p data-template-id="example-1-breakdown" class="canva-text mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100"></p>
+       <p class="mt-4 text-sm leading-7 text-slate-100">A player pushes a joystick to the right. The input system sends a direction value to the movement script. The script updates velocity, physics checks collisions, the animation controller selects a run animation, and the camera follows.</p>
+       <p class="mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100">Integration question: If the player slides through walls, is the issue likely in the character art, the movement script, or the collision setup?</p>
       </article>
       <article class="example-card rounded-3xl p-6">
        <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-300 text-slate-950"><i data-lucide="gift" class="h-5 w-5"></i></span>
-        <h3 data-template-id="example-2-title" class="canva-text text-lg font-bold text-white"></h3>
+        <h3 class="text-lg font-bold text-white">Example 2: Opening a treasure chest</h3>
        </div>
-       <p data-template-id="example-2-text" class="canva-text mt-4 text-sm leading-7 text-slate-100"></p>
-       <p data-template-id="example-2-breakdown" class="canva-text mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100"></p>
+       <p class="mt-4 text-sm leading-7 text-slate-100">The player enters an interaction area and presses a key. The script checks whether the chest is already open, plays an opening animation and sound, creates a reward, updates the inventory interface, and saves the new chest state.</p>
+       <p class="mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100">Integration question: If the chest opens but no reward appears in the inventory, which hand-off should you test first?</p>
       </article>
       <article class="example-card rounded-3xl p-6">
        <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-lime-300 text-slate-950"><i data-lucide="swords" class="h-5 w-5"></i></span>
-        <h3 data-template-id="example-3-title" class="canva-text text-lg font-bold text-white"></h3>
+        <h3 class="text-lg font-bold text-white">Example 3: Enemy takes damage</h3>
        </div>
-       <p data-template-id="example-3-text" class="canva-text mt-4 text-sm leading-7 text-slate-100"></p>
-       <p data-template-id="example-3-breakdown" class="canva-text mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100"></p>
+       <p class="mt-4 text-sm leading-7 text-slate-100">A projectile hits an enemy collider. The combat script verifies the target, subtracts health, triggers a hit animation and sound, updates the enemy health bar, and removes the enemy when health reaches zero.</p>
+       <p class="mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100">Integration question: If the health bar changes but the enemy remains active at zero health, where might the final rule be missing?</p>
       </article>
       <article class="example-card rounded-3xl p-6">
        <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-300 text-slate-950"><i data-lucide="trophy" class="h-5 w-5"></i></span>
-        <h3 data-template-id="example-4-title" class="canva-text text-lg font-bold text-white"></h3>
+        <h3 class="text-lg font-bold text-white">Example 4: Completing a level</h3>
        </div>
-       <p data-template-id="example-4-text" class="canva-text mt-4 text-sm leading-7 text-slate-100"></p>
-       <p data-template-id="example-4-breakdown" class="canva-text mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100"></p>
+       <p class="mt-4 text-sm leading-7 text-slate-100">The player reaches the finish zone. The level script checks the win condition, stops player input, plays a celebration sequence, calculates a score, updates unlock data, shows the result screen, and saves progress.</p>
+       <p class="mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100">Integration question: If the result screen appears but the next level stays locked after restarting, which system did not complete its job?</p>
       </article>
      </div>
     </section>
     <section class="lesson-panel mb-8 rounded-3xl p-6 md:p-9">
      <div class="grid gap-8 lg:grid-cols-[.78fr_1.22fr]">
       <div>
-       <p data-template-id="debug-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
-       <h2 data-template-id="debug-title" class="canva-text heading-font mt-3 text-white"></h2>
-       <p data-template-id="debug-intro" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <p class="eyebrow text-cyan-300">Part 4 • Dependencies and troubleshooting</p>
+       <h2 class="heading-font mt-3 text-3xl font-bold text-white">Debug the connection, not only the component.</h2>
+       <p class="mt-4 leading-7 text-slate-200">When a feature fails, do not guess. Trace the feature from its trigger to its visible result. Check each connection one at a time: input, script, scene reference, asset setting, and output.</p>
        <div class="callout mt-6 rounded-r-2xl px-5 py-4">
-        <p data-template-id="debug-tip" class="canva-text text-sm font-semibold leading-6 text-cyan-100"></p>
+        <p class="text-sm font-semibold leading-6 text-cyan-100">A useful habit: test the smallest possible version of a feature before adding effects, rewards, menus, and save data.</p>
        </div>
       </div>
       <div>
-       <h3 data-template-id="trace-title" class="canva-text text-lg font-bold text-amber-300"></h3>
+       <h3 class="text-lg font-bold text-amber-300">Diagram: tracing a missing jump sound</h3>
        <div class="mt-5 grid gap-3">
-        <div class="trace-step rounded-xl p-4"><span data-template-id="trace-1-label" class="canva-tag inline-flex rounded-full bg-cyan-300 px-3 py-1 text-xs font-bold text-slate-950"></span>
-         <p data-template-id="trace-1-text" class="canva-text mt-3 text-sm leading-6 text-slate-200"></p>
+        <div class="trace-step rounded-xl p-4"><span class="inline-flex rounded-full bg-cyan-300 px-3 py-1 text-xs font-bold text-slate-950">1. Trigger</span>
+         <p class="mt-3 text-sm leading-6 text-slate-200">Does the player actually jump? If not, test the input mapping and movement script first.</p>
         </div>
         <div class="flex justify-center text-cyan-300">
          <i data-lucide="arrow-down" class="h-5 w-5"></i>
         </div>
-        <div class="trace-step rounded-xl p-4"><span data-template-id="trace-2-label" class="canva-tag inline-flex rounded-full bg-amber-300 px-3 py-1 text-xs font-bold text-slate-950"></span>
-         <p data-template-id="trace-2-text" class="canva-text mt-3 text-sm leading-6 text-slate-200"></p>
+        <div class="trace-step rounded-xl p-4"><span class="inline-flex rounded-full bg-amber-300 px-3 py-1 text-xs font-bold text-slate-950">2. Connection</span>
+         <p class="mt-3 text-sm leading-6 text-slate-200">If the jump works, check whether the jump event calls the correct audio player or sound function.</p>
         </div>
         <div class="flex justify-center text-cyan-300">
          <i data-lucide="arrow-down" class="h-5 w-5"></i>
         </div>
-        <div class="trace-step rounded-xl p-4"><span data-template-id="trace-3-label" class="canva-tag inline-flex rounded-full bg-lime-300 px-3 py-1 text-xs font-bold text-slate-950"></span>
-         <p data-template-id="trace-3-text" class="canva-text mt-3 text-sm leading-6 text-slate-200"></p>
+        <div class="trace-step rounded-xl p-4"><span class="inline-flex rounded-full bg-lime-300 px-3 py-1 text-xs font-bold text-slate-950">3. Output</span>
+         <p class="mt-3 text-sm leading-6 text-slate-200">If the call exists, check the sound file, volume settings, output device, and whether the audio player is enabled in the scene.</p>
         </div>
        </div>
       </div>
      </div>
     </section>
     <section class="lesson-panel mb-8 overflow-hidden rounded-3xl">
-     <div class="grid lg:grid-cols-[.95fr_1.05fr]"><img data-template-id="case-image" loading="lazy" class="canva-image h-full min-h-[300px] w-full object-cover">
+     <div class="grid lg:grid-cols-[.95fr_1.05fr]"><img src="https://images.pexels.com/photos/17485657/pexels-photo-17485657.png?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="3D render abstract digital visualization depicting neural networks and AI technology." loading="lazy" class="h-full min-h-[300px] w-full object-cover">
       <div class="p-6 md:p-9">
-       <p data-template-id="case-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
-       <h2 data-template-id="case-title" class="canva-text heading-font mt-3 text-white"></h2>
-       <p data-template-id="case-intro" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <p class="eyebrow text-cyan-300">Guided case study</p>
+       <h2 class="heading-font mt-3 text-3xl font-bold text-white">Case: Add a collectible coin to a platform game.</h2>
+       <p class="mt-4 leading-7 text-slate-200">A coin seems small, but it is a complete integration task. It must look right, appear in the level, detect the player, update the score, communicate success, and behave correctly after a reload.</p>
        <ol class="mt-6 space-y-4">
-        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">1</span><p data-template-id="case-step-1" class="canva-text pt-1 text-sm leading-6 text-slate-200"></p></li>
-        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">2</span><p data-template-id="case-step-2" class="canva-text pt-1 text-sm leading-6 text-slate-200"></p></li>
-        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">3</span><p data-template-id="case-step-3" class="canva-text pt-1 text-sm leading-6 text-slate-200"></p></li>
-        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">4</span><p data-template-id="case-step-4" class="canva-text pt-1 text-sm leading-6 text-slate-200"></p></li>
+        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">1</span> <p class="pt-1 text-sm leading-6 text-slate-200">Prepare the asset: import the coin image or model, choose the right scale, and make sure its visual style fits the level.</p></li>
+        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">2</span> <p class="pt-1 text-sm leading-6 text-slate-200">Create the scene object: add a visible sprite or mesh, a collision area, and an optional spin animation.</p></li>
+        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">3</span> <p class="pt-1 text-sm leading-6 text-slate-200">Connect behaviour: when the player enters the collision area, play a sound, increase the score, show feedback, and remove the coin.</p></li>
+        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">4</span> <p class="pt-1 text-sm leading-6 text-slate-200">Test edge cases: collect it twice, restart the level, check if the score updates, and confirm the sound and animation are not delayed or missing.</p></li>
        </ol>
       </div>
      </div>
@@ -397,30 +396,30 @@
     <section id="activity" class="section-anchor glass mb-10 rounded-3xl p-6 md:p-9">
      <div class="grid gap-8 lg:grid-cols-[.9fr_1.1fr]">
       <div>
-       <p data-template-id="activity-eyebrow" class="canva-text eyebrow text-amber-300"></p>
-       <h2 data-template-id="activity-title" class="canva-text heading-font mt-2 text-white"></h2>
-       <p data-template-id="activity-intro" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <p class="eyebrow text-amber-300">Individual activity • 35 minutes</p>
+       <h2 class="heading-font mt-2 text-3xl font-bold text-white">Plan the integration of one game interaction.</h2>
+       <p class="mt-4 leading-7 text-slate-200">Choose one interaction: a door opening, a health pickup, an enemy attack, a checkpoint, or a level-complete trigger. Use the worksheet to think like a system integrator before anything is built.</p>
        <div class="mt-6 rounded-2xl border border-white/10 bg-slate-950/35 p-5">
-        <h3 data-template-id="activity-task-title" class="canva-text font-bold text-amber-300"></h3>
+        <h3 class="font-bold text-amber-300">Your planning task</h3>
         <ol class="mt-4 space-y-3 text-sm leading-6 text-slate-200">
-         <li class="flex gap-3"><span class="font-bold text-cyan-300">1.</span><span data-template-id="activity-step-1" class="canva-text"></span></li>
-         <li class="flex gap-3"><span class="font-bold text-cyan-300">2.</span><span data-template-id="activity-step-2" class="canva-text"></span></li>
-         <li class="flex gap-3"><span class="font-bold text-cyan-300">3.</span><span data-template-id="activity-step-3" class="canva-text"></span></li>
-         <li class="flex gap-3"><span class="font-bold text-cyan-300">4.</span><span data-template-id="activity-step-4" class="canva-text"></span></li>
+         <li class="flex gap-3"><span class="font-bold text-cyan-300">1.</span><span>Name the chosen interaction and state what the player should see, hear, or receive.</span></li>
+         <li class="flex gap-3"><span class="font-bold text-cyan-300">2.</span><span>List at least four systems or components needed for it to work.</span></li>
+         <li class="flex gap-3"><span class="font-bold text-cyan-300">3.</span><span>Draw or describe the order of events from player action to final result.</span></li>
+         <li class="flex gap-3"><span class="font-bold text-cyan-300">4.</span><span>Predict two possible integration problems and write one test for each.</span></li>
         </ol>
        </div>
        <div class="mt-5 rounded-xl bg-cyan-300/10 p-4">
-        <p data-template-id="activity-success-criteria" class="canva-text text-sm leading-6 text-cyan-100"></p>
+        <p class="text-sm font-semibold leading-6 text-cyan-100">Success criteria: Your plan should show a clear trigger, at least four connected parts, a logical event order, and two realistic checks for errors.</p>
        </div>
       </div>
-      <div><label for="activity-response" data-template-id="activity-response-label" class="canva-text mb-3 block font-bold text-white"></label> <textarea id="activity-response" class="activity-input" aria-describedby="activity-response-help"></textarea>
-       <p id="activity-response-help" data-template-id="activity-response-help" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
-       <div class="mt-4 flex flex-wrap gap-3"><button id="clear-response" type="button" data-template-id="activity-clear-button" class="canva-button rounded-xl px-4 py-2 text-sm font-bold"></button> <button id="toggle-model-answer" type="button" data-template-id="activity-reveal-button" class="canva-button rounded-xl px-4 py-2 text-sm font-bold"></button>
+      <div><label for="activity-response" class="mb-3 block font-bold text-white">Write your integration plan</label> <textarea id="activity-response" class="activity-input" aria-describedby="activity-response-help" placeholder="Start with the trigger, then map the systems and event order..."></textarea>
+       <p id="activity-response-help" class="mt-2 text-sm leading-6 text-slate-300">Your notes remain available while this page stays open. Use headings, arrows, or numbered steps to make your logic easy to review.</p>
+       <div class="mt-4 flex flex-wrap gap-3"><button id="clear-response" type="button" class="rounded-xl bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/20"> Clear my notes </button> <button id="toggle-model-answer" type="button" aria-expanded="false" class="rounded-xl bg-amber-300 px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-amber-200"> Reveal model answer </button>
        </div>
        <div id="model-answer" class="mt-6 hidden rounded-2xl border border-cyan-200/25 bg-cyan-300/10 p-5">
-        <p data-template-id="model-answer-eyebrow" class="canva-text eyebrow text-cyan-200"></p>
-        <h3 data-template-id="model-answer-title" class="canva-text mt-2 text-lg font-bold text-white"></h3>
-        <p data-template-id="model-answer-text" class="canva-text mt-3 text-sm leading-7 text-slate-100"></p>
+        <p class="eyebrow text-cyan-200">Model answer</p>
+        <h3 class="mt-2 text-lg font-bold text-white">Example plan: health pickup</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-100">Trigger: the player enters the pickup collision area. Connected parts: pickup art, collision area, player health script, UI health bar, sound effect, and save/checkpoint logic. Event order: collision detects player → health script adds 25 health but does not exceed the maximum → UI bar updates → pickup sound and sparkle play → object disappears → state is saved if needed. Tests: check that a player at full health cannot collect unlimited health; check that the pickup does not react to enemies or other objects.</p>
        </div>
       </div>
      </div>
@@ -428,61 +427,62 @@
     <section id="quiz" aria-labelledby="quiz-title" class="section-anchor glass rounded-3xl p-6 md:p-9">
      <div class="flex flex-wrap items-start justify-between gap-5">
       <div>
-       <p data-template-id="quiz-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
-       <h2 id="quiz-title" data-template-id="quiz-title" class="canva-text heading-font mt-2 text-white"></h2>
-       <p data-template-id="quiz-intro" class="canva-text mt-2 max-w-2xl leading-7 text-slate-300"></p>
+       <p class="eyebrow text-cyan-300">End-of-lesson check</p>
+       <h2 id="quiz-title" class="heading-font mt-2 text-3xl font-bold text-white">Quick integration check</h2>
+       <p class="mt-2 max-w-2xl leading-7 text-slate-300">Choose the best answer for each question. Review the diagrams and examples if you need a reminder.</p>
       </div>
       <div class="rounded-2xl border border-cyan-200/20 bg-cyan-300/10 px-5 py-3 text-right">
-       <p data-template-id="score-label" class="canva-text text-xs font-bold uppercase tracking-widest text-cyan-200"></p>
+       <p class="text-xs font-bold uppercase tracking-widest text-cyan-200">Your score</p>
        <p id="score-display" class="mt-1 text-2xl font-bold text-white" aria-live="polite">0 / 4</p>
       </div>
      </div>
      <div class="mt-8 grid gap-5">
       <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q1">
-       <h3 data-template-id="quiz-q1" class="canva-text font-bold leading-7 text-white"></h3>
-       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false"><span data-template-id="q1-option-a" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="true"><span data-template-id="q1-option-b" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false"><span data-template-id="q1-option-c" class="canva-text"></span></button>
+       <h3 class="font-bold leading-7 text-white">1. What is the main purpose of system integration in a game?</h3>
+       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false">To make every game file larger</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="true">To make separate components work together as one experience</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false">To avoid testing the game</button>
        </div>
       </article>
       <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q2">
-       <h3 data-template-id="quiz-q2" class="canva-text font-bold leading-7 text-white"></h3>
-       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false"><span data-template-id="q2-option-a" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false"><span data-template-id="q2-option-b" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="true"><span data-template-id="q2-option-c" class="canva-text"></span></button>
+       <h3 class="font-bold leading-7 text-white">2. A player moves but passes through walls. Which system connection should be checked first?</h3>
+       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false">The colour palette and menu layout</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false">The background music and volume settings</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="true">The movement logic and collision/physics setup</button>
        </div>
       </article>
       <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q3">
-       <h3 data-template-id="quiz-q3" class="canva-text font-bold leading-7 text-white"></h3>
-       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="true"><span data-template-id="q3-option-a" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false"><span data-template-id="q3-option-b" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false"><span data-template-id="q3-option-c" class="canva-text"></span></button>
+       <h3 class="font-bold leading-7 text-white">3. Which order best describes collecting a coin?</h3>
+       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="true">Collision detects player → score updates → feedback plays → coin is removed</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false">Delete coin → restart game → play music</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false">Show result screen → create player → check collision</button>
        </div>
       </article>
       <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q4">
-       <h3 data-template-id="quiz-q4" class="canva-text font-bold leading-7 text-white"></h3>
-       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false"><span data-template-id="q4-option-a" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="true"><span data-template-id="q4-option-b" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false"><span data-template-id="q4-option-c" class="canva-text"></span></button>
+       <h3 class="font-bold leading-7 text-white">4. Why is it useful to trace a feature from trigger to output?</h3>
+       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false">It guarantees there will be no bugs</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="true">It helps identify the exact connection where a feature fails</button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false">It removes the need for a game engine</button>
        </div>
       </article>
      </div>
      <div class="mt-6 flex flex-wrap items-center gap-4">
-      <p id="quiz-feedback" class="min-h-6 text-sm font-semibold text-cyan-200" aria-live="polite"></p><button id="reset-quiz" type="button" data-template-id="quiz-reset-button" class="canva-button rounded-xl px-4 py-2 text-sm font-bold"></button>
+      <p id="quiz-feedback" class="min-h-6 text-sm font-semibold text-cyan-200" aria-live="polite"></p><button id="reset-quiz" type="button" class="rounded-xl bg-amber-300 px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-amber-200"> Reset quiz </button>
      </div>
     </section>
    </main>
-   <footer data-template-id="footer-section" class="canva-footer border-t border-cyan-100/15 px-5 py-8 text-center md:px-8">
-    <p data-template-id="footer-text" class="canva-text text-sm text-slate-300"></p>
+   <footer class="border-t border-cyan-100/15 bg-[#06111c] px-5 py-8 text-center md:px-8">
+    <p class="text-sm text-slate-300">System Integration &amp; Architecture • Prelims Week 1 • System Integration in Gaming</p>
    </footer>
   </div>
-  <script src="/_sdk/b19ec5e9a6bcccbf.editing_sdk.js" integrity="sha512-zBJgQuXCQdyGFqXgZwfp8p9NowwbyuWhOK/NGHf9nps+IMSAyeeSyv3qhtfcnKWA9sWownxUevRqEhsjnjL55w=="></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      lucide.createIcons();
+      if (window.lucide) {
+        lucide.createIcons();
+      }
 
       const response = document.getElementById("activity-response");
       const clearResponse = document.getElementById("clear-response");
       const modelAnswer = document.getElementById("model-answer");
       const revealButton = document.getElementById("toggle-model-answer");
 
+      response.value = sessionStorage.getItem("sia-week-1-response") || "";
+
       response.addEventListener("input", () => {
         sessionStorage.setItem("sia-week-1-response", response.value);
       });
-
-      response.value = sessionStorage.getItem("sia-week-1-response") || "";
 
       clearResponse.addEventListener("click", () => {
         response.value = "";
@@ -508,31 +508,42 @@
       quizButtons.forEach((button) => {
         button.addEventListener("click", () => {
           const questionId = button.dataset.question;
-          if (answeredQuestions.has(questionId)) return;
+
+          if (answeredQuestions.has(questionId)) {
+            return;
+          }
 
           const correct = button.dataset.correct === "true";
           answeredQuestions.set(questionId, correct);
 
           document.querySelectorAll('.quiz-option[data-question="' + questionId + '"]').forEach((option) => {
             option.disabled = true;
-            if (option.dataset.correct === "true") option.classList.add("correct");
+
+            if (option.dataset.correct === "true") {
+              option.classList.add("correct");
+            }
           });
 
-          if (!correct) button.classList.add("incorrect");
+          if (!correct) {
+            button.classList.add("incorrect");
+          }
 
           feedback.textContent = correct
             ? "Correct — you identified the integration idea."
             : "Not quite. The correct answer is highlighted in green.";
+
           updateScore();
         });
       });
 
       document.getElementById("reset-quiz").addEventListener("click", () => {
         answeredQuestions.clear();
+
         quizButtons.forEach((button) => {
           button.disabled = false;
           button.classList.remove("correct", "incorrect");
         });
+
         feedback.textContent = "";
         updateScore();
       });
