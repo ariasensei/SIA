@@ -1,455 +1,542 @@
 <!doctype html>
 <html lang="en">
- <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260714-05-1435aa9"}');</script><script src="/_sdk/f432b76fb310b513.telemetry_sdk.js" integrity="sha512-9FJQ55EKmmqhyyik8BhrMVfm0+iYYfb8uOlRsjtkxJMEI97qOVEI4PnHohDjQAtvAep0IOEpdQ64eki0sz62ug=="></script>
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260716-05-1ab63ad"}');</script><script src="/_sdk/f432b76fb310b513.telemetry_sdk.js" integrity="sha512-9FJQ55EKmmqhyyik8BhrMVfm0+iYYfb8uOlRsjtkxJMEI97qOVEI4PnHohDjQAtvAep0IOEpdQ64eki0sz62ug=="></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>System Integration &amp; Architecture — Lesson 1</title>
+  <title>SIA Week 1 — System Integration in Gaming</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #172033;
-      --muted: #5d6878;
-      --paper: #f7f8f4;
-      --navy: #0f365c;
-      --blue: #2166a5;
-      --mint: #d9f0e8;
-      --gold: #f4b942;
-      --line: rgba(23, 32, 51, 0.12);
+      --ink: #071522;
+      --panel: #0d2031;
+      --panel-soft: #102b40;
+      --cyan: #54e4e9;
+      --amber: #ffbd59;
+      --mist: #d5e8f0;
+      --muted: #9ab7c6;
+      --line: rgba(142, 211, 223, .22);
+      --good: #70e1a1;
+      --bad: #ff8e8e;
     }
 
     * { box-sizing: border-box; }
-
+    html { scroll-behavior: smooth; }
     body {
+      width: 100%;
       margin: 0;
-      color: var(--ink);
+      background: var(--ink);
+      color: var(--mist);
       font-family: "DM Sans", sans-serif;
-      background: var(--paper);
     }
 
-    button, input { font: inherit; }
-
-    .lesson-shell {
+    .app-shell {
       width: 100%;
       min-height: calc(100 * min(var(--vh, 1vh), 1vh));
       overflow-x: hidden;
-      background:
-        radial-gradient(circle at 10% 10%, rgba(217, 240, 232, 0.72), transparent 28rem),
-        radial-gradient(circle at 92% 7%, rgba(244, 185, 66, 0.17), transparent 22rem),
-        #f7f8f4;
+      background-image:
+        linear-gradient(rgba(84, 228, 233, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(84, 228, 233, .035) 1px, transparent 1px);
+      background-size: 32px 32px;
     }
 
-    .page-width {
-      width: 100%;
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 0 1.25rem;
-    }
-
-    .hero-title {
-      font-family: "Fraunces", serif;
-      letter-spacing: -0.04em;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .paper-card {
-      border: 1px solid var(--line);
-      box-shadow: 0 16px 38px rgba(15, 54, 92, 0.08);
-    }
-
-    .icon-disc {
-      width: 2.55rem;
-      height: 2.55rem;
-      border-radius: 999px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      flex: 0 0 auto;
-    }
-
-    .section-kicker {
-      letter-spacing: 0.14em;
+    .heading-font { font-family: "Fraunces", serif; }
+    .section-anchor { scroll-margin-top: 96px; }
+    .eyebrow {
+      letter-spacing: .16em;
       text-transform: uppercase;
-      font-size: 0.75rem;
+      font-size: .75rem;
       font-weight: 700;
     }
 
-    .step-number {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      background: #0f365c;
-      color: white;
-      flex: 0 0 auto;
+    .hero-overlay {
+      background:
+        linear-gradient(90deg, rgba(7,21,34,.97) 0%, rgba(7,21,34,.85) 46%, rgba(7,21,34,.46) 100%),
+        linear-gradient(180deg, rgba(7,21,34,.12), rgba(7,21,34,.92));
+    }
+
+    .glass {
+      background: rgba(13, 32, 49, .88);
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 60px rgba(0,0,0,.22);
+    }
+
+    .lesson-panel {
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(16,43,64,.96), rgba(9,28,43,.96));
+      box-shadow: 0 18px 45px rgba(0,0,0,.18);
+    }
+
+    .callout {
+      border-left: 4px solid var(--cyan);
+      background: rgba(84,228,233,.08);
+    }
+
+    .amber-callout {
+      border-left: 4px solid var(--amber);
+      background: rgba(255,189,89,.08);
+    }
+
+    .agenda-item {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(142,211,223,.2);
+      background: rgba(7,21,34,.32);
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .agenda-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--cyan);
+    }
+
+    .flow-node {
+      min-height: 92px;
+      border: 1px solid rgba(142,211,223,.34);
+      background: rgba(7,21,34,.5);
+      box-shadow: inset 0 0 24px rgba(84,228,233,.045);
     }
 
     .flow-arrow {
-      color: #7a8794;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      color: var(--cyan);
+      font-size: 1.7rem;
+      line-height: 1;
     }
 
-    .task-toggle:checked + label {
-      background: #d9f0e8;
-      border-color: #2166a5;
-      color: #0f365c;
+    .system-node {
+      border: 1px solid rgba(142,211,223,.28);
+      background: rgba(7,21,34,.44);
     }
 
-    .role-toggle:checked + label {
-      background: #0f365c;
-      border-color: #0f365c;
-      color: #ffffff;
+    .system-core {
+      border: 1px solid var(--cyan);
+      background: rgba(84,228,233,.12);
+      box-shadow: 0 0 0 7px rgba(84,228,233,.05);
     }
 
-    .reveal-panel[hidden] { display: none; }
-
-    .reveal-panel {
-      animation: slideDown 220ms ease-out;
+    .example-card {
+      border: 1px solid rgba(255,189,89,.22);
+      background: rgba(255,189,89,.075);
     }
 
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-6px); }
+    .trace-step {
+      border: 1px solid rgba(142,211,223,.22);
+      background: rgba(7,21,34,.34);
+    }
+
+    .activity-input {
+      width: 100%;
+      resize: vertical;
+      min-height: 180px;
+      border: 1px solid rgba(142,211,223,.35);
+      background: rgba(7,21,34,.56);
+      color: var(--mist);
+      border-radius: 1rem;
+      padding: 1rem;
+      line-height: 1.55;
+    }
+
+    .activity-input:focus {
+      outline: 3px solid rgba(84,228,233,.5);
+      outline-offset: 2px;
+      border-color: var(--cyan);
+    }
+
+    .quiz-option {
+      border: 1px solid rgba(142,211,223,.25);
+      background: rgba(7,21,34,.45);
+      transition: 170ms ease;
+    }
+
+    .quiz-option:hover:not(:disabled) {
+      border-color: var(--cyan);
+      background: rgba(84,228,233,.08);
+    }
+
+    .quiz-option.correct {
+      border-color: var(--good);
+      background: rgba(112,225,161,.14);
+    }
+
+    .quiz-option.incorrect {
+      border-color: var(--bad);
+      background: rgba(255,142,142,.13);
+    }
+
+    .reveal { animation: rise 650ms ease both; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 820px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .flow-wrap { grid-template-columns: 1fr !important; }
-      .flow-arrow { transform: rotate(90deg); padding: 0.25rem 0; }
+    button:focus-visible, a:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--amber);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-copy { padding-top: 5rem; padding-bottom: 4rem; }
+      .flow-arrow { transform: rotate(90deg); }
     }
   </style>
-  <script src="/_sdk/0179d719c431a79e.data_sdk.js" type="text/javascript" integrity="sha512-OsRvJkI5GkC3MJQcgotQYotpzrMSX415GiKKgvYdxQEEkzD/fdchShO2FMSy0PJr/tiINMXOk5Vl2zAgg6bUiA=="></script>
+  <script src="/_sdk/e3937a0574eb2d69.data_sdk.js" type="text/javascript" integrity="sha512-xbp/ACqEQy1aDxYMtXTrR3y5MUbzxuggRR/9sD48Gl4VhLMMCiAHsxMaFV6DTdeBpR6ymF+t2zhPKYkWM3+Jfw=="></script>
   <script src="/_sdk/9432170dbd2ae0df.resizing_sdk.js" type="text/javascript" integrity="sha512-FeT+58sb1f9ejWPWFjCbJvTT+SDwGV+ngrHUnlO7TWEOoqwOLj6p256kO3vOL7DIWl1cIgrobiof8v2bOigwPg=="></script>
  </head>
  <body data-template-id="__page-root">
-  <div class="lesson-shell">
-   <header class="w-full border-b border-slate-900/10 bg-white/85 backdrop-blur">
-    <div class="page-width flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
-     <div class="flex items-center gap-3">
-      <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#0f365c] text-white shadow-sm">
-       <i data-lucide="network" aria-hidden="true" class="h-5 w-5"></i>
+  <div class="app-shell">
+   <header class="relative overflow-hidden"><img data-template-id="hero-image" loading="lazy" class="canva-image absolute inset-0 h-full w-full object-cover opacity-70">
+    <div class="hero-overlay absolute inset-0"></div>
+    <div class="relative mx-auto w-full max-w-7xl px-5 py-5 md:px-8">
+     <nav aria-label="Primary navigation" class="glass flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3"><a href="#overview" class="flex items-center gap-3 rounded-lg"> <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-300 text-slate-950"> <i data-lucide="boxes" class="h-5 w-5"></i> </span> <span data-template-id="nav-course" class="canva-text font-semibold"></span> </a>
+      <div class="flex flex-wrap gap-1 text-sm font-semibold"><a href="#examples" data-template-id="nav-examples" class="canva-link rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950"></a> <a href="#activity" data-template-id="nav-activity" class="canva-link rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950"></a> <a href="#quiz" data-template-id="nav-quiz" class="canva-link rounded-lg px-3 py-2 transition hover:bg-cyan-300 hover:text-slate-950"></a>
       </div>
-      <div>
-       <p data-template-id="course-label" class="canva-text m-0 text-xs font-bold uppercase tracking-[0.16em]"></p>
-       <h1 data-template-id="course-title" class="canva-text m-0 font-bold leading-tight"></h1>
-      </div>
-     </div>
-     <div data-template-id="instructor-badge" class="canva-tag inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold">
-      <i data-lucide="graduation-cap" aria-hidden="true" class="h-4 w-4"></i> <span data-template-id="instructor-name" class="canva-text"></span>
+     </nav>
+     <div id="overview" class="hero-copy section-anchor grid min-h-[540px] items-end gap-10 py-16 lg:grid-cols-[1.18fr_.82fr]">
+      <section class="reveal">
+       <p data-template-id="hero-eyebrow" class="canva-text eyebrow mb-4 text-cyan-300"></p>
+       <h1 data-template-id="hero-title" class="canva-text heading-font max-w-4xl text-white"></h1>
+       <p data-template-id="hero-description" class="canva-text mt-6 max-w-2xl text-lg leading-8 text-slate-200"></p>
+       <div class="mt-8 flex flex-wrap gap-3"><span data-template-id="hero-badge-duration" class="canva-tag rounded-full px-4 py-2 text-sm font-bold"></span> <span data-template-id="hero-badge-format" class="canva-tag rounded-full border border-white/30 px-4 py-2 text-sm font-semibold backdrop-blur"></span>
+       </div>
+      </section>
+      <aside data-template-id="outcomes-card" class="canva-card glass reveal rounded-3xl p-6 md:p-7" style="animation-delay:140ms">
+       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-full bg-amber-300 text-slate-950"> <i data-lucide="target" class="h-5 w-5"></i> </span>
+        <h2 data-template-id="outcomes-title" class="canva-text heading-font"></h2>
+       </div>
+       <ul class="mt-5 space-y-3 text-sm leading-6 text-slate-200">
+        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span data-template-id="outcome-1" class="canva-text"></span></li>
+        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span data-template-id="outcome-2" class="canva-text"></span></li>
+        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span data-template-id="outcome-3" class="canva-text"></span></li>
+        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-4 w-4 shrink-0 text-cyan-300"></i><span data-template-id="outcome-4" class="canva-text"></span></li>
+       </ul>
+      </aside>
      </div>
     </div>
    </header>
-   <main class="w-full">
-    <section class="page-width py-10 sm:py-14">
-     <div class="hero-grid">
+   <main class="mx-auto w-full max-w-7xl px-5 py-10 md:px-8 md:py-14">
+    <section aria-labelledby="agenda-title" class="mb-12">
+     <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div>
-       <p data-template-id="lesson-label" class="canva-text section-kicker mb-4"></p>
-       <h2 data-template-id="hero-title" class="canva-text hero-title mb-5 max-w-3xl text-4xl font-semibold leading-[1.05] sm:text-6xl"></h2>
-       <p data-template-id="hero-description" class="canva-text max-w-2xl text-lg leading-8"></p>
-       <div class="mt-7 flex flex-wrap gap-3">
-        <span data-template-id="lesson-tag-one" class="canva-tag rounded-full px-4 py-2 text-sm font-semibold"></span> <span data-template-id="lesson-tag-two" class="canva-tag rounded-full px-4 py-2 text-sm font-semibold"></span> <span data-template-id="lesson-tag-three" class="canva-tag rounded-full px-4 py-2 text-sm font-semibold"></span>
+       <p data-template-id="agenda-eyebrow" class="canva-text eyebrow text-amber-300"></p>
+       <h2 id="agenda-title" data-template-id="agenda-title" class="canva-text heading-font mt-2 text-white"></h2>
+      </div>
+      <p data-template-id="agenda-note" class="canva-text max-w-xl text-sm leading-6 text-slate-300"></p>
+     </div>
+     <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <article class="agenda-item rounded-2xl p-5">
+       <p data-template-id="agenda-1-time" class="canva-text text-sm font-bold text-cyan-300"></p>
+       <h3 data-template-id="agenda-1-title" class="canva-text mt-2 font-bold text-white"></h3>
+       <p data-template-id="agenda-1-text" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+      </article>
+      <article class="agenda-item rounded-2xl p-5">
+       <p data-template-id="agenda-2-time" class="canva-text text-sm font-bold text-cyan-300"></p>
+       <h3 data-template-id="agenda-2-title" class="canva-text mt-2 font-bold text-white"></h3>
+       <p data-template-id="agenda-2-text" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+      </article>
+      <article class="agenda-item rounded-2xl p-5">
+       <p data-template-id="agenda-3-time" class="canva-text text-sm font-bold text-cyan-300"></p>
+       <h3 data-template-id="agenda-3-title" class="canva-text mt-2 font-bold text-white"></h3>
+       <p data-template-id="agenda-3-text" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+      </article>
+      <article class="agenda-item rounded-2xl p-5">
+       <p data-template-id="agenda-4-time" class="canva-text text-sm font-bold text-cyan-300"></p>
+       <h3 data-template-id="agenda-4-title" class="canva-text mt-2 font-bold text-white"></h3>
+       <p data-template-id="agenda-4-text" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+      </article>
+     </div>
+    </section>
+    <section class="section-anchor lesson-panel mb-8 rounded-3xl p-6 md:p-9">
+     <div class="grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
+      <div>
+       <p data-template-id="definition-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
+       <h2 data-template-id="definition-title" class="canva-text heading-font mt-3 text-white"></h2>
+       <p data-template-id="definition-text" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <div class="callout mt-6 rounded-r-2xl px-5 py-4">
+        <p data-template-id="definition-key-point" class="canva-text text-sm font-semibold leading-6 text-cyan-100"></p>
        </div>
       </div>
-      <figure class="paper-card overflow-hidden rounded-[2rem] bg-[#0f365c]">
-       <img data-template-id="hero-image" loading="lazy" class="canva-image h-72 w-full object-cover opacity-85 sm:h-80" alt="">
-       <figcaption data-template-id="hero-caption" class="canva-text px-6 py-5 text-sm leading-6 text-white"></figcaption>
-      </figure>
-     </div>
-    </section>
-    <section class="page-width pb-10">
-     <div data-template-id="clos-section" class="canva-section paper-card rounded-[1.75rem] p-6 sm:p-8">
-      <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-       <div>
-        <p data-template-id="clos-kicker" class="canva-text section-kicker mb-2"></p>
-        <h2 data-template-id="clos-title" class="canva-text m-0 font-bold"></h2>
+      <div class="rounded-2xl border border-white/10 bg-slate-950/25 p-5">
+       <h3 data-template-id="flow-title" class="canva-text text-lg font-bold text-amber-300"></h3>
+       <p data-template-id="flow-intro" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+       <div class="mt-6 flex flex-col items-stretch gap-3 md:flex-row md:items-center">
+        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-cyan-300"><i data-lucide="gamepad-2" class="h-6 w-6"></i></span> <strong data-template-id="flow-node-1-title" class="canva-text mt-2 text-white"></strong> <span data-template-id="flow-node-1-text" class="canva-text mt-1 text-xs leading-5 text-slate-300"></span>
+        </div><span class="flow-arrow text-center">→</span>
+        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-amber-300"><i data-lucide="code-2" class="h-6 w-6"></i></span> <strong data-template-id="flow-node-2-title" class="canva-text mt-2 text-white"></strong> <span data-template-id="flow-node-2-text" class="canva-text mt-1 text-xs leading-5 text-slate-300"></span>
+        </div><span class="flow-arrow text-center">→</span>
+        <div class="flow-node flex flex-1 flex-col justify-center rounded-xl p-4"><span class="text-lime-300"><i data-lucide="sparkles" class="h-6 w-6"></i></span> <strong data-template-id="flow-node-3-title" class="canva-text mt-2 text-white"></strong> <span data-template-id="flow-node-3-text" class="canva-text mt-1 text-xs leading-5 text-slate-300"></span>
+        </div>
        </div>
-       <p data-template-id="clos-note" class="canva-text m-0 max-w-xl text-sm leading-6"></p>
+       <p data-template-id="flow-caption" class="canva-text mt-5 text-sm leading-6 text-slate-200"></p>
       </div>
-      <ol class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-       <li class="flex items-start gap-3 rounded-2xl bg-white/70 p-4"><span class="step-number">1</span> <p data-template-id="clo-one" class="canva-text m-0 leading-6"></p></li>
-       <li class="flex items-start gap-3 rounded-2xl bg-white/70 p-4"><span class="step-number">2</span> <p data-template-id="clo-two" class="canva-text m-0 leading-6"></p></li>
-       <li class="flex items-start gap-3 rounded-2xl bg-white/70 p-4"><span class="step-number">3</span> <p data-template-id="clo-three" class="canva-text m-0 leading-6"></p></li>
-       <li class="flex items-start gap-3 rounded-2xl bg-white/70 p-4"><span class="step-number">4</span> <p data-template-id="clo-four" class="canva-text m-0 leading-6"></p></li>
-       <li class="flex items-start gap-3 rounded-2xl bg-white/70 p-4"><span class="step-number">5</span> <p data-template-id="clo-five" class="canva-text m-0 leading-6"></p></li>
-       <li class="flex items-start gap-3 rounded-2xl bg-white/70 p-4"><span class="step-number">6</span> <p data-template-id="clo-six" class="canva-text m-0 leading-6"></p></li>
-      </ol>
      </div>
     </section>
-    <section class="page-width pb-10">
-     <div class="grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
-      <aside data-template-id="objectives-panel" class="canva-panel paper-card rounded-[1.75rem] p-6 sm:p-8">
-       <p data-template-id="objectives-kicker" class="canva-text section-kicker mb-2"></p>
-       <h2 data-template-id="objectives-title" class="canva-text m-0 font-bold"></h2>
-       <p data-template-id="objectives-description" class="canva-text mt-3 leading-7"></p>
-       <ul class="mt-5 space-y-4">
-        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-5 w-5 text-[#2166a5]" aria-hidden="true"></i> <span data-template-id="objective-one" class="canva-text"></span></li>
-        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-5 w-5 text-[#2166a5]" aria-hidden="true"></i> <span data-template-id="objective-two" class="canva-text"></span></li>
-        <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-1 h-5 w-5 text-[#2166a5]" aria-hidden="true"></i> <span data-template-id="objective-three" class="canva-text"></span></li>
-       </ul>
-      </aside>
-      <section data-template-id="warmup-panel" class="canva-card paper-card rounded-[1.75rem] p-6 sm:p-8">
-       <div class="flex items-start gap-4">
-        <div class="icon-disc bg-[#f4b942] text-[#172033]">
-         <i data-lucide="laptop" class="h-5 w-5" aria-hidden="true"></i>
+    <section class="section-anchor lesson-panel mb-8 rounded-3xl p-6 md:p-9">
+     <div class="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
+      <div>
+       <p data-template-id="systems-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
+       <h2 data-template-id="systems-title" class="canva-text heading-font mt-3 text-white"></h2>
+       <p data-template-id="systems-intro" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <div class="amber-callout mt-6 rounded-r-2xl px-5 py-4">
+        <p data-template-id="systems-warning" class="canva-text text-sm font-semibold leading-6 text-amber-100"></p>
+       </div>
+      </div>
+      <div class="relative rounded-2xl border border-cyan-200/20 bg-slate-950/35 p-5">
+       <h3 data-template-id="systems-diagram-title" class="canva-text text-lg font-bold text-amber-300"></h3>
+       <div class="mt-5 grid grid-cols-3 gap-3 text-center text-xs">
+        <div data-template-id="system-art" class="canva-panel system-node rounded-xl p-3">
+         <i data-lucide="palette" class="mx-auto h-5 w-5 text-cyan-300"></i><span class="canva-text mt-2 block"></span>
         </div>
-        <div>
-         <p data-template-id="warmup-kicker" class="canva-text section-kicker mb-2"></p>
-         <h2 data-template-id="warmup-title" class="canva-text m-0 font-bold"></h2>
-         <p data-template-id="warmup-description" class="canva-text mt-3 leading-7"></p>
+        <div data-template-id="system-audio" class="canva-panel system-node rounded-xl p-3">
+         <i data-lucide="volume-2" class="mx-auto h-5 w-5 text-amber-300"></i><span class="canva-text mt-2 block"></span>
+        </div>
+        <div data-template-id="system-input" class="canva-panel system-node rounded-xl p-3">
+         <i data-lucide="keyboard" class="mx-auto h-5 w-5 text-lime-300"></i><span class="canva-text mt-2 block"></span>
+        </div>
+        <div data-template-id="system-engine" class="canva-panel system-core col-span-3 rounded-xl p-4">
+         <i data-lucide="cpu" class="mx-auto h-6 w-6 text-cyan-200"></i><span class="canva-text mt-2 block font-bold"></span>
+        </div>
+        <div data-template-id="system-ui" class="canva-panel system-node rounded-xl p-3">
+         <i data-lucide="layout-dashboard" class="mx-auto h-5 w-5 text-amber-300"></i><span class="canva-text mt-2 block"></span>
+        </div>
+        <div data-template-id="system-physics" class="canva-panel system-node rounded-xl p-3">
+         <i data-lucide="circle-dot" class="mx-auto h-5 w-5 text-cyan-300"></i><span class="canva-text mt-2 block"></span>
+        </div>
+        <div data-template-id="system-save" class="canva-panel system-node rounded-xl p-3">
+         <i data-lucide="save" class="mx-auto h-5 w-5 text-lime-300"></i><span class="canva-text mt-2 block"></span>
         </div>
        </div>
-       <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        <div data-template-id="pc-option" class="canva-card rounded-2xl border border-slate-900/10 p-5">
-         <p data-template-id="pc-option-title" class="canva-text m-0 font-bold"></p>
-         <p data-template-id="pc-option-text" class="canva-text mt-2 text-sm leading-6"></p>
-        </div>
-        <div data-template-id="no-pc-option" class="canva-card rounded-2xl border border-slate-900/10 p-5">
-         <p data-template-id="no-pc-option-title" class="canva-text m-0 font-bold"></p>
-         <p data-template-id="no-pc-option-text" class="canva-text mt-2 text-sm leading-6"></p>
-        </div>
-       </div>
-       <div data-template-id="warmup-output" class="canva-banner mt-5 rounded-2xl px-5 py-4">
-        <p data-template-id="warmup-output-text" class="canva-text m-0 text-sm font-semibold leading-6"></p>
-       </div>
-      </section>
+       <p data-template-id="systems-caption" class="canva-text mt-5 text-sm leading-6 text-slate-300"></p>
+      </div>
      </div>
     </section>
-    <section class="page-width pb-10">
+    <section id="examples" class="section-anchor mb-8">
      <div class="mb-6">
-      <p data-template-id="concept-kicker" class="canva-text section-kicker mb-2"></p>
-      <h2 data-template-id="concept-title" class="canva-text hero-title m-0 text-3xl font-semibold sm:text-4xl"></h2>
+      <p data-template-id="examples-eyebrow" class="canva-text eyebrow text-amber-300"></p>
+      <h2 data-template-id="examples-title" class="canva-text heading-font mt-2 text-white"></h2>
+      <p data-template-id="examples-intro" class="canva-text mt-3 max-w-4xl leading-7 text-slate-300"></p>
      </div>
-     <div class="grid gap-5 md:grid-cols-3">
-      <article data-template-id="system-card" class="canva-card paper-card rounded-[1.5rem] p-6">
-       <div class="icon-disc bg-[#d9f0e8] text-[#0f365c]">
-        <i data-lucide="boxes" class="h-5 w-5" aria-hidden="true"></i>
+     <div class="grid gap-5 md:grid-cols-2">
+      <article class="example-card rounded-3xl p-6">
+       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-300 text-slate-950"><i data-lucide="move" class="h-5 w-5"></i></span>
+        <h3 data-template-id="example-1-title" class="canva-text text-lg font-bold text-white"></h3>
        </div>
-       <h3 data-template-id="system-card-title" class="canva-text mt-5 font-bold"></h3>
-       <p data-template-id="system-card-text" class="canva-text mt-3 leading-7"></p>
+       <p data-template-id="example-1-text" class="canva-text mt-4 text-sm leading-7 text-slate-100"></p>
+       <p data-template-id="example-1-breakdown" class="canva-text mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100"></p>
       </article>
-      <article data-template-id="integration-card" class="canva-card paper-card rounded-[1.5rem] p-6">
-       <div class="icon-disc bg-[#e5ecf5] text-[#2166a5]">
-        <i data-lucide="link-2" class="h-5 w-5" aria-hidden="true"></i>
+      <article class="example-card rounded-3xl p-6">
+       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-300 text-slate-950"><i data-lucide="gift" class="h-5 w-5"></i></span>
+        <h3 data-template-id="example-2-title" class="canva-text text-lg font-bold text-white"></h3>
        </div>
-       <h3 data-template-id="integration-card-title" class="canva-text mt-5 font-bold"></h3>
-       <p data-template-id="integration-card-text" class="canva-text mt-3 leading-7"></p>
+       <p data-template-id="example-2-text" class="canva-text mt-4 text-sm leading-7 text-slate-100"></p>
+       <p data-template-id="example-2-breakdown" class="canva-text mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100"></p>
       </article>
-      <article data-template-id="system-integration-card" class="canva-card paper-card rounded-[1.5rem] p-6">
-       <div class="icon-disc bg-[#fff0cb] text-[#825b09]">
-        <i data-lucide="git-merge" class="h-5 w-5" aria-hidden="true"></i>
+      <article class="example-card rounded-3xl p-6">
+       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-lime-300 text-slate-950"><i data-lucide="swords" class="h-5 w-5"></i></span>
+        <h3 data-template-id="example-3-title" class="canva-text text-lg font-bold text-white"></h3>
        </div>
-       <h3 data-template-id="system-integration-card-title" class="canva-text mt-5 font-bold"></h3>
-       <p data-template-id="system-integration-card-text" class="canva-text mt-3 leading-7"></p>
+       <p data-template-id="example-3-text" class="canva-text mt-4 text-sm leading-7 text-slate-100"></p>
+       <p data-template-id="example-3-breakdown" class="canva-text mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100"></p>
+      </article>
+      <article class="example-card rounded-3xl p-6">
+       <div class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-300 text-slate-950"><i data-lucide="trophy" class="h-5 w-5"></i></span>
+        <h3 data-template-id="example-4-title" class="canva-text text-lg font-bold text-white"></h3>
+       </div>
+       <p data-template-id="example-4-text" class="canva-text mt-4 text-sm leading-7 text-slate-100"></p>
+       <p data-template-id="example-4-breakdown" class="canva-text mt-4 rounded-xl bg-slate-950/35 p-4 text-sm leading-6 text-cyan-100"></p>
       </article>
      </div>
     </section>
-    <section class="page-width pb-10">
-     <div data-template-id="scenario-section" class="canva-section overflow-hidden rounded-[2rem] bg-[#0f365c] shadow-xl">
-      <div class="grid lg:grid-cols-[0.86fr_1.14fr]">
-       <img data-template-id="scenario-image" loading="lazy" class="canva-image h-full min-h-72 w-full object-cover" alt="">
-       <div class="p-7 sm:p-10">
-        <p data-template-id="scenario-kicker" class="canva-text section-kicker mb-3"></p>
-        <h2 data-template-id="scenario-title" class="canva-text hero-title m-0 text-3xl font-semibold sm:text-4xl"></h2>
-        <p data-template-id="scenario-intro" class="canva-text mt-4 max-w-2xl leading-7"></p>
-        <div class="flow-wrap mt-7 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-3">
-         <div data-template-id="flow-one" class="canva-card rounded-2xl p-4">
-          <p data-template-id="flow-one-title" class="canva-text m-0 font-bold"></p>
-          <p data-template-id="flow-one-text" class="canva-text mt-2 text-sm leading-6"></p>
-         </div>
-         <div class="flow-arrow"><i data-lucide="arrow-right" class="h-5 w-5" aria-hidden="true"></i>
-         </div>
-         <div data-template-id="flow-two" class="canva-card rounded-2xl p-4">
-          <p data-template-id="flow-two-title" class="canva-text m-0 font-bold"></p>
-          <p data-template-id="flow-two-text" class="canva-text mt-2 text-sm leading-6"></p>
-         </div>
-         <div class="flow-arrow"><i data-lucide="arrow-right" class="h-5 w-5" aria-hidden="true"></i>
-         </div>
-         <div data-template-id="flow-three" class="canva-card rounded-2xl p-4">
-          <p data-template-id="flow-three-title" class="canva-text m-0 font-bold"></p>
-          <p data-template-id="flow-three-text" class="canva-text mt-2 text-sm leading-6"></p>
-         </div>
+    <section class="lesson-panel mb-8 rounded-3xl p-6 md:p-9">
+     <div class="grid gap-8 lg:grid-cols-[.78fr_1.22fr]">
+      <div>
+       <p data-template-id="debug-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
+       <h2 data-template-id="debug-title" class="canva-text heading-font mt-3 text-white"></h2>
+       <p data-template-id="debug-intro" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <div class="callout mt-6 rounded-r-2xl px-5 py-4">
+        <p data-template-id="debug-tip" class="canva-text text-sm font-semibold leading-6 text-cyan-100"></p>
+       </div>
+      </div>
+      <div>
+       <h3 data-template-id="trace-title" class="canva-text text-lg font-bold text-amber-300"></h3>
+       <div class="mt-5 grid gap-3">
+        <div class="trace-step rounded-xl p-4"><span data-template-id="trace-1-label" class="canva-tag inline-flex rounded-full bg-cyan-300 px-3 py-1 text-xs font-bold text-slate-950"></span>
+         <p data-template-id="trace-1-text" class="canva-text mt-3 text-sm leading-6 text-slate-200"></p>
         </div>
-        <div data-template-id="scenario-question" class="canva-banner mt-7 rounded-2xl px-5 py-4">
-         <p data-template-id="scenario-question-text" class="canva-text m-0 font-semibold leading-6"></p>
+        <div class="flex justify-center text-cyan-300">
+         <i data-lucide="arrow-down" class="h-5 w-5"></i>
+        </div>
+        <div class="trace-step rounded-xl p-4"><span data-template-id="trace-2-label" class="canva-tag inline-flex rounded-full bg-amber-300 px-3 py-1 text-xs font-bold text-slate-950"></span>
+         <p data-template-id="trace-2-text" class="canva-text mt-3 text-sm leading-6 text-slate-200"></p>
+        </div>
+        <div class="flex justify-center text-cyan-300">
+         <i data-lucide="arrow-down" class="h-5 w-5"></i>
+        </div>
+        <div class="trace-step rounded-xl p-4"><span data-template-id="trace-3-label" class="canva-tag inline-flex rounded-full bg-lime-300 px-3 py-1 text-xs font-bold text-slate-950"></span>
+         <p data-template-id="trace-3-text" class="canva-text mt-3 text-sm leading-6 text-slate-200"></p>
         </div>
        </div>
       </div>
      </div>
     </section>
-    <section class="page-width pb-10">
-     <div class="mb-6">
-      <p data-template-id="importance-kicker" class="canva-text section-kicker mb-2"></p>
-      <h2 data-template-id="importance-title" class="canva-text hero-title m-0 text-3xl font-semibold sm:text-4xl"></h2>
-      <p data-template-id="importance-intro" class="canva-text mt-3 max-w-3xl leading-7"></p>
-     </div>
-     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <div data-template-id="benefit-one" class="canva-card rounded-2xl border border-slate-900/10 bg-white p-5">
-       <p data-template-id="benefit-one-title" class="canva-text m-0 font-bold"></p>
-       <p data-template-id="benefit-one-text" class="canva-text mt-2 text-sm leading-6"></p>
-      </div>
-      <div data-template-id="benefit-two" class="canva-card rounded-2xl border border-slate-900/10 bg-white p-5">
-       <p data-template-id="benefit-two-title" class="canva-text m-0 font-bold"></p>
-       <p data-template-id="benefit-two-text" class="canva-text mt-2 text-sm leading-6"></p>
-      </div>
-      <div data-template-id="benefit-three" class="canva-card rounded-2xl border border-slate-900/10 bg-white p-5">
-       <p data-template-id="benefit-three-title" class="canva-text m-0 font-bold"></p>
-       <p data-template-id="benefit-three-text" class="canva-text mt-2 text-sm leading-6"></p>
-      </div>
-      <div data-template-id="benefit-four" class="canva-card rounded-2xl border border-slate-900/10 bg-white p-5">
-       <p data-template-id="benefit-four-title" class="canva-text m-0 font-bold"></p>
-       <p data-template-id="benefit-four-text" class="canva-text mt-2 text-sm leading-6"></p>
-      </div>
-      <div data-template-id="benefit-five" class="canva-card rounded-2xl border border-slate-900/10 bg-white p-5">
-       <p data-template-id="benefit-five-title" class="canva-text m-0 font-bold"></p>
-       <p data-template-id="benefit-five-text" class="canva-text mt-2 text-sm leading-6"></p>
-      </div>
-      <div data-template-id="benefit-six" class="canva-card rounded-2xl border border-slate-900/10 bg-white p-5">
-       <p data-template-id="benefit-six-title" class="canva-text m-0 font-bold"></p>
-       <p data-template-id="benefit-six-text" class="canva-text mt-2 text-sm leading-6"></p>
+    <section class="lesson-panel mb-8 overflow-hidden rounded-3xl">
+     <div class="grid lg:grid-cols-[.95fr_1.05fr]"><img data-template-id="case-image" loading="lazy" class="canva-image h-full min-h-[300px] w-full object-cover">
+      <div class="p-6 md:p-9">
+       <p data-template-id="case-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
+       <h2 data-template-id="case-title" class="canva-text heading-font mt-3 text-white"></h2>
+       <p data-template-id="case-intro" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <ol class="mt-6 space-y-4">
+        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">1</span><p data-template-id="case-step-1" class="canva-text pt-1 text-sm leading-6 text-slate-200"></p></li>
+        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">2</span><p data-template-id="case-step-2" class="canva-text pt-1 text-sm leading-6 text-slate-200"></p></li>
+        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">3</span><p data-template-id="case-step-3" class="canva-text pt-1 text-sm leading-6 text-slate-200"></p></li>
+        <li class="flex gap-4"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300 font-bold text-slate-950">4</span><p data-template-id="case-step-4" class="canva-text pt-1 text-sm leading-6 text-slate-200"></p></li>
+       </ol>
       </div>
      </div>
     </section>
-    <section class="page-width pb-10">
-     <div class="grid gap-6 lg:grid-cols-2">
-      <section data-template-id="individual-section" class="canva-section paper-card rounded-[1.75rem] p-6 sm:p-8">
-       <div class="flex items-start gap-4">
-        <div class="icon-disc bg-[#d9f0e8] text-[#0f365c]">
-         <i data-lucide="user-round" class="h-5 w-5" aria-hidden="true"></i>
-        </div>
-        <div>
-         <p data-template-id="individual-kicker" class="canva-text section-kicker mb-2"></p>
-         <h2 data-template-id="individual-title" class="canva-text m-0 font-bold"></h2>
-         <p data-template-id="individual-description" class="canva-text mt-3 leading-7"></p>
-        </div>
+    <section id="activity" class="section-anchor glass mb-10 rounded-3xl p-6 md:p-9">
+     <div class="grid gap-8 lg:grid-cols-[.9fr_1.1fr]">
+      <div>
+       <p data-template-id="activity-eyebrow" class="canva-text eyebrow text-amber-300"></p>
+       <h2 data-template-id="activity-title" class="canva-text heading-font mt-2 text-white"></h2>
+       <p data-template-id="activity-intro" class="canva-text mt-4 leading-7 text-slate-200"></p>
+       <div class="mt-6 rounded-2xl border border-white/10 bg-slate-950/35 p-5">
+        <h3 data-template-id="activity-task-title" class="canva-text font-bold text-amber-300"></h3>
+        <ol class="mt-4 space-y-3 text-sm leading-6 text-slate-200">
+         <li class="flex gap-3"><span class="font-bold text-cyan-300">1.</span><span data-template-id="activity-step-1" class="canva-text"></span></li>
+         <li class="flex gap-3"><span class="font-bold text-cyan-300">2.</span><span data-template-id="activity-step-2" class="canva-text"></span></li>
+         <li class="flex gap-3"><span class="font-bold text-cyan-300">3.</span><span data-template-id="activity-step-3" class="canva-text"></span></li>
+         <li class="flex gap-3"><span class="font-bold text-cyan-300">4.</span><span data-template-id="activity-step-4" class="canva-text"></span></li>
+        </ol>
        </div>
-       <fieldset class="mt-6 space-y-3">
-        <legend data-template-id="individual-instructions" class="canva-text mb-3 text-sm font-semibold"></legend>
-        <div>
-         <input id="individual-task-1" class="task-toggle sr-only" type="checkbox"> <label for="individual-task-1" class="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-900/10 bg-white px-4 py-3 transition focus-within:ring-2 focus-within:ring-[#2166a5]"> <i data-lucide="check-square" class="mt-0.5 h-5 w-5" aria-hidden="true"></i> <span data-template-id="individual-task-one" class="canva-text"></span> </label>
-        </div>
-        <div>
-         <input id="individual-task-2" class="task-toggle sr-only" type="checkbox"> <label for="individual-task-2" class="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-900/10 bg-white px-4 py-3 transition focus-within:ring-2 focus-within:ring-[#2166a5]"> <i data-lucide="check-square" class="mt-0.5 h-5 w-5" aria-hidden="true"></i> <span data-template-id="individual-task-two" class="canva-text"></span> </label>
-        </div>
-        <div>
-         <input id="individual-task-3" class="task-toggle sr-only" type="checkbox"> <label for="individual-task-3" class="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-900/10 bg-white px-4 py-3 transition focus-within:ring-2 focus-within:ring-[#2166a5]"> <i data-lucide="check-square" class="mt-0.5 h-5 w-5" aria-hidden="true"></i> <span data-template-id="individual-task-three" class="canva-text"></span> </label>
-        </div>
-       </fieldset><button id="individual-reveal-button" data-template-id="individual-reveal-button" class="canva-button mt-6 inline-flex items-center gap-2 rounded-xl px-4 py-3 font-semibold transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2166a5]" type="button" aria-expanded="false" aria-controls="individual-sample"> <i data-lucide="lightbulb" class="h-4 w-4" aria-hidden="true"></i> </button>
-       <div id="individual-sample" class="reveal-panel mt-4 rounded-2xl border border-[#2166a5]/20 bg-[#e9f4fa] p-4" hidden>
-        <p data-template-id="individual-sample-title" class="canva-text m-0 font-bold"></p>
-        <p data-template-id="individual-sample-text" class="canva-text mt-2 mb-0 text-sm leading-6"></p>
+       <div class="mt-5 rounded-xl bg-cyan-300/10 p-4">
+        <p data-template-id="activity-success-criteria" class="canva-text text-sm leading-6 text-cyan-100"></p>
        </div>
-      </section>
-      <section data-template-id="group-section" class="canva-section overflow-hidden rounded-[1.75rem] bg-[#173a5e] shadow-lg">
-       <img data-template-id="group-image" loading="lazy" class="canva-image h-44 w-full object-cover opacity-75" alt="">
-       <div class="p-6 sm:p-8">
-        <p data-template-id="group-kicker" class="canva-text section-kicker mb-2"></p>
-        <h2 data-template-id="group-title" class="canva-text m-0 font-bold"></h2>
-        <p data-template-id="group-description" class="canva-text mt-3 leading-7"></p>
-        <div data-template-id="group-task-box" class="canva-card mt-5 rounded-2xl p-5">
-         <p data-template-id="group-task-title" class="canva-text m-0 font-bold"></p>
-         <p data-template-id="group-task-text" class="canva-text mt-2 mb-0 text-sm leading-6"></p>
-        </div>
-        <fieldset class="mt-5">
-         <legend data-template-id="roles-label" class="canva-text text-sm font-semibold"></legend>
-         <div class="mt-3 flex flex-wrap gap-2">
-          <input id="role-facilitator" class="role-toggle sr-only" name="group-role" type="radio"> <label for="role-facilitator" data-template-id="role-facilitator-label" class="canva-tag cursor-pointer rounded-full border border-white/30 px-3 py-2 text-sm transition"></label> <input id="role-recorder" class="role-toggle sr-only" name="group-role" type="radio"> <label for="role-recorder" data-template-id="role-recorder-label" class="canva-tag cursor-pointer rounded-full border border-white/30 px-3 py-2 text-sm transition"></label> <input id="role-illustrator" class="role-toggle sr-only" name="group-role" type="radio"> <label for="role-illustrator" data-template-id="role-illustrator-label" class="canva-tag cursor-pointer rounded-full border border-white/30 px-3 py-2 text-sm transition"></label> <input id="role-reporter" class="role-toggle sr-only" name="group-role" type="radio"> <label for="role-reporter" data-template-id="role-reporter-label" class="canva-tag cursor-pointer rounded-full border border-white/30 px-3 py-2 text-sm transition"></label>
-         </div>
-        </fieldset>
-        <div data-template-id="group-output" class="canva-banner mt-5 rounded-2xl px-5 py-4">
-         <p data-template-id="group-output-text" class="canva-text m-0 text-sm font-semibold leading-6"></p>
-        </div>
+      </div>
+      <div><label for="activity-response" data-template-id="activity-response-label" class="canva-text mb-3 block font-bold text-white"></label> <textarea id="activity-response" class="activity-input" aria-describedby="activity-response-help"></textarea>
+       <p id="activity-response-help" data-template-id="activity-response-help" class="canva-text mt-2 text-sm leading-6 text-slate-300"></p>
+       <div class="mt-4 flex flex-wrap gap-3"><button id="clear-response" type="button" data-template-id="activity-clear-button" class="canva-button rounded-xl px-4 py-2 text-sm font-bold"></button> <button id="toggle-model-answer" type="button" data-template-id="activity-reveal-button" class="canva-button rounded-xl px-4 py-2 text-sm font-bold"></button>
        </div>
-      </section>
+       <div id="model-answer" class="mt-6 hidden rounded-2xl border border-cyan-200/25 bg-cyan-300/10 p-5">
+        <p data-template-id="model-answer-eyebrow" class="canva-text eyebrow text-cyan-200"></p>
+        <h3 data-template-id="model-answer-title" class="canva-text mt-2 text-lg font-bold text-white"></h3>
+        <p data-template-id="model-answer-text" class="canva-text mt-3 text-sm leading-7 text-slate-100"></p>
+       </div>
+      </div>
      </div>
     </section>
-    <section class="page-width pb-10">
-     <section data-template-id="lab-section" class="canva-section paper-card overflow-hidden rounded-[2rem]">
-      <div class="grid lg:grid-cols-[0.82fr_1.18fr]">
-       <img data-template-id="lab-image" loading="lazy" class="canva-image h-full min-h-80 w-full object-cover" alt="">
-       <div class="p-7 sm:p-10">
-        <div class="flex items-start gap-4">
-         <div class="icon-disc bg-[#f4b942] text-[#172033]">
-          <i data-lucide="monitor-cog" class="h-5 w-5" aria-hidden="true"></i>
-         </div>
-         <div>
-          <p data-template-id="lab-kicker" class="canva-text section-kicker mb-2"></p>
-          <h2 data-template-id="lab-title" class="canva-text m-0 font-bold"></h2>
-          <p data-template-id="lab-description" class="canva-text mt-3 leading-7"></p>
-         </div>
-        </div>
-        <fieldset class="mt-7 space-y-4">
-         <legend data-template-id="lab-instructions-title" class="canva-text mb-3 font-bold"></legend>
-         <div class="flex gap-3">
-          <input id="lab-step-1" class="mt-1 h-4 w-4 accent-[#2166a5]" type="checkbox"> <label for="lab-step-1" data-template-id="lab-step-one" class="canva-text cursor-pointer leading-6"></label>
-         </div>
-         <div class="flex gap-3">
-          <input id="lab-step-2" class="mt-1 h-4 w-4 accent-[#2166a5]" type="checkbox"> <label for="lab-step-2" data-template-id="lab-step-two" class="canva-text cursor-pointer leading-6"></label>
-         </div>
-         <div class="flex gap-3">
-          <input id="lab-step-3" class="mt-1 h-4 w-4 accent-[#2166a5]" type="checkbox"> <label for="lab-step-3" data-template-id="lab-step-three" class="canva-text cursor-pointer leading-6"></label>
-         </div>
-         <div class="flex gap-3">
-          <input id="lab-step-4" class="mt-1 h-4 w-4 accent-[#2166a5]" type="checkbox"> <label for="lab-step-4" data-template-id="lab-step-four" class="canva-text cursor-pointer leading-6"></label>
-         </div>
-        </fieldset>
-        <div data-template-id="lab-submission" class="canva-banner mt-7 rounded-2xl px-5 py-4">
-         <p data-template-id="lab-submission-text" class="canva-text m-0 text-sm font-semibold leading-6"></p>
-        </div>
-       </div>
+    <section id="quiz" aria-labelledby="quiz-title" class="section-anchor glass rounded-3xl p-6 md:p-9">
+     <div class="flex flex-wrap items-start justify-between gap-5">
+      <div>
+       <p data-template-id="quiz-eyebrow" class="canva-text eyebrow text-cyan-300"></p>
+       <h2 id="quiz-title" data-template-id="quiz-title" class="canva-text heading-font mt-2 text-white"></h2>
+       <p data-template-id="quiz-intro" class="canva-text mt-2 max-w-2xl leading-7 text-slate-300"></p>
       </div>
-     </section>
-    </section>
-    <section class="page-width pb-14">
-     <section data-template-id="exit-section" class="canva-section rounded-[2rem] p-7 sm:p-10">
-      <div class="max-w-3xl">
-       <p data-template-id="exit-kicker" class="canva-text section-kicker mb-2"></p>
-       <h2 data-template-id="exit-title" class="canva-text hero-title m-0 text-3xl font-semibold sm:text-4xl"></h2>
-       <p data-template-id="exit-question" class="canva-text mt-4 text-lg leading-8"></p><button id="exit-reveal-button" data-template-id="exit-reveal-button" class="canva-button mt-6 inline-flex items-center gap-2 rounded-xl px-5 py-3 font-semibold transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2166a5]" type="button" aria-expanded="false" aria-controls="exit-answer"> <i data-lucide="search-check" class="h-4 w-4" aria-hidden="true"></i> </button>
-       <div id="exit-answer" class="reveal-panel mt-5 rounded-2xl bg-white/85 p-5" hidden>
-        <p data-template-id="exit-answer-title" class="canva-text m-0 font-bold"></p>
-        <p data-template-id="exit-answer-text" class="canva-text mt-2 mb-0 leading-7"></p>
-       </div>
+      <div class="rounded-2xl border border-cyan-200/20 bg-cyan-300/10 px-5 py-3 text-right">
+       <p data-template-id="score-label" class="canva-text text-xs font-bold uppercase tracking-widest text-cyan-200"></p>
+       <p id="score-display" class="mt-1 text-2xl font-bold text-white" aria-live="polite">0 / 4</p>
       </div>
-     </section>
+     </div>
+     <div class="mt-8 grid gap-5">
+      <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q1">
+       <h3 data-template-id="quiz-q1" class="canva-text font-bold leading-7 text-white"></h3>
+       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false"><span data-template-id="q1-option-a" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="true"><span data-template-id="q1-option-b" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q1" data-correct="false"><span data-template-id="q1-option-c" class="canva-text"></span></button>
+       </div>
+      </article>
+      <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q2">
+       <h3 data-template-id="quiz-q2" class="canva-text font-bold leading-7 text-white"></h3>
+       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false"><span data-template-id="q2-option-a" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="false"><span data-template-id="q2-option-b" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q2" data-correct="true"><span data-template-id="q2-option-c" class="canva-text"></span></button>
+       </div>
+      </article>
+      <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q3">
+       <h3 data-template-id="quiz-q3" class="canva-text font-bold leading-7 text-white"></h3>
+       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="true"><span data-template-id="q3-option-a" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false"><span data-template-id="q3-option-b" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q3" data-correct="false"><span data-template-id="q3-option-c" class="canva-text"></span></button>
+       </div>
+      </article>
+      <article class="rounded-2xl border border-white/10 bg-slate-950/20 p-5" data-question="q4">
+       <h3 data-template-id="quiz-q4" class="canva-text font-bold leading-7 text-white"></h3>
+       <div class="mt-4 grid gap-3 md:grid-cols-3"><button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false"><span data-template-id="q4-option-a" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="true"><span data-template-id="q4-option-b" class="canva-text"></span></button> <button type="button" class="quiz-option rounded-xl px-4 py-3 text-left text-sm" data-question="q4" data-correct="false"><span data-template-id="q4-option-c" class="canva-text"></span></button>
+       </div>
+      </article>
+     </div>
+     <div class="mt-6 flex flex-wrap items-center gap-4">
+      <p id="quiz-feedback" class="min-h-6 text-sm font-semibold text-cyan-200" aria-live="polite"></p><button id="reset-quiz" type="button" data-template-id="quiz-reset-button" class="canva-button rounded-xl px-4 py-2 text-sm font-bold"></button>
+     </div>
     </section>
    </main>
-   <footer class="w-full border-t border-slate-900/10 bg-white/70">
-    <div class="page-width py-6">
-     <p data-template-id="footer-text" class="canva-text m-0 text-center text-sm"></p>
-    </div>
+   <footer data-template-id="footer-section" class="canva-footer border-t border-cyan-100/15 px-5 py-8 text-center md:px-8">
+    <p data-template-id="footer-text" class="canva-text text-sm text-slate-300"></p>
    </footer>
   </div>
-  <script src="/_sdk/719055fef2a85d14.editing_sdk.js" integrity="sha512-kFqrdGgIiTOsu307feB5Cy3JVP9IayftsmCIZ0csxYBGuBmJQPhyvcnmKR8F0fTW97h5s1gAvz3SumI8zJ6OxQ=="></script>
+  <script src="/_sdk/b19ec5e9a6bcccbf.editing_sdk.js" integrity="sha512-zBJgQuXCQdyGFqXgZwfp8p9NowwbyuWhOK/NGHf9nps+IMSAyeeSyv3qhtfcnKWA9sWownxUevRqEhsjnjL55w=="></script>
   <script>
-    function setupReveal(buttonId, panelId) {
-      const button = document.getElementById(buttonId);
-      const panel = document.getElementById(panelId);
-
-      button.addEventListener("click", () => {
-        const willShow = panel.hidden;
-        panel.hidden = !willShow;
-        button.setAttribute("aria-expanded", String(willShow));
-      });
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
-      setupReveal("individual-reveal-button", "individual-sample");
-      setupReveal("exit-reveal-button", "exit-answer");
       lucide.createIcons();
+
+      const response = document.getElementById("activity-response");
+      const clearResponse = document.getElementById("clear-response");
+      const modelAnswer = document.getElementById("model-answer");
+      const revealButton = document.getElementById("toggle-model-answer");
+
+      response.addEventListener("input", () => {
+        sessionStorage.setItem("sia-week-1-response", response.value);
+      });
+
+      response.value = sessionStorage.getItem("sia-week-1-response") || "";
+
+      clearResponse.addEventListener("click", () => {
+        response.value = "";
+        sessionStorage.removeItem("sia-week-1-response");
+        response.focus();
+      });
+
+      revealButton.addEventListener("click", () => {
+        const isHidden = modelAnswer.classList.toggle("hidden");
+        revealButton.setAttribute("aria-expanded", String(!isHidden));
+      });
+
+      const answeredQuestions = new Map();
+      const scoreDisplay = document.getElementById("score-display");
+      const feedback = document.getElementById("quiz-feedback");
+      const quizButtons = document.querySelectorAll(".quiz-option");
+
+      function updateScore() {
+        const correct = [...answeredQuestions.values()].filter(Boolean).length;
+        scoreDisplay.textContent = correct + " / 4";
+      }
+
+      quizButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const questionId = button.dataset.question;
+          if (answeredQuestions.has(questionId)) return;
+
+          const correct = button.dataset.correct === "true";
+          answeredQuestions.set(questionId, correct);
+
+          document.querySelectorAll('.quiz-option[data-question="' + questionId + '"]').forEach((option) => {
+            option.disabled = true;
+            if (option.dataset.correct === "true") option.classList.add("correct");
+          });
+
+          if (!correct) button.classList.add("incorrect");
+
+          feedback.textContent = correct
+            ? "Correct — you identified the integration idea."
+            : "Not quite. The correct answer is highlighted in green.";
+          updateScore();
+        });
+      });
+
+      document.getElementById("reset-quiz").addEventListener("click", () => {
+        answeredQuestions.clear();
+        quizButtons.forEach((button) => {
+          button.disabled = false;
+          button.classList.remove("correct", "incorrect");
+        });
+        feedback.textContent = "";
+        updateScore();
+      });
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1b4746141d31114',t:'MTc4NDA3MzI4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ </body>
 </html>
