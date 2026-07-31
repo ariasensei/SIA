@@ -1,0 +1,1034 @@
+<!doctype html>
+<html lang="en">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260731-03-0b60c17","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Broken Glyph":"YADZ-exUkv0,0","Canva Sans":"YAFdJjTk5UU,0","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Ghost Mono":"YAHO2EIdDP0,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YADy3sAhvXQ,0","Oleo Script":"YACgEQQ14jI,0","Playfair Display":"YAFdJhem5V8,1","Poppins":"YAE5fPSY9qM,0","Press Start 2P":"YAFyGr-8pmQ,0","Source Sans 3":"YAG4lO1Mj10,0","Space Grotesk":"YAHO2sjPCSM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Trebuchet MS":"YAFcfrglpVA,0","Verdana":"YAGzXTctYtQ,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0"}}');</script><script src="/_sdk/a27874207e105461.telemetry_sdk.js" integrity="sha512-wgI5N9F7oA2h3vH+benMYIv4wGqTct4nKWakqgvfgRyBLmfYq8q/fi6gkfWKd2hMsyN+VQ/qOAOpxybwkcoxlA=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 5 | Integration Tools for Game Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --ink: #06131d;
+      --panel: #0c2030;
+      --panel2: #102b3f;
+      --line: rgba(181,230,255,.17);
+      --cyan: #62e8f5;
+      --lime: #d5ff5f;
+      --orange: #ffad4d;
+      --soft: #b9cad6;
+      --white: #eef8ff;
+      --danger: #ff8d7b;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--white);
+      background: var(--ink);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid var(--lime);
+      outline-offset: 3px;
+    }
+
+    .app-shell {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(rgba(98,232,245,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(98,232,245,.035) 1px, transparent 1px),
+        radial-gradient(circle at 88% 2%, rgba(36,141,166,.36), transparent 32%),
+        radial-gradient(circle at 8% 54%, rgba(40,110,92,.16), transparent 27%),
+        var(--ink);
+      background-size: 28px 28px, 28px 28px, auto, auto;
+    }
+
+    .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+    .mono { font-family: "Space Mono", monospace; }
+
+    .topbar {
+      border-bottom: 1px solid rgba(181,230,255,.12);
+      background: rgba(6,19,29,.82);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 13px; }
+    .mark {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      color: var(--cyan);
+      font-size: 21px;
+      border: 1px solid rgba(181,230,255,.25);
+      border-radius: 12px;
+      background: rgba(98,232,245,.1);
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: #8fbbca;
+      font-size: 11px;
+      letter-spacing: .09em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    h1 { margin: 2px 0 0; font-size: 25px; line-height: 1.1; }
+    h2 { margin: 8px 0 0; font-size: 30px; line-height: 1.2; }
+    h3 { margin: 0; font-size: 20px; line-height: 1.25; }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge {
+      padding: 8px 12px;
+      color: #baf8ff;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid rgba(181,230,255,.22);
+      border-radius: 99px;
+      background: rgba(98,232,245,.09);
+    }
+    .badge.lime {
+      color: #e7ffac;
+      border-color: rgba(213,255,95,.24);
+      background: rgba(213,255,95,.1);
+    }
+
+    main { padding: 28px 0 42px; }
+
+    .hero {
+      position: relative;
+      min-height: 440px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: #0a1f2d;
+      box-shadow: 0 20px 55px rgba(0,0,0,.22);
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .45;
+    }
+
+    .hero::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(90deg, rgba(6,19,29,.98), rgba(6,19,29,.84) 46%, rgba(6,19,29,.18));
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 770px;
+      padding: 56px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 11px;
+      color: var(--lime);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      border: 1px solid rgba(213,255,95,.24);
+      border-radius: 99px;
+      background: rgba(6,19,29,.64);
+    }
+
+    .hero h2 {
+      margin: 20px 0 0;
+      font-size: clamp(38px, 6vw, 67px);
+      line-height: 1.03;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 20px 0 0;
+      color: #d7e7ef;
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      color: #edfaff;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      transition: .18s ease;
+    }
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .primary { color: #06202b; background: var(--cyan); }
+    .secondary { border-color: rgba(181,230,255,.25); background: rgba(6,19,29,.52); }
+
+    .section {
+      margin-top: 30px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(10,31,45,.88);
+      box-shadow: 0 20px 55px rgba(0,0,0,.18);
+    }
+
+    .kicker {
+      margin: 0;
+      color: var(--cyan);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .rule { width: 74px; height: 4px; margin: 14px 0 18px; border-radius: 20px; background: var(--cyan); }
+    .copy { color: #c5d7e1; line-height: 1.7; }
+
+    .grid { display: grid; gap: 16px; }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+    .objective, .mini-card {
+      padding: 17px;
+      color: #d9edf5;
+      line-height: 1.55;
+      border: 1px solid rgba(181,230,255,.16);
+      border-radius: 14px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .objective { background: rgba(98,232,245,.055); }
+    .lime-card { border-color: rgba(213,255,95,.19); background: rgba(213,255,95,.075); }
+    .orange-card { border-color: rgba(255,173,77,.21); background: rgba(255,173,77,.07); }
+
+    .callout {
+      margin-top: 18px;
+      padding: 20px;
+      color: #ffe1bc;
+      border: 1px solid rgba(255,173,77,.28);
+      border-radius: 16px;
+      background: rgba(255,173,77,.08);
+    }
+
+    .list { margin: 14px 0 0; padding-left: 20px; color: #c5d7e1; line-height: 1.85; }
+
+    .workflow {
+      margin-top: 20px;
+      padding: 25px 18px;
+      color: #c9f9ff;
+      text-align: center;
+      line-height: 1.9;
+      border: 1px solid rgba(98,232,245,.2);
+      border-radius: 16px;
+      background: rgba(98,232,245,.05);
+    }
+
+    .tool-tabs { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+    .tool-tab {
+      padding: 9px 13px;
+      color: #d9faff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid rgba(181,230,255,.24);
+      border-radius: 99px;
+      background: rgba(98,232,245,.07);
+      transition: .18s ease;
+    }
+    .tool-tab:hover { border-color: rgba(98,232,245,.7); }
+    .tool-tab.active {
+      color: #efffc6;
+      border-color: var(--lime);
+      background: rgba(213,255,95,.13);
+      box-shadow: 0 0 0 1px rgba(213,255,95,.12);
+    }
+
+    .tool-detail {
+      margin-top: 18px;
+      padding: 21px;
+      border: 1px solid rgba(213,255,95,.27);
+      border-radius: 16px;
+      background: rgba(213,255,95,.08);
+    }
+    .tool-detail .kicker { color: var(--lime); }
+    .tool-detail p { color: #e4f5cc; line-height: 1.7; }
+
+    .table-wrap { margin-top: 18px; overflow-x: auto; }
+    table { width: 100%; min-width: 620px; border-collapse: collapse; text-align: left; }
+    th { padding: 13px; color: var(--cyan); border-bottom: 1px solid rgba(181,230,255,.17); }
+    td { padding: 13px; color: #c5d7e1; vertical-align: top; border-bottom: 1px solid rgba(181,230,255,.09); }
+    td:first-child { color: #eaf7ff; font-weight: 700; }
+
+    .activity {
+      padding: 20px;
+      border: 1px solid rgba(181,230,255,.16);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .reveal {
+      margin-top: 14px;
+      padding: 10px 13px;
+      color: #d9faff;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid rgba(98,232,245,.35);
+      border-radius: 9px;
+      background: transparent;
+    }
+
+    .answer {
+      margin-top: 14px;
+      padding: 15px;
+      color: #e8ffc0;
+      line-height: 1.65;
+      border: 1px solid rgba(213,255,95,.21);
+      border-radius: 11px;
+      background: rgba(213,255,95,.08);
+    }
+
+    [hidden] { display: none !important; }
+
+    .quiz-head { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+    .score {
+      min-width: 112px;
+      padding: 13px 17px;
+      text-align: center;
+      border: 1px solid rgba(213,255,95,.25);
+      border-radius: 15px;
+      background: rgba(213,255,95,.1);
+    }
+    .score p { margin: 0; }
+    .score .mono { margin-top: 4px; color: var(--lime); font-size: 23px; font-weight: 700; }
+
+    .question {
+      margin-top: 18px;
+      padding: 20px;
+      border: 1px solid rgba(181,230,255,.16);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .options { display: grid; gap: 8px; margin-top: 14px; }
+    .option {
+      width: 100%;
+      padding: 12px 14px;
+      color: #eaf7ff;
+      text-align: left;
+      cursor: pointer;
+      border: 1px solid rgba(185,202,214,.25);
+      border-radius: 11px;
+      background: rgba(255,255,255,.035);
+      transition: .18s ease;
+    }
+    .option:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.1); }
+    .option.correct { color: #efffdc; border-color: #98e852; background: rgba(128,214,71,.17); }
+    .option.incorrect { color: #ffe4df; border-color: var(--danger); background: rgba(255,102,91,.14); }
+    .feedback { min-height: 22px; margin: 12px 0 0; font-size: 14px; font-weight: 700; }
+
+    .footer { padding: 22px 0; color: #8fabb9; font-size: 14px; border-top: 1px solid rgba(181,230,255,.1); }
+
+    @media (max-width: 800px) {
+      .topbar-inner, .split { display: block; }
+      .badges { margin-top: 13px; }
+      .hero-content { padding: 34px 25px; }
+      .hero::after { background: linear-gradient(0deg, rgba(6,19,29,.98), rgba(6,19,29,.75) 60%, rgba(6,19,29,.2)); }
+      .two, .three { grid-template-columns: 1fr; }
+      .section { padding: 22px; }
+      .quiz-head { display: block; }
+      .score { width: max-content; margin-top: 16px; }
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/935a53bc2e11fb8d.data_sdk.js" type="text/javascript" integrity="sha512-qr2oyPnEys1WebcOABaRh6hG77r5PWpqeWW6JTKbRJqly/INsfBi31CVNlTmHqjgeLpkVmmHZJUdxSx/32tOFQ=="></script>
+  <script src="/_sdk/9a740ce6cacd0808.editing_sdk.js" type="text/javascript" integrity="sha512-ZcKE2UXVxSh0Kmty64HdB2xjpgsalbehms1KOXHeK7POjO9v81VU+RYWmq0cOBM9u4mY5oRq7UsigAanNH4Iww=="></script>
+  <script src="/_sdk/6030e540d4419216.resizing_sdk.js" type="text/javascript" integrity="sha512-b5KWzyoXsbWP4smq4sftIi6Kts4YVBpBsz0BwCViwbBJkK64a3/Z6ZMdWA+qnplNcXw4mhZeqvQi3mOosiRJdA=="></script>
+ </head>
+ <body data-template-id="__page-root">
+  <div class="app-shell">
+   <header class="topbar">
+    <div class="wrap topbar-inner">
+     <div class="brand">
+      <div class="mark" aria-hidden="true">
+       <i data-lucide="network"></i>
+      </div>
+      <div>
+       <p class="eyebrow mono">Course · System Integration and Architecture for Game Development</p>
+       <h1>Integration Tools for Game Development</h1>
+      </div>
+     </div>
+     <div class="badges"><span class="badge">Instructor · MKDB</span> <span class="badge lime">Lesson 5</span>
+     </div>
+    </div>
+   </header>
+   <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title"><img src="https://images.pexels.com/photos/4792733/pexels-photo-4792733.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="Modern computer monitors displaying programming code on a development desk" loading="lazy">
+     <div class="hero-content"><span class="tag mono">Integration lab · game development</span>
+      <h2 id="hero-title">Every great game is a connected toolkit.</h2>
+      <p>Explore the tools that bring code, art, sound, assets, teams, testing, cloud services, and game engines together into one complete game development workflow.</p>
+      <div class="actions"><a class="btn primary" href="#lesson"><i data-lucide="play" aria-hidden="true"></i> Start the lesson</a> <a class="btn secondary" href="#knowledge-check"><i data-lucide="circle-help" aria-hidden="true"></i> Knowledge check</a>
+      </div>
+     </div>
+    </section>
+    <section id="lesson" class="section">
+     <p class="kicker mono">Lesson Learning Outcome</p>
+     <h2>Use integration tools for game development.</h2>
+     <div class="rule"></div>
+     <p class="copy">At the end of this lesson, students should be able to understand how different development tools work together across a complete game project.</p>
+     <div class="grid three" style="margin-top:20px">
+      <div class="objective">
+       Define integration tools and their role in game development.
+      </div>
+      <div class="objective">
+       Identify common integration tools used in the game development workflow.
+      </div>
+      <div class="objective">
+       Explain the purpose of each tool.
+      </div>
+      <div class="objective">
+       Select appropriate integration tools for different game development tasks.
+      </div>
+      <div class="objective">
+       Apply integration tools in a simple game development project.
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Introduction</p>
+     <h2>Modern game development is a connected process</h2>
+     <div class="rule"></div>
+     <p class="copy">Modern games are not created using only a game engine. A single game may require tools for programming, version control, graphics, 3D modeling, sound, databases, testing, deployment, and team collaboration.</p>
+     <p class="copy">When developing a role-playing game (RPG), each specialist may use a different tool:</p>
+     <div class="grid three" style="margin-top:18px">
+      <div class="mini-card">
+       <strong>Programmer</strong><br>
+       Writes scripts in Visual Studio Code.
+      </div>
+      <div class="mini-card">
+       <strong>Artist</strong><br>
+       Creates characters in Blender.
+      </div>
+      <div class="mini-card">
+       <strong>Designer</strong><br>
+       Edits textures in GIMP.
+      </div>
+      <div class="mini-card">
+       <strong>Development Team</strong><br>
+       Stores and shares work using GitHub.
+      </div>
+      <div class="mini-card">
+       <strong>Game Builder</strong><br>
+       Builds the game using Godot or Unity.
+      </div>
+      <div class="mini-card">
+       <strong>Project Team</strong><br>
+       Tracks bugs using project management tools.
+      </div>
+     </div>
+     <div class="callout">
+      <p class="kicker mono" style="color:#ffbd70">Tool integration</p>
+      <h3 style="margin-top:8px;color:#fff0db">All these tools work together to produce one complete game.</h3>
+      <p>Tool integration is the process of connecting software, assets, workflows, and team members so that development work stays organized, compatible, and efficient.</p>
+     </div>
+    </section>
+    <section class="split">
+     <article class="section">
+      <p class="kicker mono">What are Integration Tools?</p>
+      <h2>Tools that help every game part work together</h2>
+      <div class="rule"></div>
+      <p class="copy">Integration tools are software applications that help different components, assets, and team members work together throughout the game development process.</p>
+      <p class="copy">They improve collaboration, organization, efficiency, and software quality by supporting the movement of work from planning to deployment.</p>
+      <div class="workflow mono">
+       Code + Assets + Audio<br>
+        ↓<br>
+        Version Control + Collaboration<br>
+        ↓<br>
+        Game Engine + Testing<br>
+        ↓<br>
+        Complete Game
+      </div>
+     </article>
+     <article class="section">
+      <p class="kicker mono">Why are they important?</p>
+      <h2>Reliable tools create reliable workflows</h2>
+      <div class="rule"></div>
+      <div class="mini-card orange-card">
+       <h3 style="color:#fff0db">Without integration tools</h3>
+       <ul class="list">
+        <li>Files become disorganized.</li>
+        <li>Team members overwrite each other's work.</li>
+        <li>Bugs are difficult to trace.</li>
+        <li>Assets are difficult to manage.</li>
+        <li>Development becomes slow and inefficient.</li>
+       </ul>
+      </div>
+      <div class="mini-card lime-card" style="margin-top:16px">
+       <h3 style="color:#e8ffc0">With integration tools</h3>
+       <ul class="list">
+        <li>Teams collaborate effectively.</li>
+        <li>Files are synchronized.</li>
+        <li>Changes are tracked.</li>
+        <li>Assets are organized.</li>
+        <li>Development becomes faster and more reliable.</li>
+       </ul>
+      </div>
+     </article>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Categories of Integration Tools</p>
+     <h2>Ten tool categories in a game development workflow</h2>
+     <div class="rule"></div>
+     <p class="copy">Select a category to inspect its purpose, examples, and typical use in game development.</p>
+     <div class="tool-tabs" aria-label="Integration tool categories"><button class="tool-tab active" type="button" data-tool="engine">1 Game Engines</button> <button class="tool-tab" type="button" data-tool="version">2 Version Control</button> <button class="tool-tab" type="button" data-tool="ide">3 IDEs</button> <button class="tool-tab" type="button" data-tool="modeling">4 3D Modeling</button> <button class="tool-tab" type="button" data-tool="image">5 Image Editing</button> <button class="tool-tab" type="button" data-tool="audio">6 Audio Tools</button> <button class="tool-tab" type="button" data-tool="database">7 Database Tools</button> <button class="tool-tab" type="button" data-tool="cloud">8 API &amp; Cloud</button> <button class="tool-tab" type="button" data-tool="testing">9 Testing</button> <button class="tool-tab" type="button" data-tool="project">10 Collaboration</button>
+     </div>
+     <div id="tool-detail" class="tool-detail" aria-live="polite">
+      <p class="kicker mono">Category 01 · Game Engines</p>
+      <h3 style="margin-top:8px;color:#efffc6">The main platform where the game is built and executed</h3>
+      <p><strong>Examples:</strong> Godot, Unity, Unreal Engine</p>
+      <p><strong>Functions:</strong> Game logic, physics, animation, user interface, scene management, lighting, and audio.</p>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Typical Game Development Workflow</p>
+     <h2>One connected path from idea to release</h2>
+     <div class="rule"></div>
+     <div class="workflow mono">
+      Planning<br>
+       │<br>
+       ▼<br>
+       Trello / Notion<br>
+       │<br>
+       ▼<br>
+       Blender + GIMP<br>
+       │<br>
+       ▼<br>
+       VS Code<br>
+       │<br>
+       ▼<br>
+       GitHub<br>
+       │<br>
+       ▼<br>
+       Godot / Unity<br>
+       │<br>
+       ▼<br>
+       Firebase / SQLite<br>
+       │<br>
+       ▼<br>
+       Testing<br>
+       │<br>
+       ▼<br>
+       Deployment
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Example Project</p>
+     <h2>Treasure Hunter: a complete development toolkit</h2>
+     <div class="rule"></div>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Tool</th>
+         <th>Purpose</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Godot</td>
+         <td>Build the game.</td>
+        </tr>
+        <tr>
+         <td>Visual Studio Code</td>
+         <td>Write scripts.</td>
+        </tr>
+        <tr>
+         <td>Blender</td>
+         <td>Create treasure chest and character models.</td>
+        </tr>
+        <tr>
+         <td>GIMP</td>
+         <td>Create textures and icons.</td>
+        </tr>
+        <tr>
+         <td>GitHub</td>
+         <td>Collaborate and track changes.</td>
+        </tr>
+        <tr>
+         <td>SQLite</td>
+         <td>Save game progress.</td>
+        </tr>
+        <tr>
+         <td>Audacity</td>
+         <td>Create sound effects.</td>
+        </tr>
+        <tr>
+         <td>Firebase</td>
+         <td>Store online scores.</td>
+        </tr>
+        <tr>
+         <td>Trello</td>
+         <td>Manage project tasks.</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </section>
+    <section class="split">
+     <article class="section">
+      <p class="kicker mono">Choosing the Right Tool</p>
+      <h2>Match the tool to the task</h2>
+      <div class="rule"></div>
+      <div class="table-wrap">
+       <table>
+        <thead>
+         <tr>
+          <th>Task</th>
+          <th>Recommended Tool</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>Create 3D models</td>
+          <td>Blender</td>
+         </tr>
+         <tr>
+          <td>Edit images</td>
+          <td>GIMP</td>
+         </tr>
+         <tr>
+          <td>Write code</td>
+          <td>Visual Studio Code</td>
+         </tr>
+         <tr>
+          <td>Build the game</td>
+          <td>Godot</td>
+         </tr>
+         <tr>
+          <td>Store player data</td>
+          <td>SQLite</td>
+         </tr>
+         <tr>
+          <td>Team collaboration</td>
+          <td>GitHub</td>
+         </tr>
+         <tr>
+          <td>Project management</td>
+          <td>Trello</td>
+         </tr>
+         <tr>
+          <td>Sound editing</td>
+          <td>Audacity</td>
+         </tr>
+         <tr>
+          <td>Online services</td>
+          <td>Firebase</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </article>
+     <article class="section">
+      <p class="kicker mono">Best Free Tools for Students</p>
+      <h2>An industry-relevant free toolkit</h2>
+      <div class="rule"></div>
+      <div class="table-wrap">
+       <table>
+        <thead>
+         <tr>
+          <th>Tool</th>
+          <th>Free</th>
+          <th>Purpose</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>Godot</td>
+          <td>✔</td>
+          <td>Game Engine</td>
+         </tr>
+         <tr>
+          <td>Blender</td>
+          <td>✔</td>
+          <td>3D Modeling</td>
+         </tr>
+         <tr>
+          <td>Visual Studio Code</td>
+          <td>✔</td>
+          <td>Code Editor</td>
+         </tr>
+         <tr>
+          <td>GitHub</td>
+          <td>✔</td>
+          <td>Version Control</td>
+         </tr>
+         <tr>
+          <td>GIMP</td>
+          <td>✔</td>
+          <td>Image Editing</td>
+         </tr>
+         <tr>
+          <td>Krita</td>
+          <td>✔</td>
+          <td>Digital Art</td>
+         </tr>
+         <tr>
+          <td>Audacity</td>
+          <td>✔</td>
+          <td>Audio Editing</td>
+         </tr>
+         <tr>
+          <td>SQLite</td>
+          <td>✔</td>
+          <td>Database</td>
+         </tr>
+         <tr>
+          <td>Firebase Free Tier</td>
+          <td>✔</td>
+          <td>Cloud Backend</td>
+         </tr>
+         <tr>
+          <td>Trello</td>
+          <td>✔</td>
+          <td>Project Management</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </article>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Classroom Activity</p>
+     <h2>Build your development toolkit</h2>
+     <div class="rule"></div>
+     <article class="activity"><span class="tag mono" style="color:#baf8ff;border-color:rgba(98,232,245,.25);background:rgba(98,232,245,.1)">Group Activity · 3–5 Students</span>
+      <h3 style="margin-top:17px">Choose a game concept and build its tool plan</h3>
+      <p class="copy">Choose a game concept such as a platformer, puzzle, RPG, or racing game. Create a table identifying the tools your team will use and explain why each choice fits the task.</p>
+      <div class="table-wrap">
+       <table>
+        <thead>
+         <tr>
+          <th>Development Task</th>
+          <th>Tool</th>
+          <th>Reason for Choosing It</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>Game Engine</td>
+          <td></td>
+          <td></td>
+         </tr>
+         <tr>
+          <td>Coding</td>
+          <td></td>
+          <td></td>
+         </tr>
+         <tr>
+          <td>3D Models</td>
+          <td></td>
+          <td></td>
+         </tr>
+         <tr>
+          <td>Images</td>
+          <td></td>
+          <td></td>
+         </tr>
+         <tr>
+          <td>Audio</td>
+          <td></td>
+          <td></td>
+         </tr>
+         <tr>
+          <td>Version Control</td>
+          <td></td>
+          <td></td>
+         </tr>
+         <tr>
+          <td>Database</td>
+          <td></td>
+          <td></td>
+         </tr>
+         <tr>
+          <td>Cloud Services</td>
+          <td></td>
+          <td></td>
+         </tr>
+         <tr>
+          <td>Testing</td>
+          <td></td>
+          <td></td>
+         </tr>
+         <tr>
+          <td>Project Management</td>
+          <td></td>
+          <td></td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <p class="copy">Present your toolkit in class and explain how the tools work together.</p><button class="reveal" type="button" aria-expanded="false" aria-controls="activity-guidance">Reveal sample guidance</button>
+      <div id="activity-guidance" class="answer" hidden>
+       Sample guidance: A student team could select Godot for the game engine, Visual Studio Code for scripting, Blender for 3D models, GIMP for textures, Audacity for audio, GitHub for version control, SQLite for local save data, Firebase for online scores, Godot Debugger for testing, and Trello for task management. The team should explain how assets move into the engine, code changes are shared through GitHub, and testing checks that the integrated game works correctly.
+      </div>
+     </article>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Reflection Questions</p>
+     <h2>Think like a game development team</h2>
+     <div class="rule"></div>
+     <ol class="list">
+      <li>Why are integration tools important in game development?</li>
+      <li>Which integration tool do you think is the most essential? Why?</li>
+      <li>How does version control improve teamwork?</li>
+      <li>What problems might occur if a development team does not use collaboration tools?</li>
+      <li>If you were developing your own game, which tools would you choose and why?</li>
+     </ol>
+    </section>
+    <section id="knowledge-check" class="section">
+     <div class="quiz-head">
+      <div>
+       <p class="kicker mono">Knowledge Check</p>
+       <h2>Test your understanding</h2>
+       <div class="rule"></div>
+       <p class="copy">Choose one answer per question. Feedback appears immediately.</p>
+      </div>
+      <div class="score">
+       <p class="kicker mono" style="color:#e8ffc0">Your score</p>
+       <p id="score-value" class="mono" aria-live="polite">0 / 4</p>
+      </div>
+     </div>
+     <article class="question" data-correct="b">
+      <h3>1. What is the main purpose of an integration tool in game development?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">To replace every other member of the team.</button> <button class="option" type="button" data-answer="b">To help components, assets, and team members work together.</button> <button class="option" type="button" data-answer="c">To create only character artwork.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Answer: B. Integration tools connect workflows, assets, software components, and team members throughout development.</p>
+     </article>
+     <article class="question" data-correct="a">
+      <h3>2. Which tool is commonly used to track changes and collaborate on game files?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">GitHub</button> <button class="option" type="button" data-answer="b">Audacity</button> <button class="option" type="button" data-answer="c">GIMP</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Answer: A. GitHub supports version control, collaboration, backups, and merging code changes.</p>
+     </article>
+     <article class="question" data-correct="c">
+      <h3>3. Which tool category is used to create characters, vehicles, buildings, and trees?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Audio tools</button> <button class="option" type="button" data-answer="b">Database tools</button> <button class="option" type="button" data-answer="c">3D modeling tools</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Answer: C. 3D modeling tools such as Blender, Maya, and 3ds Max create game models that can be exported to the game engine.</p>
+     </article>
+     <article class="question" data-correct="b">
+      <h3>4. Which tool is best suited for managing game development tasks and deadlines?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">SQLite</button> <button class="option" type="button" data-answer="b">Trello</button> <button class="option" type="button" data-answer="c">Blender</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Answer: B. Trello is a project management tool used to assign tasks, monitor progress, manage deadlines, and improve communication.</p>
+     </article>
+     <div class="actions"><button id="retry-quiz" class="btn secondary" type="button"><i data-lucide="rotate-ccw" aria-hidden="true"></i> Retry quiz</button> <button id="review-answers" class="btn primary" type="button"><i data-lucide="list-checks" aria-hidden="true"></i> Show answer review</button>
+     </div>
+    </section>
+    <section class="section" style="margin-bottom:10px">
+     <p class="kicker mono">Summary</p>
+     <h2>Use the right tools to build one complete game</h2>
+     <div class="rule"></div>
+     <p class="copy">Integration tools enable developers to combine software, assets, and services into a complete game. Different tools support different stages of development, including coding, modeling, graphics, audio, databases, testing, deployment, and collaboration. Using the right tools improves productivity, teamwork, software quality, and maintainability. Popular free tools such as Godot, Blender, Visual Studio Code, GitHub, GIMP, Audacity, SQLite, Firebase, and Trello provide students with an industry-relevant workflow for building integrated game applications.</p>
+    </section>
+   </main>
+   <footer class="footer">
+    <div class="wrap">
+     Lesson 5 · Integration Tools for Game Development · System Integration and Architecture for Game Development · Instructor: MKDB
+    </div>
+   </footer>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      lucide.createIcons();
+
+      const tools = {
+        engine: {
+          number: "Category 01 · Game Engines",
+          title: "The main platform where the game is built and executed",
+          examples: "Godot, Unity, Unreal Engine",
+          use: "Game logic, physics, animation, user interface, scene management, lighting, and audio."
+        },
+        version: {
+          number: "Category 02 · Version Control Systems",
+          title: "Track changes made by multiple developers",
+          examples: "Git, GitHub, GitLab, Bitbucket",
+          use: "Supports team collaboration, restores previous versions, merges code changes, and creates project backups. A common workflow is Developer A → GitHub ← Developer B, with Developer C also contributing through the shared repository."
+        },
+        ide: {
+          number: "Category 03 · Integrated Development Environments",
+          title: "Write, edit, and debug source code",
+          examples: "Visual Studio Code, Visual Studio, JetBrains Rider",
+          use: "Provides code completion, debugging, error detection, extensions, and Git integration."
+        },
+        modeling: {
+          number: "Category 04 · 3D Modeling Tools",
+          title: "Create game characters, environments, and objects",
+          examples: "Blender, Maya, 3ds Max",
+          use: "Students can create characters, weapons, buildings, vehicles, and trees. These models are exported to the game engine."
+        },
+        image: {
+          number: "Category 05 · Image Editing Tools",
+          title: "Create and edit textures, sprites, and interface elements",
+          examples: "GIMP, Adobe Photoshop, Krita",
+          use: "Used for character sprites, icons, buttons, backgrounds, and texture maps."
+        },
+        audio: {
+          number: "Category 06 · Audio Tools",
+          title: "Create and edit music and sound effects",
+          examples: "Audacity, LMMS, FL Studio",
+          use: "Used for background music, character voices, footsteps, explosions, and menu sounds."
+        },
+        database: {
+          number: "Category 07 · Database Tools",
+          title: "Store player information and game data",
+          examples: "SQLite, MySQL, Firebase",
+          use: "Can store player profiles, inventory, high scores, achievements, and game progress."
+        },
+        cloud: {
+          number: "Category 08 · API and Cloud Services",
+          title: "Provide online services to games",
+          examples: "Firebase, PlayFab, Steamworks API, Google Play Games Services",
+          use: "Possible features include login, cloud save, multiplayer, leaderboards, achievements, and analytics."
+        },
+        testing: {
+          number: "Category 09 · Testing Tools",
+          title: "Find bugs and improve software quality",
+          examples: "Unity Test Framework, Godot Debugger, Browser Developer Tools, Postman",
+          use: "Testing can include functional testing, performance testing, integration testing, and user acceptance testing. Postman is commonly used for API testing."
+        },
+        project: {
+          number: "Category 10 · Project Management and Collaboration Tools",
+          title: "Manage project tasks and team communication",
+          examples: "Trello, Jira, Notion, GitHub Projects",
+          use: "Helps teams assign tasks, monitor progress, manage deadlines, and improve communication."
+        }
+      };
+
+      const detail = document.getElementById("tool-detail");
+
+      document.querySelectorAll(".tool-tab").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const tool = tools[button.dataset.tool];
+
+          document.querySelectorAll(".tool-tab").forEach(function (tab) {
+            tab.classList.toggle("active", tab === button);
+          });
+
+          detail.innerHTML =
+            '<p class="kicker mono">' + tool.number + '</p>' +
+            '<h3 style="margin-top:8px;color:#efffc6">' + tool.title + '</h3>' +
+            '<p><strong>Examples:</strong> ' + tool.examples + '</p>' +
+            '<p><strong>Use in game development:</strong> ' + tool.use + '</p>';
+        });
+      });
+
+      const revealButton = document.querySelector(".reveal");
+      const activityGuidance = document.getElementById("activity-guidance");
+
+      revealButton.addEventListener("click", function () {
+        const shouldShow = activityGuidance.hidden;
+        activityGuidance.hidden = !shouldShow;
+        revealButton.setAttribute("aria-expanded", String(shouldShow));
+        revealButton.textContent = shouldShow ? "Hide sample guidance" : "Reveal sample guidance";
+      });
+
+      const questions = Array.from(document.querySelectorAll(".question"));
+      const score = document.getElementById("score-value");
+
+      function updateScore() {
+        const correct = questions.filter(function (question) {
+          return question.dataset.answered === "correct";
+        }).length;
+        score.textContent = correct + " / " + questions.length;
+      }
+
+      questions.forEach(function (question) {
+        const correctAnswer = question.dataset.correct;
+        const options = Array.from(question.querySelectorAll(".option"));
+        const feedback = question.querySelector(".feedback");
+
+        options.forEach(function (option) {
+          option.addEventListener("click", function () {
+            if (question.dataset.answered) return;
+
+            const isCorrect = option.dataset.answer === correctAnswer;
+            question.dataset.answered = isCorrect ? "correct" : "incorrect";
+
+            options.forEach(function (choice) {
+              choice.disabled = true;
+              if (choice.dataset.answer === correctAnswer) {
+                choice.classList.add("correct");
+              }
+            });
+
+            if (isCorrect) {
+              feedback.textContent = "Correct — well done.";
+              feedback.style.color = "#d5ff5f";
+            } else {
+              option.classList.add("incorrect");
+              feedback.textContent = "Not quite — the highlighted option is correct.";
+              feedback.style.color = "#ffbd70";
+            }
+
+            updateScore();
+          });
+        });
+      });
+
+      document.getElementById("retry-quiz").addEventListener("click", function () {
+        questions.forEach(function (question) {
+          delete question.dataset.answered;
+          question.querySelector(".feedback").textContent = "";
+          question.querySelector(".feedback").style.color = "";
+          question.querySelector(".quiz-review").hidden = true;
+
+          question.querySelectorAll(".option").forEach(function (option) {
+            option.disabled = false;
+            option.classList.remove("correct", "incorrect");
+          });
+        });
+
+        updateScore();
+      });
+
+      document.getElementById("review-answers").addEventListener("click", function () {
+        document.querySelectorAll(".quiz-review").forEach(function (review) {
+          review.hidden = false;
+        });
+      });
+    });
+  </script>
+ </body>
+</html>
