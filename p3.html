@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260731-01-417e477","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Broken Glyph":"YADZ-exUkv0,0","Canva Sans":"YAFdJjTk5UU,0","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Ghost Mono":"YAHO2EIdDP0,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YADy3sAhvXQ,0","Oleo Script":"YACgEQQ14jI,0","Playfair Display":"YAFdJhem5V8,1","Poppins":"YAE5fPSY9qM,0","Press Start 2P":"YAFyGr-8pmQ,0","Source Sans 3":"YAG4lO1Mj10,0","Space Grotesk":"YAHO2sjPCSM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Trebuchet MS":"YAFcfrglpVA,0","Verdana":"YAGzXTctYtQ,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0"}}');</script><script src="/_sdk/a27874207e105461.telemetry_sdk.js" integrity="sha512-wgI5N9F7oA2h3vH+benMYIv4wGqTct4nKWakqgvfgRyBLmfYq8q/fi6gkfWKd2hMsyN+VQ/qOAOpxybwkcoxlA=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Integration Lifecycle | Game Development</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #06131d;
+      --panel: #0c2030;
+      --panel-2: #102b3f;
+      --line: rgba(181, 230, 255, .17);
+      --cyan: #62e8f5;
+      --lime: #d5ff5f;
+      --orange: #ffad4d;
+      --soft: #b9cad6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: "DM Sans", sans-serif; color: #eef8ff; background: var(--ink); }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .app-shell {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(rgba(98,232,245,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(98,232,245,.035) 1px, transparent 1px),
+        radial-gradient(circle at 88% 2%, rgba(36,141,166,.36), transparent 32%),
+        radial-gradient(circle at 8% 54%, rgba(40,110,92,.16), transparent 27%),
+        var(--ink);
+      background-size: 28px 28px, 28px 28px, auto, auto;
+    }
+    .mono { font-family: "Space Mono", monospace; }
+    .glass-panel {
+      border: 1px solid var(--line);
+      background: rgba(10,31,45,.88);
+      box-shadow: 0 20px 55px rgba(0,0,0,.22);
+    }
+    .section-rule { width: 74px; height: 4px; background: var(--cyan); border-radius: 999px; margin: .85rem 0 1.1rem; }
+    .hero-fade { background: linear-gradient(90deg, rgba(6,19,29,.98) 0%, rgba(6,19,29,.85) 44%, rgba(6,19,29,.24) 100%); }
+    .phase-card, .phase-button, .reveal-button, .quiz-option, .action-button {
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, filter 180ms ease, box-shadow 180ms ease;
+    }
+    .phase-card:hover, .reveal-button:hover, .quiz-option:hover, .action-button:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .phase-button:hover { border-color: rgba(98,232,245,.7); }
+    .phase-button.is-active {
+      border-color: var(--lime);
+      background: rgba(213,255,95,.13);
+      color: #efffc6;
+      box-shadow: 0 0 0 1px rgba(213,255,95,.12), 0 10px 30px rgba(213,255,95,.08);
+    }
+    .phase-card.is-active {
+      border-color: rgba(213,255,95,.62);
+      box-shadow: 0 0 0 1px rgba(213,255,95,.13), 0 18px 38px rgba(0,0,0,.22);
+    }
+    .reveal-answer[hidden], .quiz-review[hidden] { display: none; }
+    .quiz-option { width: 100%; text-align: left; border: 1px solid rgba(185,202,214,.25); background: rgba(255,255,255,.035); color: #eaf7ff; }
+    .quiz-option.correct { border-color: #98e852; background: rgba(128,214,71,.17); color: #efffdc; }
+    .quiz-option.incorrect { border-color: #ff8d7b; background: rgba(255,102,91,.14); color: #ffe4df; }
+    .quiz-option:disabled { cursor: default; }
+    .feedback { min-height: 1.5rem; }
+    .node { width: 13px; height: 13px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 18px rgba(98,232,245,.8); }
+    .focusable:focus-visible, button:focus-visible, a:focus-visible {
+      outline: 3px solid var(--lime);
+      outline-offset: 3px;
+    }
+    @media (max-width: 768px) {
+      .hero-fade { background: linear-gradient(0deg, rgba(6,19,29,.99) 0%, rgba(6,19,29,.74) 62%, rgba(6,19,29,.18) 100%); }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/935a53bc2e11fb8d.data_sdk.js" type="text/javascript" integrity="sha512-qr2oyPnEys1WebcOABaRh6hG77r5PWpqeWW6JTKbRJqly/INsfBi31CVNlTmHqjgeLpkVmmHZJUdxSx/32tOFQ=="></script>
+  <script src="/_sdk/6030e540d4419216.resizing_sdk.js" type="text/javascript" integrity="sha512-b5KWzyoXsbWP4smq4sftIi6Kts4YVBpBsz0BwCViwbBJkK64a3/Z6ZMdWA+qnplNcXw4mhZeqvQi3mOosiRJdA=="></script>
+ </head>
+ <body data-template-id="__page-root">
+  <div class="app-shell">
+   <header class="w-full border-b border-cyan-100/10 bg-[#06131d]/80 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-5 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-xl grid place-items-center border border-cyan-200/25 bg-cyan-200/10 text-cyan-200 text-xl" aria-hidden="true">
+       ⌘
+      </div>
+      <div>
+       <p class="mono text-xs tracking-widest uppercase text-[#8fbbca]">Course · System Integration and Architecture for Game Development</p>
+       <h1 class="font-bold leading-tight text-[#eef8ff] text-2xl md:text-3xl">System Integration Lifecycle</h1>
+      </div>
+     </div>
+     <div class="flex flex-wrap gap-2 text-sm"><span class="px-3 py-1.5 rounded-full border border-cyan-200/25 bg-cyan-200/10 text-[#baf8ff] font-semibold">Instructor · MKDB</span> <span class="px-3 py-1.5 rounded-full border border-lime-200/25 bg-lime-200/10 text-[#e7ffac] font-semibold">Lesson 3</span>
+     </div>
+    </div>
+   </header>
+   <main class="w-full">
+    <section class="w-full max-w-7xl mx-auto px-5 pt-7 pb-12">
+     <div class="relative overflow-hidden rounded-3xl glass-panel min-h-[460px] flex items-stretch"><img data-template-id="hero-image" class="absolute inset-0 w-full h-full object-cover opacity-55" loading="lazy">
+      <div class="hero-fade absolute inset-0"></div>
+      <div class="relative z-10 p-7 md:p-12 max-w-4xl flex flex-col justify-center"><span class="mono text-xs tracking-[.2em] uppercase inline-flex w-fit px-3 py-2 rounded-full border border-lime-200/25 bg-[#06131d]/65 text-[#d5ff5f]">Integration lab · game development</span>
+       <h2 class="mt-5 font-bold leading-[1.06] text-white text-4xl md:text-6xl">Build game systems that work together.</h2>
+       <p class="mt-5 text-lg leading-relaxed max-w-2xl text-[#d7e7ef]">Learn the structured lifecycle developers use to connect, test, release, and improve game systems without creating chaos.</p>
+       <div class="mt-7 flex flex-wrap gap-3"><a href="#lesson" class="action-button inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold no-underline bg-[#62e8f5] text-[#06202b]">▶ Start the lesson</a> <a href="#knowledge-check" class="action-button inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold no-underline border border-cyan-100/25 bg-[#06131d]/50 text-[#edfaff]">? Knowledge check</a>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="lesson" class="w-full max-w-7xl mx-auto px-5 pb-12 space-y-8">
+     <section class="glass-panel rounded-2xl p-6 md:p-8">
+      <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Lesson Learning Outcome</p>
+      <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Describe and apply the System Integration Lifecycle.</h2>
+      <div class="section-rule"></div>
+      <p class="text-lg leading-relaxed text-[#c5d7e1]">By the end of this lesson, you should be able to describe the phases of the System Integration Lifecycle and apply them to software development projects.</p>
+      <div class="mt-6 grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+       <div class="rounded-xl border border-cyan-200/20 bg-cyan-200/[.06] p-4 text-[#cceaf4]">
+        Define the System Integration Lifecycle.
+       </div>
+       <div class="rounded-xl border border-cyan-200/20 bg-cyan-200/[.06] p-4 text-[#cceaf4]">
+        Explain each phase and its activities.
+       </div>
+       <div class="rounded-xl border border-cyan-200/20 bg-cyan-200/[.06] p-4 text-[#cceaf4]">
+        Relate the lifecycle to game development.
+       </div>
+       <div class="rounded-xl border border-cyan-200/20 bg-cyan-200/[.06] p-4 text-[#cceaf4]">
+        Apply the lifecycle to a simple game project.
+       </div>
+       <div class="rounded-xl border border-cyan-200/20 bg-cyan-200/[.06] p-4 text-[#cceaf4]">
+        Identify work performed in every phase.
+       </div>
+      </div>
+     </section>
+     <section class="glass-panel rounded-2xl p-6 md:p-8">
+      <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Part 1 · Introduction</p>
+      <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Why do systems need a lifecycle?</h2>
+      <div class="section-rule"></div>
+      <p class="leading-relaxed text-[#c5d7e1]">Imagine your team is creating a multiplayer game. One student creates player movement, another creates the inventory, another designs the user interface, and another develops the save system.</p>
+      <div class="mt-6 rounded-2xl border border-orange-200/25 bg-orange-200/[.08] p-5">
+       <p class="mono text-xs tracking-widest uppercase text-[#ffbd70]">Question</p>
+       <p class="mt-2 text-xl font-bold text-[#fff0db]">Can these parts simply be combined and expected to work perfectly?</p>
+       <p class="mt-4 text-[#ffe1bc]"><strong>Answer: No.</strong> Each component must be carefully connected, tested, and refined. This structured process is called the <strong>System Integration Lifecycle (SIL)</strong>.</p>
+      </div>
+     </section>
+     <section class="grid lg:grid-cols-2 gap-8">
+      <article class="glass-panel rounded-2xl p-6 md:p-8">
+       <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Definition</p>
+       <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">What is System Integration?</h2>
+       <div class="section-rule"></div>
+       <p class="leading-relaxed text-[#c5d7e1]">System Integration is the process of combining different software components into one complete, functional system. The goal is to ensure that they communicate correctly.</p>
+       <div class="mt-6 grid grid-cols-2 gap-3 text-sm"><span class="rounded-lg p-3 border border-cyan-100/10 bg-white/[.04] text-[#d9edf5]">Game Engine</span> <span class="rounded-lg p-3 border border-cyan-100/10 bg-white/[.04] text-[#d9edf5]">Database</span> <span class="rounded-lg p-3 border border-cyan-100/10 bg-white/[.04] text-[#d9edf5]">User Interface</span> <span class="rounded-lg p-3 border border-cyan-100/10 bg-white/[.04] text-[#d9edf5]">Audio</span> <span class="rounded-lg p-3 border border-cyan-100/10 bg-white/[.04] text-[#d9edf5]">Networking</span> <span class="rounded-lg p-3 border border-cyan-100/10 bg-white/[.04] text-[#d9edf5]">Artificial Intelligence</span> <span class="rounded-lg p-3 border border-cyan-100/10 bg-white/[.04] text-[#d9edf5]">APIs</span> <span class="rounded-lg p-3 border border-cyan-100/10 bg-white/[.04] text-[#d9edf5]">Cloud Services</span>
+       </div>
+      </article>
+      <article class="glass-panel rounded-2xl p-6 md:p-8">
+       <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Structured approach</p>
+       <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">What is the SIL?</h2>
+       <div class="section-rule"></div>
+       <p class="leading-relaxed text-[#c5d7e1]">The System Integration Lifecycle is a structured sequence of phases used to integrate software components successfully. Instead of connecting everything randomly, developers follow a systematic approach to reduce errors and improve software quality.</p>
+       <h3 class="mt-6 text-xl font-bold text-[#e9fbff]">Why is it important?</h3>
+       <div class="mt-4 grid sm:grid-cols-2 gap-3 text-sm">
+        <div class="rounded-xl border border-red-200/15 bg-red-200/[.06] p-4 text-[#ffd8d3]">
+         <strong>Without a lifecycle:</strong><br>
+         Components may not communicate, bugs become difficult to locate, testing becomes complicated, and deployment may fail.
+        </div>
+        <div class="rounded-xl border border-lime-200/20 bg-lime-200/[.07] p-4 text-[#e8ffc0]">
+         <strong>With a lifecycle:</strong><br>
+         Teams collaborate better, debug faster, maintain systems more easily, and lower development cost.
+        </div>
+       </div>
+      </article>
+     </section>
+     <section class="glass-panel rounded-2xl p-6 md:p-8">
+      <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Part 2 · Lifecycle Map</p>
+      <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">The seven phases of the System Integration Lifecycle</h2>
+      <div class="section-rule"></div>
+      <p class="leading-relaxed text-[#c5d7e1]">Select a phase to inspect its purpose, core activities, and game-development example.</p>
+      <div class="mt-7 flex flex-wrap items-center gap-2" aria-label="System Integration Lifecycle phases"><button type="button" class="phase-button is-active rounded-full border border-cyan-200/25 bg-cyan-200/[.08] px-4 py-2 text-sm font-bold text-[#d9faff]" data-phase="planning">1 Planning</button> <span class="text-[#62e8f5]" aria-hidden="true">→</span> <button type="button" class="phase-button rounded-full border border-cyan-200/25 bg-cyan-200/[.08] px-4 py-2 text-sm font-bold text-[#d9faff]" data-phase="design">2 Design</button> <span class="text-[#62e8f5]" aria-hidden="true">→</span> <button type="button" class="phase-button rounded-full border border-cyan-200/25 bg-cyan-200/[.08] px-4 py-2 text-sm font-bold text-[#d9faff]" data-phase="development">3 Development</button> <span class="text-[#62e8f5]" aria-hidden="true">→</span> <button type="button" class="phase-button rounded-full border border-cyan-200/25 bg-cyan-200/[.08] px-4 py-2 text-sm font-bold text-[#d9faff]" data-phase="integration">4 Integration</button> <span class="text-[#62e8f5]" aria-hidden="true">→</span> <button type="button" class="phase-button rounded-full border border-cyan-200/25 bg-cyan-200/[.08] px-4 py-2 text-sm font-bold text-[#d9faff]" data-phase="testing">5 Testing</button> <span class="text-[#62e8f5]" aria-hidden="true">→</span> <button type="button" class="phase-button rounded-full border border-cyan-200/25 bg-cyan-200/[.08] px-4 py-2 text-sm font-bold text-[#d9faff]" data-phase="deployment">6 Deployment</button> <span class="text-[#62e8f5]" aria-hidden="true">→</span> <button type="button" class="phase-button rounded-full border border-cyan-200/25 bg-cyan-200/[.08] px-4 py-2 text-sm font-bold text-[#d9faff]" data-phase="maintenance">7 Maintenance</button>
+      </div>
+      <div id="phase-detail" class="mt-6 rounded-2xl border border-lime-200/25 bg-lime-200/[.08] p-5" aria-live="polite">
+       <p class="mono text-xs uppercase tracking-widest text-[#d5ff5f]">Phase 1</p>
+       <h3 class="mt-2 text-2xl font-bold text-[#efffc6]">Planning</h3>
+       <p class="mt-3 text-[#e4f5cc]">Determine what systems need to be integrated. Teams gather requirements, identify components, define objectives, estimate resources, and assign responsibilities.</p>
+       <p class="mt-3 text-sm text-[#c9e9aa]"><strong>Game example:</strong> Plan how the Player System, Inventory, Audio, Save System, and Main Menu will interact.</p>
+      </div>
+      <div class="mt-6 grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+       <article class="phase-card is-active rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-phase-card="planning">
+        <div class="flex items-center gap-3">
+         <span class="node"></span>
+         <p class="mono text-xs text-[#62e8f5]">PHASE 01</p>
+        </div>
+        <h3 class="mt-3 text-xl font-bold">Planning</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#c5d7e1]">Determine what systems need to be integrated and who is responsible.</p>
+       </article>
+       <article class="phase-card rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-phase-card="design">
+        <div class="flex items-center gap-3">
+         <span class="node"></span>
+         <p class="mono text-xs text-[#62e8f5]">PHASE 02</p>
+        </div>
+        <h3 class="mt-3 text-xl font-bold">Design</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#c5d7e1]">Design communication, interfaces, data flows, and architecture.</p>
+       </article>
+       <article class="phase-card rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-phase-card="development">
+        <div class="flex items-center gap-3">
+         <span class="node"></span>
+         <p class="mono text-xs text-[#62e8f5]">PHASE 03</p>
+        </div>
+        <h3 class="mt-3 text-xl font-bold">Development</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#c5d7e1]">Build individual modules so each one works independently.</p>
+       </article>
+       <article class="phase-card rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-phase-card="integration">
+        <div class="flex items-center gap-3">
+         <span class="node"></span>
+         <p class="mono text-xs text-[#62e8f5]">PHASE 04</p>
+        </div>
+        <h3 class="mt-3 text-xl font-bold">Integration</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#c5d7e1]">Connect modules and resolve compatibility problems.</p>
+       </article>
+       <article class="phase-card rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-phase-card="testing">
+        <div class="flex items-center gap-3">
+         <span class="node"></span>
+         <p class="mono text-xs text-[#62e8f5]">PHASE 05</p>
+        </div>
+        <h3 class="mt-3 text-xl font-bold">Testing</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#c5d7e1]">Check features, communication, performance, and player experience.</p>
+       </article>
+       <article class="phase-card rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-phase-card="deployment">
+        <div class="flex items-center gap-3">
+         <span class="node"></span>
+         <p class="mono text-xs text-[#62e8f5]">PHASE 06</p>
+        </div>
+        <h3 class="mt-3 text-xl font-bold">Deployment</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#c5d7e1]">Package, configure, install, and publish the game.</p>
+       </article>
+       <article class="phase-card rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5 md:col-span-2 xl:col-span-1" data-phase-card="maintenance">
+        <div class="flex items-center gap-3">
+         <span class="node"></span>
+         <p class="mono text-xs text-[#62e8f5]">PHASE 07</p>
+        </div>
+        <h3 class="mt-3 text-xl font-bold">Maintenance</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#c5d7e1]">Fix bugs, improve performance, add features, and release updates.</p>
+       </article>
+      </div>
+     </section>
+     <section class="glass-panel rounded-2xl p-6 md:p-8">
+      <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Phase Detail · Design and Integration</p>
+      <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">From architecture to a complete game</h2>
+      <div class="section-rule"></div>
+      <div class="grid lg:grid-cols-2 gap-6">
+       <div class="rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5">
+        <h3 class="font-bold text-xl text-[#eafaff]">Design communication</h3>
+        <p class="mt-3 text-[#c5d7e1]">Developers create architecture diagrams, database designs, API specifications, and data-flow diagrams.</p>
+        <div class="mt-5 text-center mono text-sm leading-loose text-[#baf8ff]">
+         Player<br>
+         ↓<br>
+         Inventory<br>
+         ↓<br>
+         Save System<br>
+         ↓<br>
+         Database
+        </div>
+        <p class="mt-4 text-sm text-[#d5ff5f]">Good design prevents future problems.</p>
+       </div>
+       <div class="rounded-2xl border border-orange-200/20 bg-orange-200/[.05] p-5">
+        <h3 class="font-bold text-xl text-[#fff0db]">Integration reveals compatibility issues</h3>
+        <p class="mt-3 text-[#ead5bd]">Movement, Inventory, UI, Sound, and Save System are combined into one complete game.</p>
+        <p class="mt-4 text-[#ffd39f]"><strong>Example:</strong> The inventory works alone. The save system works alone. When connected, items disappear after saving. This integration problem must be solved.</p>
+       </div>
+      </div>
+      <div class="mt-6 grid md:grid-cols-4 gap-3 text-sm">
+       <div class="rounded-lg bg-cyan-200/[.08] p-4 text-[#cbf7ff]">
+        <strong>Functional testing</strong><br>
+        Does every feature work?
+       </div>
+       <div class="rounded-lg bg-cyan-200/[.08] p-4 text-[#cbf7ff]">
+        <strong>Integration testing</strong><br>
+        Do modules communicate?
+       </div>
+       <div class="rounded-lg bg-cyan-200/[.08] p-4 text-[#cbf7ff]">
+        <strong>Performance testing</strong><br>
+        Is the game smooth?
+       </div>
+       <div class="rounded-lg bg-cyan-200/[.08] p-4 text-[#cbf7ff]">
+        <strong>User acceptance testing</strong><br>
+        Can users play comfortably?
+       </div>
+      </div>
+     </section>
+     <section class="glass-panel rounded-2xl p-6 md:p-8">
+      <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Example Project</p>
+      <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Building a simple 2D game: Treasure Hunter</h2>
+      <div class="section-rule"></div>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+       <article class="rounded-xl border border-cyan-100/15 bg-white/[.03] p-5">
+        <h3 class="font-bold text-[#d5ff5f]">Planning</h3>
+        <p class="mt-2 text-sm text-[#c5d7e1]">Decide the game concept: Treasure Hunter.</p>
+       </article>
+       <article class="rounded-xl border border-cyan-100/15 bg-white/[.03] p-5">
+        <h3 class="font-bold text-[#d5ff5f]">Design</h3>
+        <p class="mt-2 text-sm text-[#c5d7e1]">Draw the Main Menu, Gameplay, Inventory, and Save System.</p>
+       </article>
+       <article class="rounded-xl border border-cyan-100/15 bg-white/[.03] p-5">
+        <h3 class="font-bold text-[#d5ff5f]">Development</h3>
+        <p class="mt-2 text-sm text-[#c5d7e1]">Program player movement, enemy AI, inventory, and audio.</p>
+       </article>
+       <article class="rounded-xl border border-cyan-100/15 bg-white/[.03] p-5">
+        <h3 class="font-bold text-[#d5ff5f]">Integration</h3>
+        <p class="mt-2 text-sm text-[#c5d7e1]">Player picks treasure → inventory updates → sound plays → score increases → game saves progress.</p>
+       </article>
+       <article class="rounded-xl border border-cyan-100/15 bg-white/[.03] p-5">
+        <h3 class="font-bold text-[#d5ff5f]">Testing</h3>
+        <p class="mt-2 text-sm text-[#c5d7e1]">Check saving, enemy attacks, audio, and menus.</p>
+       </article>
+       <article class="rounded-xl border border-cyan-100/15 bg-white/[.03] p-5">
+        <h3 class="font-bold text-[#d5ff5f]">Deployment &amp; Maintenance</h3>
+        <p class="mt-2 text-sm text-[#c5d7e1]">Export to Windows, test on another computer, fix discovered bugs, improve gameplay, and add new levels.</p>
+       </article>
+      </div>
+     </section>
+     <section class="grid lg:grid-cols-2 gap-8">
+      <article class="glass-panel rounded-2xl p-6 md:p-8">
+       <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Real-world example</p>
+       <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Mobile Legends</h2>
+       <div class="section-rule"></div>
+       <p class="mono leading-loose text-[#c9f9ff]">Planning<br>
+        ↓<br>
+        Game architecture<br>
+        ↓<br>
+        Character development<br>
+        ↓<br>
+        Network integration<br>
+        ↓<br>
+        Testing<br>
+        ↓<br>
+        Deployment<br>
+        ↓<br>
+        Continuous updates</p>
+       <p class="mt-5 text-[#c5d7e1]">Even commercial games follow the same lifecycle.</p>
+      </article>
+      <article class="glass-panel rounded-2xl p-6 md:p-8">
+       <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Advantages</p>
+       <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Why use the lifecycle?</h2>
+       <div class="section-rule"></div>
+       <ul class="grid grid-cols-2 gap-3 text-sm text-[#d8edf5]">
+        <li class="rounded-lg bg-lime-200/[.08] p-3">Organized development</li>
+        <li class="rounded-lg bg-lime-200/[.08] p-3">Easier teamwork</li>
+        <li class="rounded-lg bg-lime-200/[.08] p-3">Better software quality</li>
+        <li class="rounded-lg bg-lime-200/[.08] p-3">Easier maintenance</li>
+        <li class="rounded-lg bg-lime-200/[.08] p-3">Lower cost and risk</li>
+        <li class="rounded-lg bg-lime-200/[.08] p-3">Faster debugging</li>
+       </ul>
+      </article>
+     </section>
+     <section class="glass-panel rounded-2xl p-6 md:p-8">
+      <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Common Problems</p>
+      <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Prevent issues early</h2>
+      <div class="section-rule"></div>
+      <div class="overflow-x-auto">
+       <table class="min-w-[650px] w-full text-left border-collapse">
+        <thead class="text-[#62e8f5] border-b border-cyan-100/15">
+         <tr>
+          <th class="p-3">Problem</th>
+          <th class="p-3">Solution</th>
+         </tr>
+        </thead>
+        <tbody class="divide-y divide-cyan-100/10 text-[#c5d7e1]">
+         <tr>
+          <td class="p-3 font-semibold text-[#ffe0bb]">Incompatible modules</td>
+          <td class="p-3">Define interfaces early.</td>
+         </tr>
+         <tr>
+          <td class="p-3 font-semibold text-[#ffe0bb]">Duplicate work</td>
+          <td class="p-3">Assign clear responsibilities.</td>
+         </tr>
+         <tr>
+          <td class="p-3 font-semibold text-[#ffe0bb]">Poor communication</td>
+          <td class="p-3">Hold regular team meetings.</td>
+         </tr>
+         <tr>
+          <td class="p-3 font-semibold text-[#ffe0bb]">Unclear requirements</td>
+          <td class="p-3">Gather and validate requirements before development.</td>
+         </tr>
+         <tr>
+          <td class="p-3 font-semibold text-[#ffe0bb]">Late bug discovery</td>
+          <td class="p-3">Perform integration testing frequently.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </section>
+     <section class="glass-panel rounded-2xl p-6 md:p-8">
+      <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Activities</p>
+      <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Apply the lifecycle</h2>
+      <div class="section-rule"></div>
+      <article class="rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5"><span class="mono text-xs rounded-full px-3 py-1 bg-cyan-200/10 text-[#baf8ff]">Activity 1 · Think–Pair–Share</span>
+       <h3 class="mt-4 text-xl font-bold text-[#f2fbff]">2D Adventure Game</h3>
+       <p class="mt-3 text-[#c5d7e1]">Imagine your group is creating a 2D Adventure Game. Identify five game components that must be integrated. Which phase is the most important? Why? Discuss with a partner and share your answers.</p><button type="button" class="reveal-button mt-4 rounded-lg px-4 py-2 text-sm font-bold border border-cyan-200/35 text-cyan-100" aria-expanded="false" aria-controls="activity-one-answer">Reveal sample guidance</button>
+       <div id="activity-one-answer" class="reveal-answer mt-4 rounded-xl border border-lime-200/20 bg-lime-200/[.09] p-4 text-[#e8ffc0]" hidden>
+        Possible components: player movement, enemy AI, inventory, audio, user interface, save system, and level loading. Planning is often especially important because it identifies how systems should connect before the team begins building them.
+       </div>
+      </article>
+      <article class="mt-4 rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5"><span class="mono text-xs rounded-full px-3 py-1 bg-cyan-200/10 text-[#baf8ff]">Activity 2 · Lifecycle Mapping</span>
+       <h3 class="mt-4 text-xl font-bold text-[#f2fbff]">Map your proposed game project</h3>
+       <p class="mt-3 text-[#c5d7e1]">Create a table using your own proposed game project as the basis.</p>
+       <div class="mt-4 overflow-x-auto">
+        <table class="min-w-[520px] w-full border-collapse text-left">
+         <thead class="text-[#62e8f5] border-b border-cyan-100/15">
+          <tr>
+           <th class="p-3">Phase</th>
+           <th class="p-3">What will your team do?</th>
+          </tr>
+         </thead>
+         <tbody class="text-[#c5d7e1] divide-y divide-cyan-100/10">
+          <tr>
+           <td class="p-3">Planning</td>
+           <td class="p-3">____________________________</td>
+          </tr>
+          <tr>
+           <td class="p-3">Design</td>
+           <td class="p-3">____________________________</td>
+          </tr>
+          <tr>
+           <td class="p-3">Development</td>
+           <td class="p-3">____________________________</td>
+          </tr>
+          <tr>
+           <td class="p-3">Integration</td>
+           <td class="p-3">____________________________</td>
+          </tr>
+          <tr>
+           <td class="p-3">Testing</td>
+           <td class="p-3">____________________________</td>
+          </tr>
+          <tr>
+           <td class="p-3">Deployment</td>
+           <td class="p-3">____________________________</td>
+          </tr>
+          <tr>
+           <td class="p-3">Maintenance</td>
+           <td class="p-3">____________________________</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </article>
+     </section>
+     <section class="glass-panel rounded-2xl p-6 md:p-8">
+      <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Reflection</p>
+      <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Think like a project leader</h2>
+      <div class="section-rule"></div>
+      <ol class="space-y-3 list-decimal pl-5 text-[#c5d7e1]">
+       <li>Why is planning important before integration?</li>
+       <li>What problems may occur if testing is skipped?</li>
+       <li>Which phase requires the most teamwork? Explain.</li>
+       <li>How does the System Integration Lifecycle improve software quality?</li>
+       <li>If you were the project leader of a game development team, how would you ensure successful system integration?</li>
+      </ol>
+     </section>
+     <section id="knowledge-check" class="glass-panel rounded-2xl p-6 md:p-8">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+       <div>
+        <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Knowledge Check</p>
+        <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Test your understanding</h2>
+        <div class="section-rule"></div>
+        <p class="text-[#c5d7e1]">Choose one answer per question. Feedback appears immediately.</p>
+       </div>
+       <div class="rounded-2xl border border-lime-200/25 bg-lime-200/10 px-5 py-3 text-center">
+        <p class="mono text-xs uppercase tracking-wider text-[#e8ffc0]">Your score</p>
+        <p id="quiz-score" class="mono text-2xl font-bold text-lime-200" aria-live="polite">0 / 5</p>
+       </div>
+      </div>
+      <div class="mt-7 space-y-5">
+       <article class="quiz-question rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-correct="b">
+        <h3 class="text-xl font-bold">1. What is System Integration?</h3>
+        <div class="mt-4 grid gap-2"><button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="a">Writing all game code in one file.</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="b">Combining software components into one functional system.</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="c">Only testing graphics and animation.</button>
+        </div>
+        <p class="feedback mt-3 text-sm font-semibold" aria-live="polite"></p>
+        <p class="quiz-review mt-2 text-sm text-[#baf8ff]" hidden>Answer: B. Integration combines separate components so they communicate and function together.</p>
+       </article>
+       <article class="quiz-question rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-correct="a">
+        <h3 class="text-xl font-bold">2. Which phase determines what systems need to be integrated?</h3>
+        <div class="mt-4 grid gap-2"><button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="a">Planning</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="b">Deployment</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="c">Maintenance</button>
+        </div>
+        <p class="feedback mt-3 text-sm font-semibold" aria-live="polite"></p>
+        <p class="quiz-review mt-2 text-sm text-[#baf8ff]" hidden>Answer: A. Planning identifies components, objectives, resources, and responsibilities.</p>
+       </article>
+       <article class="quiz-question rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-correct="c">
+        <h3 class="text-xl font-bold">3. In which phase are architecture diagrams and API specifications created?</h3>
+        <div class="mt-4 grid gap-2"><button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="a">Testing</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="b">Integration</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="c">Design</button>
+        </div>
+        <p class="feedback mt-3 text-sm font-semibold" aria-live="polite"></p>
+        <p class="quiz-review mt-2 text-sm text-[#baf8ff]" hidden>Answer: C. Design defines how systems communicate and exchange data.</p>
+       </article>
+       <article class="quiz-question rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-correct="b">
+        <h3 class="text-xl font-bold">4. What does Integration Testing check?</h3>
+        <div class="mt-4 grid gap-2"><button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="a">Whether a game logo looks attractive.</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="b">Whether modules communicate correctly.</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="c">Whether the game has been published online.</button>
+        </div>
+        <p class="feedback mt-3 text-sm font-semibold" aria-live="polite"></p>
+        <p class="quiz-review mt-2 text-sm text-[#baf8ff]" hidden>Answer: B. Integration Testing checks communication and coordinated behaviour between modules.</p>
+       </article>
+       <article class="quiz-question rounded-2xl border border-cyan-100/15 bg-white/[.03] p-5" data-correct="a">
+        <h3 class="text-xl font-bold">5. Which task belongs to Maintenance?</h3>
+        <div class="mt-4 grid gap-2"><button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="a">Fixing bugs and releasing updates.</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="b">Choosing project team roles for the first time.</button> <button type="button" class="quiz-option rounded-xl px-4 py-3" data-answer="c">Drawing the initial architecture diagram.</button>
+        </div>
+        <p class="feedback mt-3 text-sm font-semibold" aria-live="polite"></p>
+        <p class="quiz-review mt-2 text-sm text-[#baf8ff]" hidden>Answer: A. Maintenance continues after release through bug fixes, improvements, security work, and updates.</p>
+       </article>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3"><button id="retry-quiz" type="button" class="action-button rounded-xl px-5 py-3 font-bold border border-cyan-100/25 bg-[#06131d]/55 text-[#eaf9ff]">Retry quiz</button> <button id="review-answers" type="button" class="action-button rounded-xl px-5 py-3 font-bold bg-[#d5ff5f] text-[#10220a]">Show answer review</button>
+      </div>
+     </section>
+     <section class="glass-panel rounded-2xl p-6 md:p-8 mb-10">
+      <p class="mono text-xs tracking-widest uppercase text-[#62e8f5]">Key Takeaways</p>
+      <h2 class="mt-2 text-3xl font-bold text-[#f2fbff]">Keep these ideas connected</h2>
+      <div class="section-rule"></div>
+      <ul class="space-y-3 text-[#c5d7e1]">
+       <li>• System Integration combines multiple software components into one functional system.</li>
+       <li>• The System Integration Lifecycle provides a structured process to integrate systems efficiently.</li>
+       <li>• The lifecycle consists of Planning, Design, Development, Integration, Testing, Deployment, and Maintenance.</li>
+       <li>• Every phase contributes to software quality, reliability, and maintainability.</li>
+       <li>• In game development, successful integration ensures gameplay, graphics, audio, networking, databases, and user interfaces work together seamlessly.</li>
+      </ul>
+     </section>
+    </section>
+   </main>
+   <footer class="w-full border-t border-cyan-100/10">
+    <div class="max-w-7xl mx-auto px-5 py-6">
+     <p class="text-sm text-[#8fabb9]">System Integration Lifecycle · System Integration and Architecture for Game Development · Instructor: MKDB</p>
+    </div>
+   </footer>
+  </div>
+  <script src="/_sdk/9a740ce6cacd0808.editing_sdk.js" integrity="sha512-ZcKE2UXVxSh0Kmty64HdB2xjpgsalbehms1KOXHeK7POjO9v81VU+RYWmq0cOBM9u4mY5oRq7UsigAanNH4Iww=="></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const phaseContent = {
+        planning: {
+          number: "Phase 1", title: "Planning",
+          text: "Determine what systems need to be integrated. Teams gather requirements, identify components, define objectives, estimate resources, and assign responsibilities.",
+          example: "Plan how the Player System, Inventory, Audio, Save System, and Main Menu will interact."
+        },
+        design: {
+          number: "Phase 2", title: "Design",
+          text: "Design how systems communicate. Developers create architecture diagrams, database designs, API specifications, and data-flow diagrams.",
+          example: "Map the flow: Player → Inventory → Save System → Database."
+        },
+        development: {
+          number: "Phase 3", title: "Development",
+          text: "Each team develops its assigned module. Every module should work independently before the full integration begins.",
+          example: "One programmer builds character movement, another builds inventory, another develops enemy AI, and another handles audio."
+        },
+        integration: {
+          number: "Phase 4", title: "Integration",
+          text: "Modules are now combined into one system. This is often where compatibility issues appear and must be resolved.",
+          example: "An inventory and save system may work separately, but items could disappear after saving when connected."
+        },
+        testing: {
+          number: "Phase 5", title: "Testing",
+          text: "The complete system is tested through functional, integration, performance, and user acceptance testing.",
+          example: "Check if features work, modules communicate, gameplay is smooth, and players can use the game comfortably."
+        },
+        deployment: {
+          number: "Phase 6", title: "Deployment",
+          text: "The software is packaged, installed, configured, and published for its target platform.",
+          example: "A game may be released on Windows, Android, Steam, itch.io, or Google Play."
+        },
+        maintenance: {
+          number: "Phase 7", title: "Maintenance",
+          text: "Development continues after release through bug fixes, performance improvements, features, updates, and security work.",
+          example: "Minecraft has received continuous updates and improvements for many years."
+        }
+      };
+
+      const detail = document.getElementById("phase-detail");
+      document.querySelectorAll(".phase-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const phase = button.dataset.phase;
+          const item = phaseContent[phase];
+
+          document.querySelectorAll(".phase-button").forEach(function (itemButton) {
+            itemButton.classList.toggle("is-active", itemButton === button);
+          });
+          document.querySelectorAll("[data-phase-card]").forEach(function (card) {
+            card.classList.toggle("is-active", card.dataset.phaseCard === phase);
+          });
+
+          detail.innerHTML =
+            '<p class="mono text-xs uppercase tracking-widest text-[#d5ff5f]">' + item.number + '</p>' +
+            '<h3 class="mt-2 text-2xl font-bold text-[#efffc6]">' + item.title + '</h3>' +
+            '<p class="mt-3 text-[#e4f5cc]">' + item.text + '</p>' +
+            '<p class="mt-3 text-sm text-[#c9e9aa]"><strong>Game example:</strong> ' + item.example + '</p>';
+        });
+      });
+
+      document.querySelectorAll(".reveal-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const answer = document.getElementById(button.getAttribute("aria-controls"));
+          const shouldShow = answer.hidden;
+          answer.hidden = !shouldShow;
+          button.setAttribute("aria-expanded", String(shouldShow));
+          button.textContent = shouldShow ? "Hide sample guidance" : "Reveal sample guidance";
+        });
+      });
+
+      const questions = Array.from(document.querySelectorAll(".quiz-question"));
+      const scoreDisplay = document.getElementById("quiz-score");
+
+      function updateScore() {
+        const correct = questions.filter(function (question) {
+          return question.dataset.answered === "correct";
+        }).length;
+        scoreDisplay.textContent = correct + " / " + questions.length;
+      }
+
+      questions.forEach(function (question) {
+        const options = Array.from(question.querySelectorAll(".quiz-option"));
+        const feedback = question.querySelector(".feedback");
+        const correctAnswer = question.dataset.correct;
+
+        options.forEach(function (option) {
+          option.addEventListener("click", function () {
+            if (question.dataset.answered) return;
+
+            const isCorrect = option.dataset.answer === correctAnswer;
+            question.dataset.answered = isCorrect ? "correct" : "incorrect";
+
+            options.forEach(function (choice) {
+              choice.disabled = true;
+              if (choice.dataset.answer === correctAnswer) choice.classList.add("correct");
+            });
+
+            if (isCorrect) {
+              feedback.textContent = "Correct — well done.";
+              feedback.className = "feedback mt-3 text-sm font-semibold text-lime-200";
+            } else {
+              option.classList.add("incorrect");
+              feedback.textContent = "Not quite — the highlighted option is correct.";
+              feedback.className = "feedback mt-3 text-sm font-semibold text-orange-200";
+            }
+            updateScore();
+          });
+        });
+      });
+
+      document.getElementById("retry-quiz").addEventListener("click", function () {
+        questions.forEach(function (question) {
+          delete question.dataset.answered;
+          const feedback = question.querySelector(".feedback");
+          feedback.textContent = "";
+          feedback.className = "feedback mt-3 text-sm font-semibold";
+
+          question.querySelectorAll(".quiz-option").forEach(function (option) {
+            option.disabled = false;
+            option.classList.remove("correct", "incorrect");
+          });
+          question.querySelector(".quiz-review").hidden = true;
+        });
+        updateScore();
+      });
+
+      document.getElementById("review-answers").addEventListener("click", function () {
+        document.querySelectorAll(".quiz-review").forEach(function (review) {
+          review.hidden = false;
+        });
+      });
+    });
+  </script>
+ </body>
+</html>
