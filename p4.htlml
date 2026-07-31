@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260731-03-0b60c17","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Broken Glyph":"YADZ-exUkv0,0","Canva Sans":"YAFdJjTk5UU,0","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Ghost Mono":"YAHO2EIdDP0,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YADy3sAhvXQ,0","Oleo Script":"YACgEQQ14jI,0","Playfair Display":"YAFdJhem5V8,1","Poppins":"YAE5fPSY9qM,0","Press Start 2P":"YAFyGr-8pmQ,0","Source Sans 3":"YAG4lO1Mj10,0","Space Grotesk":"YAHO2sjPCSM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Trebuchet MS":"YAFcfrglpVA,0","Verdana":"YAGzXTctYtQ,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0"}}');</script><script src="/_sdk/a27874207e105461.telemetry_sdk.js" integrity="sha512-wgI5N9F7oA2h3vH+benMYIv4wGqTct4nKWakqgvfgRyBLmfYq8q/fi6gkfWKd2hMsyN+VQ/qOAOpxybwkcoxlA=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 4 | Roles of the System Integration Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#06131d; --panel:#0c2030; --panel2:#102b3f; --line:rgba(181,230,255,.17);
+      --cyan:#62e8f5; --lime:#d5ff5f; --orange:#ffad4d; --soft:#b9cad6; --white:#eef8ff;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--ink);color:var(--white);font-family:"DM Sans",sans-serif}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{font:inherit}
+    .app-shell{
+      width:100%; min-height:100%;
+      overflow-x:hidden;
+      background:
+        linear-gradient(rgba(98,232,245,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(98,232,245,.035) 1px,transparent 1px),
+        radial-gradient(circle at 88% 2%,rgba(36,141,166,.36),transparent 32%),
+        radial-gradient(circle at 8% 54%,rgba(40,110,92,.16),transparent 27%),
+        var(--ink);
+      background-size:28px 28px,28px 28px,auto,auto;
+    }
+    .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+    .mono{font-family:"Space Mono",monospace}
+    .topbar{border-bottom:1px solid rgba(181,230,255,.12);background:rgba(6,19,29,.82);backdrop-filter:blur(12px)}
+    .topbar-inner{min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:14px;padding-bottom:14px}
+    .brand{display:flex;align-items:center;gap:13px}
+    .mark{width:43px;height:43px;border:1px solid rgba(181,230,255,.25);border-radius:12px;display:grid;place-items:center;background:rgba(98,232,245,.1);color:var(--cyan);font-size:22px}
+    .eyebrow{margin:0;color:#8fbbca;font-size:11px;letter-spacing:.09em;text-transform:uppercase;line-height:1.5}
+    h1{margin:2px 0 0;font-size:25px;line-height:1.1}
+    .badges{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{padding:8px 12px;border-radius:99px;font-size:13px;font-weight:700;border:1px solid rgba(181,230,255,.22);background:rgba(98,232,245,.09);color:#baf8ff}
+    .badge.lime{border-color:rgba(213,255,95,.24);background:rgba(213,255,95,.1);color:#e7ffac}
+    main{padding:28px 0 42px}
+    .hero{position:relative;min-height:440px;overflow:hidden;border:1px solid var(--line);border-radius:26px;background:#0a1f2d;box-shadow:0 20px 55px rgba(0,0,0,.22)}
+    .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.48}
+    .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,19,29,.98),rgba(6,19,29,.84) 46%,rgba(6,19,29,.18))}
+    .hero-content{position:relative;z-index:1;max-width:760px;padding:56px}
+    .tag{display:inline-block;padding:8px 11px;border:1px solid rgba(213,255,95,.24);border-radius:99px;background:rgba(6,19,29,.64);color:var(--lime);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+    .hero h2{margin:20px 0 0;font-size:clamp(38px,6vw,67px);line-height:1.03}
+    .hero p{max-width:650px;margin:20px 0 0;color:#d7e7ef;font-size:18px;line-height:1.65}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border:1px solid transparent;border-radius:12px;cursor:pointer;text-decoration:none;font-size:15px;font-weight:700;transition:.18s ease}
+    .btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+    .primary{background:var(--cyan);color:#06202b}
+    .secondary{border-color:rgba(181,230,255,.25);background:rgba(6,19,29,.52);color:#edfaff}
+    .section{margin-top:30px;padding:28px;border:1px solid var(--line);border-radius:20px;background:rgba(10,31,45,.88);box-shadow:0 20px 55px rgba(0,0,0,.18)}
+    .kicker{margin:0;color:var(--cyan);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+    h2{margin:8px 0 0;font-size:30px;line-height:1.2}
+    h3{margin:0;font-size:20px;line-height:1.25}
+    .rule{width:74px;height:4px;margin:14px 0 18px;border-radius:20px;background:var(--cyan)}
+    .copy{color:#c5d7e1;line-height:1.7}
+    .grid{display:grid;gap:16px}
+    .two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .objective,.mini-card,.role-card{border:1px solid rgba(181,230,255,.16);border-radius:14px;background:rgba(255,255,255,.035);padding:17px;color:#d9edf5;line-height:1.55}
+    .objective{background:rgba(98,232,245,.055)}
+    .callout{margin-top:18px;padding:20px;border:1px solid rgba(255,173,77,.28);border-radius:16px;background:rgba(255,173,77,.08);color:#ffe1bc}
+    .callout strong{color:#fff0db}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+    .list{margin:14px 0 0;padding-left:20px;color:#c5d7e1;line-height:1.85}
+    .diagram{margin-top:20px;padding:19px;border:1px solid rgba(98,232,245,.2);border-radius:16px;background:rgba(98,232,245,.05);text-align:center;color:#c9f9ff;line-height:1.9}
+    .role-tabs{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+    .role-tab{border:1px solid rgba(181,230,255,.24);border-radius:99px;background:rgba(98,232,245,.07);padding:9px 13px;color:#d9faff;font-weight:700;font-size:13px;cursor:pointer;transition:.18s ease}
+    .role-tab:hover{border-color:rgba(98,232,245,.7)}
+    .role-tab.active{border-color:var(--lime);background:rgba(213,255,95,.13);box-shadow:0 0 0 1px rgba(213,255,95,.12);color:#efffc6}
+    .role-detail{margin-top:18px;padding:21px;border:1px solid rgba(213,255,95,.27);border-radius:16px;background:rgba(213,255,95,.08)}
+    .role-detail .kicker{color:var(--lime)}
+    .role-detail p{color:#e4f5cc;line-height:1.7}
+    .lime-card{background:rgba(213,255,95,.075);border-color:rgba(213,255,95,.19)}
+    .orange-card{background:rgba(255,173,77,.07);border-color:rgba(255,173,77,.21)}
+    .table-wrap{overflow-x:auto;margin-top:18px}
+    table{width:100%;min-width:630px;border-collapse:collapse;text-align:left}
+    th{padding:13px;color:var(--cyan);border-bottom:1px solid rgba(181,230,255,.17)}
+    td{padding:13px;color:#c5d7e1;border-bottom:1px solid rgba(181,230,255,.09);vertical-align:top}
+    td:first-child{font-weight:700;color:#eaf7ff}
+    .activity{padding:20px;border:1px solid rgba(181,230,255,.16);border-radius:16px;background:rgba(255,255,255,.03)}
+    .activity+.activity{margin-top:15px}
+    .reveal{margin-top:14px;padding:10px 13px;border:1px solid rgba(98,232,245,.35);border-radius:9px;background:transparent;color:#d9faff;cursor:pointer;font-weight:700}
+    .answer{margin-top:14px;padding:15px;border:1px solid rgba(213,255,95,.21);border-radius:11px;background:rgba(213,255,95,.08);color:#e8ffc0;line-height:1.65}
+    [hidden]{display:none!important}
+    .quiz-head{display:flex;justify-content:space-between;gap:16px;align-items:start}
+    .score{min-width:112px;padding:13px 17px;border:1px solid rgba(213,255,95,.25);border-radius:15px;background:rgba(213,255,95,.1);text-align:center}
+    .score p{margin:0}.score .mono{margin-top:4px;color:var(--lime);font-size:23px;font-weight:700}
+    .question{margin-top:18px;padding:20px;border:1px solid rgba(181,230,255,.16);border-radius:16px;background:rgba(255,255,255,.03)}
+    .options{display:grid;gap:8px;margin-top:14px}
+    .option{width:100%;padding:12px 14px;border:1px solid rgba(185,202,214,.25);border-radius:11px;background:rgba(255,255,255,.035);color:#eaf7ff;text-align:left;cursor:pointer;transition:.18s ease}
+    .option:hover{transform:translateY(-1px);filter:brightness(1.1)}
+    .option.correct{border-color:#98e852;background:rgba(128,214,71,.17);color:#efffdc}
+    .option.incorrect{border-color:#ff8d7b;background:rgba(255,102,91,.14);color:#ffe4df}
+    .feedback{min-height:22px;margin:12px 0 0;font-size:14px;font-weight:700}
+    .footer{border-top:1px solid rgba(181,230,255,.1);padding:22px 0;color:#8fabb9;font-size:14px}
+    button:focus-visible,a:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+    @media(max-width:800px){.topbar-inner,.split{display:block}.badges{margin-top:13px}.hero-content{padding:34px 25px}.hero:after{background:linear-gradient(0deg,rgba(6,19,29,.98),rgba(6,19,29,.75) 60%,rgba(6,19,29,.2))}.two,.three{grid-template-columns:1fr}.section{padding:22px}.quiz-head{display:block}.score{margin-top:16px;width:max-content}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/935a53bc2e11fb8d.data_sdk.js" type="text/javascript" integrity="sha512-qr2oyPnEys1WebcOABaRh6hG77r5PWpqeWW6JTKbRJqly/INsfBi31CVNlTmHqjgeLpkVmmHZJUdxSx/32tOFQ=="></script>
+  <script src="/_sdk/9a740ce6cacd0808.editing_sdk.js" type="text/javascript" integrity="sha512-ZcKE2UXVxSh0Kmty64HdB2xjpgsalbehms1KOXHeK7POjO9v81VU+RYWmq0cOBM9u4mY5oRq7UsigAanNH4Iww=="></script>
+  <script src="/_sdk/6030e540d4419216.resizing_sdk.js" type="text/javascript" integrity="sha512-b5KWzyoXsbWP4smq4sftIi6Kts4YVBpBsz0BwCViwbBJkK64a3/Z6ZMdWA+qnplNcXw4mhZeqvQi3mOosiRJdA=="></script>
+ </head>
+ <body>
+  <div class="app-shell">
+   <header class="topbar">
+    <div class="wrap topbar-inner">
+     <div class="brand">
+      <div class="mark" aria-hidden="true">
+       ⌘
+      </div>
+      <div>
+       <p class="eyebrow mono">Course · System Integration and Architecture for Game Development</p>
+       <h1>Roles of the System Integration Engineer</h1>
+      </div>
+     </div>
+     <div class="badges"><span class="badge">Instructor · MKDB</span> <span class="badge lime">Lesson 4</span>
+     </div>
+    </div>
+   </header>
+   <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title"><img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="A woman with digital code projections on her face, representing technology and future concepts." loading="lazy">
+     <div class="hero-content"><span class="tag mono">Integration lab · game development</span>
+      <h2 id="hero-title">The engineer who connects the whole game.</h2>
+      <p>Explore how System Integration Engineers plan, connect, test, troubleshoot, deploy, and maintain the systems that turn independent game modules into one complete product.</p>
+      <div class="actions"><a class="btn primary" href="#lesson">▶ Start the lesson</a> <a class="btn secondary" href="#knowledge-check">? Knowledge check</a>
+      </div>
+     </div>
+    </section>
+    <section id="lesson" class="section">
+     <p class="kicker mono">Lesson Learning Outcome</p>
+     <h2>Identify the roles of a System Integration Engineer.</h2>
+     <div class="rule"></div>
+     <p class="copy">At the end of this lesson, students should be able to identify the roles of a System Integration Engineer.</p>
+     <div class="grid three" style="margin-top:20px">
+      <div class="objective">
+       Define a System Integration Engineer.
+      </div>
+      <div class="objective">
+       Explain the responsibilities of a System Integration Engineer.
+      </div>
+      <div class="objective">
+       Identify technical and professional skills required for the role.
+      </div>
+      <div class="objective">
+       Differentiate the role from other software development roles.
+      </div>
+      <div class="objective">
+       Apply integration responsibilities in a game development project.
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Motivation</p>
+     <h2>When completed modules still do not make a game</h2>
+     <div class="rule"></div>
+     <p class="copy">Imagine your class is developing a 3D Adventure Game. Each member has a different responsibility:</p>
+     <div class="grid three" style="margin-top:18px">
+      <div class="mini-card">
+       <strong>Student A</strong><br>
+       Develops player movement.
+      </div>
+      <div class="mini-card">
+       <strong>Student B</strong><br>
+       Creates the inventory system.
+      </div>
+      <div class="mini-card">
+       <strong>Student C</strong><br>
+       Designs the user interface.
+      </div>
+      <div class="mini-card">
+       <strong>Student D</strong><br>
+       Programs enemy AI.
+      </div>
+      <div class="mini-card">
+       <strong>Student E</strong><br>
+       Creates sound effects.
+      </div>
+     </div>
+     <div class="callout">
+      <p class="kicker mono" style="color:#ffbd70">After three months</p>
+      <h3 style="margin-top:8px;color:#fff0db">Everyone finishes their assigned tasks. Now comes the biggest challenge:</h3>
+      <p>How do all these independent modules work together as one complete game? This is where the <strong>System Integration Engineer</strong> plays a critical role.</p>
+     </div>
+    </section>
+    <section class="split">
+     <article class="section">
+      <p class="kicker mono">What is a System Integration Engineer?</p>
+      <h2>One complete, functional system</h2>
+      <div class="rule"></div>
+      <p class="copy">A System Integration Engineer is an IT professional responsible for connecting different software, hardware, databases, services, and technologies into a single functional system.</p>
+      <p class="copy">Instead of creating every module, the integration engineer ensures that all components communicate correctly, exchange data properly, and operate as one complete application.</p>
+      <div class="diagram mono">
+       Player Controller<br>
+       ↓<br>
+       Inventory System<br>
+       ↓<br>
+       Save System<br>
+       ↓<br>
+       Database
+      </div>
+     </article>
+     <article class="section">
+      <p class="kicker mono">Definition</p>
+      <h2>Plans, connects, tests, troubleshoots, maintains</h2>
+      <div class="rule"></div>
+      <p class="copy">A System Integration Engineer plans, connects, tests, troubleshoots, and maintains multiple software and hardware components to ensure they function as one integrated system.</p>
+      <div class="mini-card lime-card" style="margin-top:22px">
+       <h3 style="color:#e8ffc0">The key mission</h3>
+       <p class="copy" style="margin-bottom:0">Make sure the right data reaches the right system at the right time—reliably, safely, and consistently.</p>
+      </div>
+     </article>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Why is the role important?</p>
+     <h2>Integration prevents system-wide failure</h2>
+     <div class="rule"></div>
+     <div class="split">
+      <div class="mini-card orange-card">
+       <h3 style="color:#fff0db">Without a System Integration Engineer</h3>
+       <ul class="list">
+        <li>Different modules may not communicate.</li>
+        <li>APIs may fail.</li>
+        <li>Databases may become inconsistent.</li>
+        <li>Games may crash.</li>
+        <li>Multiplayer features may stop working.</li>
+        <li>Save systems may fail.</li>
+       </ul>
+      </div>
+      <div class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">With effective integration</h3>
+       <p class="copy">Every component works together seamlessly. Teams can find compatibility issues earlier, protect data flow, reduce bugs, and produce a more reliable game.</p>
+       <h3 style="color:#e8ffc0;margin-top:20px">Where they work</h3>
+       <p class="copy">Software companies, game development studios, banks, hospitals, government agencies, telecommunications, cloud computing companies, manufacturing industries, robotics companies, and artificial intelligence companies.</p>
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Role in Game Development</p>
+     <h2>Connecting the game’s moving parts</h2>
+     <div class="rule"></div>
+     <p class="copy">In a game studio, the System Integration Engineer connects systems such as:</p>
+     <div class="grid three" style="margin-top:18px">
+      <div class="mini-card">
+       Player Controller
+      </div>
+      <div class="mini-card">
+       Inventory System
+      </div>
+      <div class="mini-card">
+       Enemy AI
+      </div>
+      <div class="mini-card">
+       Physics Engine
+      </div>
+      <div class="mini-card">
+       Audio System
+      </div>
+      <div class="mini-card">
+       Animation System
+      </div>
+      <div class="mini-card">
+       User Interface
+      </div>
+      <div class="mini-card">
+       Save System
+      </div>
+      <div class="mini-card">
+       Cloud Database
+      </div>
+      <div class="mini-card">
+       Multiplayer Server
+      </div>
+     </div>
+     <p class="copy" style="margin-top:20px">Without proper integration, the game cannot function as a complete product.</p>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Major Roles</p>
+     <h2>Ten responsibilities of a System Integration Engineer</h2>
+     <div class="rule"></div>
+     <p class="copy">Select a responsibility to inspect its role in a game development project.</p>
+     <div class="role-tabs" aria-label="System Integration Engineer responsibilities"><button class="role-tab active" type="button" data-role="planning">1 Planning</button> <button class="role-tab" type="button" data-role="software">2 Software Integration</button> <button class="role-tab" type="button" data-role="api">3 API Integration</button> <button class="role-tab" type="button" data-role="database">4 Database</button> <button class="role-tab" type="button" data-role="middleware">5 Middleware</button> <button class="role-tab" type="button" data-role="network">6 Network</button> <button class="role-tab" type="button" data-role="testing">7 Testing</button> <button class="role-tab" type="button" data-role="troubleshooting">8 Troubleshooting</button> <button class="role-tab" type="button" data-role="deployment">9 Deployment</button> <button class="role-tab" type="button" data-role="maintenance">10 Maintenance</button>
+     </div>
+     <div id="role-detail" class="role-detail" aria-live="polite">
+      <p class="kicker mono">Role 01</p>
+      <h3 style="margin-top:8px;color:#efffc6">System Planning</h3>
+      <p>Before development begins, the engineer helps identify software requirements, hardware requirements, integration requirements, and technologies to be used.</p>
+      <p><strong>Example:</strong> Choosing Unity, Godot, or Unreal Engine, then selecting supporting technologies such as SQLite, Firebase, or MySQL.</p>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Skills of a System Integration Engineer</p>
+     <h2>Technical ability plus team ability</h2>
+     <div class="rule"></div>
+     <div class="grid two">
+      <div class="mini-card">
+       <h3 style="color:#baf8ff">Technical Skills</h3>
+       <div class="grid two" style="margin-top:16px">
+        <div>
+         Programming
+        </div>
+        <div>
+         Networking
+        </div>
+        <div>
+         Databases
+        </div>
+        <div>
+         APIs
+        </div>
+        <div>
+         Cloud Computing
+        </div>
+        <div>
+         Operating Systems
+        </div>
+        <div>
+         Version Control (Git)
+        </div>
+        <div>
+         Software Testing
+        </div>
+        <div>
+         System Architecture
+        </div>
+        <div>
+         Debugging
+        </div>
+       </div>
+      </div>
+      <div class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Soft Skills</h3>
+       <div class="grid two" style="margin-top:16px">
+        <div>
+         Communication
+        </div>
+        <div>
+         Problem Solving
+        </div>
+        <div>
+         Critical Thinking
+        </div>
+        <div>
+         Collaboration
+        </div>
+        <div>
+         Time Management
+        </div>
+        <div>
+         Documentation
+        </div>
+        <div>
+         Adaptability
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Tools Commonly Used</p>
+     <h2>The integration toolkit</h2>
+     <div class="rule"></div>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Tool</th>
+         <th>Purpose</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Git &amp; GitHub</td>
+         <td>Version Control</td>
+        </tr>
+        <tr>
+         <td>Unity</td>
+         <td>Game Development</td>
+        </tr>
+        <tr>
+         <td>Godot</td>
+         <td>Game Development</td>
+        </tr>
+        <tr>
+         <td>Unreal Engine</td>
+         <td>AAA Game Development</td>
+        </tr>
+        <tr>
+         <td>Firebase</td>
+         <td>Cloud Database</td>
+        </tr>
+        <tr>
+         <td>MySQL</td>
+         <td>Database</td>
+        </tr>
+        <tr>
+         <td>Postman</td>
+         <td>API Testing</td>
+        </tr>
+        <tr>
+         <td>Docker</td>
+         <td>Deployment</td>
+        </tr>
+        <tr>
+         <td>Visual Studio Code</td>
+         <td>Programming</td>
+        </tr>
+        <tr>
+         <td>Jira</td>
+         <td>Project Management</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Collaboration in a Game Development Team</p>
+     <h2>Different specialists, one working game</h2>
+     <div class="rule"></div>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Team Member</th>
+         <th>Responsibility</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Game Designer</td>
+         <td>Creates gameplay concepts and mechanics.</td>
+        </tr>
+        <tr>
+         <td>Programmer</td>
+         <td>Develops game features and logic.</td>
+        </tr>
+        <tr>
+         <td>Artist</td>
+         <td>Produces characters, environments, and animations.</td>
+        </tr>
+        <tr>
+         <td>Audio Designer</td>
+         <td>Creates music and sound effects.</td>
+        </tr>
+        <tr>
+         <td>QA Tester</td>
+         <td>Tests the game for bugs and usability.</td>
+        </tr>
+        <tr>
+         <td>System Integration Engineer</td>
+         <td>Connects all modules and ensures they function as one complete system.</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </section>
+    <section class="split">
+     <article class="section">
+      <p class="kicker mono">Real-World Example</p>
+      <h2>Mobile game development</h2>
+      <div class="rule"></div>
+      <p class="copy">Different developers may work on login, shop, inventory, online matchmaking, achievements, cloud save, and the user interface.</p>
+      <p class="copy">The System Integration Engineer integrates these systems, tests them together, resolves conflicts, and ensures the final game runs smoothly before release.</p>
+     </article>
+     <article class="section">
+      <p class="kicker mono">Challenges</p>
+      <h2>Problems they must solve</h2>
+      <div class="rule"></div>
+      <ul class="list">
+       <li>Incompatible software versions</li>
+       <li>Communication failures between modules</li>
+       <li>API errors</li>
+       <li>Database connection issues</li>
+       <li>Network latency</li>
+       <li>Security vulnerabilities</li>
+       <li>Performance bottlenecks</li>
+       <li>Integration conflicts</li>
+      </ul>
+     </article>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Best Practices</p>
+     <h2>Make integration a continuous habit</h2>
+     <div class="rule"></div>
+     <div class="grid three">
+      <div class="objective">
+       Plan integration early in the project.
+      </div>
+      <div class="objective">
+       Use version control for collaboration.
+      </div>
+      <div class="objective">
+       Document APIs and system interfaces.
+      </div>
+      <div class="objective">
+       Test modules regularly.
+      </div>
+      <div class="objective">
+       Follow coding standards.
+      </div>
+      <div class="objective">
+       Perform integration testing after each major feature.
+      </div>
+      <div class="objective">
+       Monitor system performance throughout development.
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Class Activity</p>
+     <h2>Apply the role to your own game project</h2>
+     <div class="rule"></div>
+     <article class="activity"><span class="tag mono" style="color:#baf8ff;border-color:rgba(98,232,245,.25);background:rgba(98,232,245,.1)">Activity 1 · Team Scenario</span>
+      <h3 style="margin-top:17px">2D Adventure Game</h3>
+      <p class="copy">Imagine your group is developing a 2D Adventure Game. Identify the responsibilities of the System Integration Engineer during the Planning, Development, Integration, Testing, Deployment, and Maintenance stages. Discuss your answers with your group.</p>
+      <div class="table-wrap">
+       <table>
+        <thead>
+         <tr>
+          <th>Stage</th>
+          <th>Responsibility</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>Planning</td>
+          <td>____________________________________</td>
+         </tr>
+         <tr>
+          <td>Development</td>
+          <td>____________________________________</td>
+         </tr>
+         <tr>
+          <td>Integration</td>
+          <td>____________________________________</td>
+         </tr>
+         <tr>
+          <td>Testing</td>
+          <td>____________________________________</td>
+         </tr>
+         <tr>
+          <td>Deployment</td>
+          <td>____________________________________</td>
+         </tr>
+         <tr>
+          <td>Maintenance</td>
+          <td>____________________________________</td>
+         </tr>
+        </tbody>
+       </table>
+      </div><button class="reveal" type="button" aria-expanded="false" aria-controls="activity-one">Reveal sample guidance</button>
+      <div id="activity-one" class="answer" hidden>
+       Sample guidance: Plan system interfaces early; coordinate module compatibility during development; connect player, inventory, UI, audio, and save systems; verify data flow through integration testing; package the game for its target platform; then manage bug fixes, performance improvements, and compatibility updates.
+      </div>
+     </article>
+     <article class="activity"><span class="tag mono" style="color:#baf8ff;border-color:rgba(98,232,245,.25);background:rgba(98,232,245,.1)">Activity 2 · Role Identification</span>
+      <h3 style="margin-top:17px">Which tasks belong to the integration engineer?</h3>
+      <ul class="list">
+       <li>Connecting the inventory system to the save system.</li>
+       <li>Designing the main character.</li>
+       <li>Integrating an online leaderboard API.</li>
+       <li>Creating background music.</li>
+       <li>Fixing communication errors between modules.</li>
+      </ul><button class="reveal" type="button" aria-expanded="false" aria-controls="activity-two">Reveal sample guidance</button>
+      <div id="activity-two" class="answer" hidden>
+       The System Integration Engineer is responsible for connecting the inventory to the save system, integrating the leaderboard API, and fixing communication errors. Designing a main character is primarily an artist or game designer task; creating background music is an audio designer task.
+      </div>
+     </article>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Reflection Questions</p>
+     <h2>Think like an integration engineer</h2>
+     <div class="rule"></div>
+     <ol class="list">
+      <li>Why is the role of a System Integration Engineer important in game development?</li>
+      <li>Which technical skill do you think is the most essential for a System Integration Engineer? Why?</li>
+      <li>What problems might occur if no one is responsible for integrating software components?</li>
+      <li>How does collaboration improve the success of a game development project?</li>
+      <li>If you were assigned as the System Integration Engineer in your capstone project, what would be your first responsibility?</li>
+     </ol>
+    </section>
+    <section id="knowledge-check" class="section">
+     <div class="quiz-head">
+      <div>
+       <p class="kicker mono">Knowledge Check</p>
+       <h2>Test your understanding</h2>
+       <div class="rule"></div>
+       <p class="copy">Choose one answer per question. Feedback appears immediately.</p>
+      </div>
+      <div class="score">
+       <p class="kicker mono" style="color:#e8ffc0">Your score</p>
+       <p id="score-value" class="mono" aria-live="polite">0 / 4</p>
+      </div>
+     </div>
+     <article class="question" data-correct="b">
+      <h3>1. What is the main responsibility of a System Integration Engineer?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Creating all character artwork.</button> <button class="option" type="button" data-answer="b">Connecting systems so they communicate and function together.</button> <button class="option" type="button" data-answer="c">Writing only the game story.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Answer: B. The integration engineer connects different components into one functional system.</p>
+     </article>
+     <article class="question" data-correct="a">
+      <h3>2. Which task is an example of API integration in a game?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Connecting an online leaderboard service.</button> <button class="option" type="button" data-answer="b">Drawing a game logo.</button> <button class="option" type="button" data-answer="c">Writing dialogue for a non-player character.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Answer: A. Online leaderboards depend on communication with an external service through an API.</p>
+     </article>
+     <article class="question" data-correct="c">
+      <h3>3. Which skill helps identify version conflicts and communication errors?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Character modelling.</button> <button class="option" type="button" data-answer="b">Music composition.</button> <button class="option" type="button" data-answer="c">Debugging and problem solving.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Answer: C. Debugging and problem solving are essential for locating and resolving integration failures.</p>
+     </article>
+     <article class="question" data-correct="b">
+      <h3>4. What should happen after a major game feature is completed?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Wait until release before checking it with other systems.</button> <button class="option" type="button" data-answer="b">Perform integration testing with connected modules.</button> <button class="option" type="button" data-answer="c">Delete the previous version of the game immediately.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Answer: B. Frequent integration testing reveals compatibility and data-flow problems early.</p>
+     </article>
+     <div class="actions"><button id="retry-quiz" class="btn secondary" type="button">Retry quiz</button> <button id="review-answers" class="btn primary" type="button">Show answer review</button>
+     </div>
+    </section>
+    <section class="section" style="margin-bottom:10px">
+     <p class="kicker mono">Summary</p>
+     <h2>One role, many connected responsibilities</h2>
+     <div class="rule"></div>
+     <p class="copy">A System Integration Engineer plays a vital role in ensuring that all software components work together as one complete application. In game development, this includes integrating gameplay mechanics, user interfaces, databases, networking, APIs, audio, and third-party services. The role requires both technical expertise and strong collaboration skills to deliver reliable, maintainable, and high-quality software. By understanding the responsibilities of a System Integration Engineer, students are better prepared to work effectively in multidisciplinary game development teams and contribute to the successful integration of complex software systems.</p>
+    </section>
+   </main>
+   <footer class="footer">
+    <div class="wrap">
+     Lesson 4 · Roles of the System Integration Engineer · System Integration and Architecture for Game Development · Instructor: MKDB
+    </div>
+   </footer>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const roles = {
+        planning: {
+          number: "Role 01", title: "System Planning",
+          text: "Before development begins, the engineer helps identify software requirements, hardware requirements, integration requirements, and technologies to be used.",
+          example: "Choosing Unity, Godot, or Unreal Engine, then selecting supporting technologies such as SQLite, Firebase, or MySQL."
+        },
+        software: {
+          number: "Role 02", title: "Software Integration",
+          text: "This is the primary responsibility. The engineer connects different software modules and verifies that each module exchanges data with the next one correctly.",
+          example: "Connecting the Player Controller to the Inventory System, then to the Save System and Database."
+        },
+        api: {
+          number: "Role 03", title: "API Integration",
+          text: "Modern games communicate with online services. The integration engineer ensures APIs work correctly, respond properly, and handle errors safely.",
+          example: "Integrating login, cloud save, leaderboards, achievements, or payment services."
+        },
+        database: {
+          number: "Role 04", title: "Database Integration",
+          text: "Many games store important player data. The engineer ensures reliable communication between the game and its database.",
+          example: "Saving player profiles, coins, levels, inventory items, and scores."
+        },
+        middleware: {
+          number: "Role 05", title: "Middleware Integration",
+          text: "Games often depend on third-party tools and services. The engineer integrates these tools while checking compatibility, configuration, and updates.",
+          example: "Using FMOD for audio, Photon for networking, Steamworks SDK, Firebase, or Unity Ads."
+        },
+        network: {
+          number: "Role 06", title: "Network Integration",
+          text: "Online games need reliable networking between players and servers. The engineer works to support stable, synchronized communication.",
+          example: "Multiplayer sessions, chat, matchmaking, and cloud synchronization."
+        },
+        testing: {
+          number: "Role 07", title: "Testing",
+          text: "After integration, the engineer verifies that every module works correctly, data transfers accurately, APIs respond properly, multiplayer functions correctly, and save files work properly.",
+          example: "Testing a treasure pickup from gameplay through UI updates, sound effects, score changes, and save data."
+        },
+        troubleshooting: {
+          number: "Role 08", title: "Troubleshooting",
+          text: "When issues occur, the engineer identifies the source of a problem, including communication errors, missing libraries, version conflicts, and configuration issues.",
+          example: "Resolving an issue where the inventory works alone but items disappear when saved."
+        },
+        deployment: {
+          number: "Role 09", title: "Deployment",
+          text: "The engineer prepares the final application for release and checks that the correct build, settings, services, and dependencies are ready for each target platform.",
+          example: "Preparing releases for Windows, Android, Steam, Google Play, or itch.io."
+        },
+        maintenance: {
+          number: "Role 10", title: "Maintenance",
+          text: "After deployment, integration responsibilities continue through bug fixes, software updates, performance improvements, security patches, and compatibility updates.",
+          example: "Updating a game when an online service changes its API or a new operating system affects a build."
+        }
+      };
+
+      const detail = document.getElementById("role-detail");
+      document.querySelectorAll(".role-tab").forEach(function(button) {
+        button.addEventListener("click", function() {
+          const role = roles[button.dataset.role];
+          document.querySelectorAll(".role-tab").forEach(function(tab) {
+            tab.classList.toggle("active", tab === button);
+          });
+          detail.innerHTML =
+            '<p class="kicker mono">' + role.number + '</p>' +
+            '<h3 style="margin-top:8px;color:#efffc6">' + role.title + '</h3>' +
+            '<p>' + role.text + '</p>' +
+            '<p><strong>Game example:</strong> ' + role.example + '</p>';
+        });
+      });
+
+      document.querySelectorAll(".reveal").forEach(function(button) {
+        button.addEventListener("click", function() {
+          const answer = document.getElementById(button.getAttribute("aria-controls"));
+          const show = answer.hidden;
+          answer.hidden = !show;
+          button.setAttribute("aria-expanded", String(show));
+          button.textContent = show ? "Hide sample guidance" : "Reveal sample guidance";
+        });
+      });
+
+      const questions = Array.from(document.querySelectorAll(".question"));
+      const score = document.getElementById("score-value");
+
+      function updateScore() {
+        const correct = questions.filter(function(question) {
+          return question.dataset.answered === "correct";
+        }).length;
+        score.textContent = correct + " / " + questions.length;
+      }
+
+      questions.forEach(function(question) {
+        const correctAnswer = question.dataset.correct;
+        const options = Array.from(question.querySelectorAll(".option"));
+        const feedback = question.querySelector(".feedback");
+
+        options.forEach(function(option) {
+          option.addEventListener("click", function() {
+            if (question.dataset.answered) return;
+            const isCorrect = option.dataset.answer === correctAnswer;
+            question.dataset.answered = isCorrect ? "correct" : "incorrect";
+
+            options.forEach(function(choice) {
+              choice.disabled = true;
+              if (choice.dataset.answer === correctAnswer) choice.classList.add("correct");
+            });
+
+            if (isCorrect) {
+              feedback.textContent = "Correct — well done.";
+              feedback.style.color = "#d5ff5f";
+            } else {
+              option.classList.add("incorrect");
+              feedback.textContent = "Not quite — the highlighted option is correct.";
+              feedback.style.color = "#ffbd70";
+            }
+            updateScore();
+          });
+        });
+      });
+
+      document.getElementById("retry-quiz").addEventListener("click", function() {
+        questions.forEach(function(question) {
+          delete question.dataset.answered;
+          question.querySelector(".feedback").textContent = "";
+          question.querySelector(".feedback").style.color = "";
+          question.querySelector(".quiz-review").hidden = true;
+          question.querySelectorAll(".option").forEach(function(option) {
+            option.disabled = false;
+            option.classList.remove("correct", "incorrect");
+          });
+        });
+        updateScore();
+      });
+
+      document.getElementById("review-answers").addEventListener("click", function() {
+        document.querySelectorAll(".quiz-review").forEach(function(review) {
+          review.hidden = false;
+        });
+      });
+    });
+  </script>
+ </body>
+</html>
