@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260819-01-6858913","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Engine Architecture | BSIT 3 Game Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#06131d; --panel:#0c2030; --panel2:#102b3f; --line:rgba(181,230,255,.17);
+      --cyan:#62e8f5; --lime:#d5ff5f; --orange:#ffad4d; --soft:#b9cad6; --white:#eef8ff; --danger:#ff8d7b;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--white);font-family:"DM Sans",sans-serif;background:var(--ink)}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{font:inherit}
+    button:focus-visible,a:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+    .app-shell{width:100%;overflow-x:hidden;background:
+      linear-gradient(rgba(98,232,245,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(98,232,245,.035) 1px,transparent 1px),
+      radial-gradient(circle at 90% 3%,rgba(36,141,166,.36),transparent 32%),
+      radial-gradient(circle at 5% 48%,rgba(40,110,92,.16),transparent 28%),var(--ink);
+      background-size:28px 28px,28px 28px,auto,auto}
+    .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+    .mono{font-family:"Space Mono",monospace}
+    .topbar{border-bottom:1px solid rgba(181,230,255,.12);background:rgba(6,19,29,.9);backdrop-filter:blur(12px)}
+    .topbar-inner{min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:13px}.mark{width:43px;height:43px;display:grid;place-items:center;color:var(--cyan);font-size:24px;border:1px solid rgba(181,230,255,.25);border-radius:12px;background:rgba(98,232,245,.1)}
+    .eyebrow,.kicker{margin:0;color:#8fbbca;font-size:11px;letter-spacing:.1em;text-transform:uppercase;line-height:1.5}.kicker{color:var(--cyan)}
+    h1{margin:2px 0 0;font-size:25px;line-height:1.1}h2{margin:8px 0 0;font-size:30px;line-height:1.2}h3{margin:0;font-size:20px;line-height:1.25}h4{margin:0;font-size:16px}
+    .badges,.actions{display:flex;flex-wrap:wrap;gap:8px}.badge{padding:8px 12px;color:#baf8ff;font-size:13px;font-weight:700;border:1px solid rgba(181,230,255,.22);border-radius:99px;background:rgba(98,232,245,.09)}.badge.lime{color:#e7ffac;border-color:rgba(213,255,95,.24);background:rgba(213,255,95,.1)}
+    main{padding:28px 0 42px}.hero{position:relative;min-height:440px;overflow:hidden;border:1px solid var(--line);border-radius:26px;background:#0a1f2d;box-shadow:0 20px 55px rgba(0,0,0,.22)}
+    .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.31}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,19,29,.99),rgba(6,19,29,.84) 48%,rgba(6,19,29,.22))}
+    .hero-content{position:relative;z-index:1;max-width:830px;padding:56px}.tag{display:inline-block;padding:8px 11px;color:var(--lime);font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(213,255,95,.24);border-radius:99px;background:rgba(6,19,29,.64)}
+    .hero h2{margin:20px 0 0;font-size:clamp(38px,6vw,66px);line-height:1.03}.hero p{max-width:690px;margin:20px 0 0;color:#d7e7ef;font-size:18px;line-height:1.65}
+    .actions{margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;color:#edfaff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;border:1px solid transparent;border-radius:12px;transition:.18s ease}.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.primary{color:#06202b;background:var(--cyan)}.secondary{border-color:rgba(181,230,255,.25);background:rgba(6,19,29,.52)}
+    .lesson-nav{position:sticky;top:0;z-index:4;display:flex;gap:8px;overflow:auto;margin-top:18px;padding:10px;border:1px solid var(--line);border-radius:14px;background:rgba(6,19,29,.91);backdrop-filter:blur(12px)}.lesson-nav a{flex:0 0 auto;padding:7px 10px;color:#baf8ff;font-size:12px;text-decoration:none;border-radius:8px}.lesson-nav a:hover{color:var(--ink);background:var(--cyan)}
+    .section{margin-top:30px;padding:28px;border:1px solid var(--line);border-radius:20px;background:rgba(10,31,45,.9);box-shadow:0 20px 55px rgba(0,0,0,.18)}.rule{width:74px;height:4px;margin:14px 0 18px;border-radius:20px;background:var(--cyan)}
+    .copy{color:#c5d7e1;line-height:1.7}.grid{display:grid;gap:16px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.split{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+    .objective,.mini-card,.activity{padding:17px;color:#d9edf5;line-height:1.58;border:1px solid rgba(181,230,255,.16);border-radius:14px;background:rgba(255,255,255,.035)}.objective{background:rgba(98,232,245,.055)}.lime-card{border-color:rgba(213,255,95,.19);background:rgba(213,255,95,.075)}.orange-card{border-color:rgba(255,173,77,.21);background:rgba(255,173,77,.07)}
+    .callout{margin-top:18px;padding:20px;color:#ffe1bc;border:1px solid rgba(255,173,77,.28);border-radius:16px;background:rgba(255,173,77,.08)}.callout p{line-height:1.65}.list{margin:14px 0 0;padding-left:20px;color:#c5d7e1;line-height:1.85}.term{color:#eaf7ff;font-weight:700}
+    .diagram{margin-top:20px;padding:25px 18px;color:#c9f9ff;text-align:center;white-space:pre-wrap;line-height:1.75;border:1px solid rgba(98,232,245,.2);border-radius:16px;background:rgba(98,232,245,.05)}.diagram.lime{color:#e8ffc0;border-color:rgba(213,255,95,.24);background:rgba(213,255,95,.06)}
+    .table-wrap{margin-top:18px;overflow-x:auto}table{width:100%;min-width:680px;border-collapse:collapse;text-align:left}th{padding:13px;color:var(--cyan);border-bottom:1px solid rgba(181,230,255,.17)}td{padding:13px;color:#c5d7e1;vertical-align:top;border-bottom:1px solid rgba(181,230,255,.09)}td:first-child{color:#eaf7ff;font-weight:700}
+    .answer-toggle{margin-top:16px;padding:10px 13px;color:#d9faff;font-weight:700;cursor:pointer;border:1px solid rgba(98,232,245,.35);border-radius:9px;background:transparent}.answer{margin-top:14px;padding:15px;color:#e8ffc0;line-height:1.65;border:1px solid rgba(213,255,95,.21);border-radius:11px;background:rgba(213,255,95,.08)}[hidden]{display:none!important}
+    .quiz-head{display:flex;align-items:start;justify-content:space-between;gap:16px}.score{min-width:112px;padding:13px 17px;text-align:center;border:1px solid rgba(213,255,95,.25);border-radius:15px;background:rgba(213,255,95,.1)}.score p{margin:0}.score .mono{margin-top:4px;color:var(--lime);font-size:23px;font-weight:700}
+    .question{margin-top:18px;padding:20px;border:1px solid rgba(181,230,255,.16);border-radius:16px;background:rgba(255,255,255,.03)}.options{display:grid;gap:8px;margin-top:14px}.option{width:100%;padding:12px 14px;color:#eaf7ff;text-align:left;cursor:pointer;border:1px solid rgba(185,202,214,.25);border-radius:11px;background:rgba(255,255,255,.035);transition:.18s ease}.option:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.1)}.option.correct{color:#efffdc;border-color:#98e852;background:rgba(128,214,71,.17)}.option.incorrect{color:#ffe4df;border-color:var(--danger);background:rgba(255,102,91,.14)}.feedback{min-height:22px;margin:12px 0 0;font-size:14px;font-weight:700}
+    .footer{padding:22px 0;color:#8fabb9;font-size:14px;border-top:1px solid rgba(181,230,255,.1)}
+    @media(max-width:800px){.topbar-inner,.split{display:block}.badges{margin-top:13px}.hero-content{padding:34px 25px}.hero:after{background:linear-gradient(0deg,rgba(6,19,29,.98),rgba(6,19,29,.75) 60%,rgba(6,19,29,.2))}.two,.three{grid-template-columns:1fr}.section{padding:22px}.quiz-head{display:block}.score{width:max-content;margin-top:16px}}
+  </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
+  <script src="/_sdk/d97541380e824b1a.editing_sdk.js" type="text/javascript" integrity="sha512-iBVkuiyctyjmaqUwrsoYSc/nxwymdEKZMKPeBCNj6uN/7hFPTiMVeunYJjJVnUh1GNECKEyCerl7IHtlqhzSYQ=="></script>
+  <script src="/_sdk/eba18683f23e5798.resizing_sdk.js" type="text/javascript" integrity="sha512-E0UWUllhwPXaNJtjyTKXWKrIE+FruPfFpO4mRmMDP2LI+U9bOizy5npCq6xx/JyWcvSK7D3TFf2wFR2Mha9kbA=="></script>
+ </head>
+ <body data-template-id="__page-root">
+  <div class="app-shell">
+   <header class="topbar">
+    <div class="wrap topbar-inner">
+     <div class="brand">
+      <div class="mark" aria-hidden="true">
+       ⌘
+      </div>
+      <div>
+       <p class="eyebrow mono">Course · System Integration and Architecture — Game Development</p>
+       <h1>Midterm Lesson 3: Game Engine Architecture</h1>
+      </div>
+     </div>
+     <div class="badges">
+      <span class="badge">BSIT 3 Game Development</span><span class="badge lime">Midterm Lesson</span>
+     </div>
+    </div>
+   </header>
+   <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title"><img src="https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="Detailed view of a computer motherboard highlighting electronic components and technology connections." loading="lazy">
+     <div class="hero-content"><span class="tag mono">Architecture lab · game development</span>
+      <h2 id="hero-title">Understand the systems behind every game frame.</h2>
+      <p>Explore how a game engine combines input, game logic, physics, animation, audio, rendering, assets, scenes, and tools into one integrated platform.</p>
+      <div class="actions">
+       <a class="btn primary" href="#lesson">▶ Start the lesson</a><a class="btn secondary" href="#knowledge-check">? Knowledge check</a>
+      </div>
+     </div>
+    </section>
+    <nav class="lesson-nav" aria-label="Lesson navigation"><a href="#lesson">Objectives</a><a href="#engine">Engine</a><a href="#subsystems">Subsystems</a><a href="#loop">Game Loop</a><a href="#architecture">Architecture</a><a href="#activities">Activities</a><a href="#knowledge-check">Quiz</a>
+    </nav>
+    <section id="lesson" class="section">
+     <p class="kicker mono">I. Learning Objectives</p>
+     <h2>What you should be able to do</h2>
+     <div class="rule"></div>
+     <p class="copy">At the end of this lesson, students should be able to:</p>
+     <div class="grid three" style="margin-top:20px">
+      <div class="objective">
+       Define a game engine and explain its purpose.
+      </div>
+      <div class="objective">
+       Explain the difference between a game engine and a game.
+      </div>
+      <div class="objective">
+       Identify major game-engine components.
+      </div>
+      <div class="objective">
+       Explain how game-engine subsystems communicate.
+      </div>
+      <div class="objective">
+       Explain the game loop and why it is important.
+      </div>
+      <div class="objective">
+       Describe rendering, physics, audio, input, animation, AI, scripting, and resources.
+      </div>
+      <div class="objective">
+       Explain scene management, entity/component systems, and asset management.
+      </div>
+      <div class="objective">
+       Explain how an engine integrates multiple subsystems.
+      </div>
+      <div class="objective">
+       Apply architecture concepts to Unity, Unreal Engine, Godot, or similar engines.
+      </div>
+     </div>
+    </section>
+    <section id="engine" class="section">
+     <p class="kicker mono">II–V. Introduction · Definition · Engine vs. Game</p>
+     <h2>What is a game engine?</h2>
+     <div class="rule"></div>
+     <p class="copy">Software architecture is the overall structure of a system. In game development, the key question is: <strong>how is the game engine itself structured?</strong> When Play is pressed, many systems begin working together.</p>
+     <div class="diagram mono">
+      INPUT ↓ GAME LOGIC ↓ PHYSICS → ANIMATION → RENDERING → SCREEN ↓ AUDIO
+     </div>
+     <div class="callout">
+      <p class="kicker mono" style="color:#ffbd70">Simple definition</p>
+      <h3 style="margin-top:8px;color:#fff0db">A game engine is a software framework or platform that provides reusable tools and systems for creating, running, and managing games.</h3>
+     </div>
+     <div class="split" style="margin-top:18px">
+      <article class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Game Engine</h3>
+       <p class="copy">The engine provides technology and tools: rendering, physics, audio, input, scene systems, scripting, AI tools, assets, networking, UI, and debugging tools.</p>
+      </article>
+      <article class="mini-card orange-card">
+       <h3 style="color:#fff0db">Game</h3>
+       <p class="copy">The game is the actual product built with the engine: characters, levels, weapons, enemies, quests, rules, and player experiences.</p>
+      </article>
+     </div>
+     <div class="diagram lime mono">
+      GAME ENGINE ↓ PHYSICS · AUDIO · RENDERING ↓ GAME ↓ CHARACTERS · LEVELS · WEAPONS · ENEMIES · QUESTS
+     </div>
+     <p class="copy">Examples of game engines include <span class="term">Unity</span>, <span class="term">Unreal Engine</span>, <span class="term">Godot</span>, and <span class="term">GameMaker</span>. Their terminology differs, but most need input, rendering, physics, audio, game logic, assets, scenes, and animation.</p>
+    </section>
+    <section class="section">
+     <p class="kicker mono">VI. Important Game Engine Jargons</p>
+     <h2>Vocabulary for engine architecture</h2>
+     <div class="rule"></div>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Term</th>
+         <th>Simple Definition</th>
+         <th>Example</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Game Engine</td>
+         <td>Software used to build and run games</td>
+         <td>Unity</td>
+        </tr>
+        <tr>
+         <td>Runtime / Editor</td>
+         <td>Game execution / development environment</td>
+         <td>Playing a game / Unity Editor</td>
+        </tr>
+        <tr>
+         <td>Subsystem</td>
+         <td>Major functional part of an engine</td>
+         <td>Physics System</td>
+        </tr>
+        <tr>
+         <td>Rendering</td>
+         <td>Creating displayed images</td>
+         <td>Drawing a 3D character</td>
+        </tr>
+        <tr>
+         <td>Collider / Rigid Body</td>
+         <td>Collision shape / physics object</td>
+         <td>Box collider / falling box</td>
+        </tr>
+        <tr>
+         <td>Transform</td>
+         <td>Position, rotation, and scale</td>
+         <td>Player location</td>
+        </tr>
+        <tr>
+         <td>Asset / Scene / Prefab</td>
+         <td>Resource / organized content / reusable object template</td>
+         <td>Texture / Level 1 / enemy prefab</td>
+        </tr>
+        <tr>
+         <td>Entity / Component</td>
+         <td>Game object / attached functionality</td>
+         <td>Player / Health</td>
+        </tr>
+        <tr>
+         <td>Game Loop / Frame / FPS</td>
+         <td>Repeating update process / one image / frames per second</td>
+         <td>Update → Render / 60 FPS</td>
+        </tr>
+        <tr>
+         <td>Delta Time</td>
+         <td>Time since the previous frame</td>
+         <td>0.016 seconds</td>
+        </tr>
+        <tr>
+         <td>Mesh / Texture / Material / Shader</td>
+         <td>Shape / surface image / visual surface settings / rendering program</td>
+         <td>Model, brick image, metal sword, water effect</td>
+        </tr>
+        <tr>
+         <td>API / Plugin / Serialization</td>
+         <td>Engine communication interface / extension / saved-data conversion</td>
+         <td>Engine API / audio plugin / save data</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </section>
+    <section id="subsystems" class="section">
+     <p class="kicker mono">VII–XLI. Architecture and Core Subsystems</p>
+     <h2>A game engine is an integrated system</h2>
+     <div class="rule"></div>
+     <div class="diagram mono">
+      GAME ENGINE │ ├── GAME LOOP ── GAME LOGIC ── Physics · AI · Animation · Audio · Rendering ├── RESOURCE MANAGER └── EDITOR ↓ OUTPUT → SCREEN
+     </div>
+     <p class="copy">A <span class="term">subsystem</span> is a major functional part of a larger system. Each subsystem has a focused responsibility, but none works in isolation.</p>
+     <div class="grid three" style="margin-top:18px">
+      <article class="mini-card">
+       <h3>Rendering System</h3>
+       <p class="copy">Processes models, textures, lights, shadows, cameras, materials, and effects to generate images. A 2D renderer works with sprites and 2D cameras; a 3D renderer works with meshes, lighting, materials, shadows, and 3D animation.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Physics System</h3>
+       <p class="copy">Simulates gravity, collision, friction, movement, forces, velocity, and acceleration. Colliders detect intersections; rigid bodies participate in physical simulation.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Input System</h3>
+       <p class="copy">Receives keyboard, mouse, controller, touch, and VR commands. Input abstraction maps devices to actions, such as Spacebar or Controller A becoming “Jump.”</p>
+      </article>
+      <article class="mini-card">
+       <h3>Audio System</h3>
+       <p class="copy">Handles music, sound effects, voice, environmental sound, and positional 3D audio. Background music is usually 2D; a nearby enemy growl can depend on direction and distance.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Animation System</h3>
+       <p class="copy">Manages idle, walk, run, jump, attack, and death states. Animation state machines transition between visual states such as Idle → Run → Attack → Idle.</p>
+      </article>
+      <article class="mini-card">
+       <h3>AI System</h3>
+       <p class="copy">Controls enemies, NPCs, companions, and animals. It can detect players, decide to patrol/chase/attack, and use pathfinding such as A* to avoid obstacles.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Game Logic &amp; Scripting</h3>
+       <p class="copy">Controls rules such as XP, damage, quests, doors, rewards, and game-over states. Scripts use the engine API instead of rebuilding physics or rendering from scratch.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Scene Management</h3>
+       <p class="copy">Organizes menus, levels, battle areas, and worlds. A scene graph can show parent-child relationships between environment, player, camera, weapons, enemies, and UI.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Asset Management</h3>
+       <p class="copy">Finds, loads, unloads, organizes, and tracks dependencies for models, textures, materials, sounds, maps, animations, and UI resources.</p>
+      </article>
+     </div>
+     <div class="split" style="margin-top:18px">
+      <article class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Entity + Components</h3>
+       <div class="diagram lime mono">
+        PLAYER ENTITY ├── Transform ├── Renderer ├── Physics ├── Health ├── Movement └── Inventory
+       </div>
+       <p class="copy">Component-based design assembles objects from reusable functionality.</p>
+      </article>
+      <article class="mini-card orange-card">
+       <h3 style="color:#fff0db">Entity-Component-System</h3>
+       <div class="diagram mono">
+        ENTITY → identifies object COMPONENT → stores data SYSTEM → processes matching data
+       </div>
+       <p class="copy">ECS separates entities, components, and systems and can improve large-scale object processing.</p>
+      </article>
+     </div>
+    </section>
+    <section id="loop" class="section">
+     <p class="kicker mono">XLII–XLVIII. Game Loop and Timing</p>
+     <h2>The repeating heartbeat of a game</h2>
+     <div class="rule"></div>
+     <p class="copy">The <span class="term">game loop</span> is the repeating process that updates the game and produces frames while the game is running.</p>
+     <div class="diagram lime mono">
+      START ↓ READ INPUT ↓ UPDATE GAME ↓ PHYSICS → AI → ANIMATION → AUDIO ↓ RENDER ↓ NEXT FRAME → REPEAT
+     </div>
+     <div class="grid two" style="margin-top:18px">
+      <article class="mini-card">
+       <h3>Frames, FPS, and Delta Time</h3>
+       <p class="copy">A frame is one displayed image. FPS means Frames Per Second: 60 FPS produces about 60 frames each second. Delta time is the elapsed time since the previous frame, helping movement remain consistent: <strong>Movement = Speed × Delta Time</strong>.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Update vs. Render</h3>
+       <p class="copy"><strong>Update</strong> changes game state: positions, enemy behavior, HP, or quests. <strong>Render</strong> draws the current state: models, environment, effects, and UI. Physics often uses a consistent fixed update step for stability.</p>
+      </article>
+     </div>
+    </section>
+    <section id="architecture" class="section">
+     <p class="kicker mono">L–LXVIII. Editor, Runtime, Build, Hardware and Performance</p>
+     <h2>From editor to screen</h2>
+     <div class="rule"></div>
+     <div class="diagram mono">
+      GAME ENGINE │ ├── EDITOR → Scene Editor · Asset Manager · Inspector └── RUNTIME → Input · Game Loop · Scripts ↓ Physics · AI · Animation · Audio ↓ Rendering → GPU → SCREEN
+     </div>
+     <div class="grid two" style="margin-top:18px">
+      <article class="mini-card">
+       <h3>Editor, Runtime, and Build Pipeline</h3>
+       <p class="copy">The editor is used to place objects, import assets, configure lighting, create animation, write scripts, and test. The runtime executes the game. A build compiles scripts, processes assets, packages files, and prepares the game for Windows, Android, consoles, or other platforms.</p>
+      </article>
+      <article class="mini-card">
+       <h3>CPU and GPU</h3>
+       <p class="copy">The CPU handles general-purpose work such as game logic, AI, input, physics calculations, and resource management. The GPU specializes in parallel graphics work such as rendering, shaders, lighting, and visual effects.</p>
+      </article>
+      <article class="mini-card">
+       <h3>What happens when Play is pressed?</h3>
+       <p class="copy">The runtime starts, a scene loads, objects and assets load, systems initialize, then the game loop begins: Input → Update → Physics → AI → Animation → Render → Repeat.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Performance Architecture</h3>
+       <p class="copy">Architecture affects performance. Improve heavy games through object pooling, culling, level of detail (LOD), efficient data structures, multithreading, spatial partitioning, and ECS approaches.</p>
+      </article>
+     </div>
+     <div class="diagram lime mono">
+      OBJECT POOLING → reuse bullets instead of recreating them CULLING → skip objects outside the camera view LOD → use lower-detail models farther away MULTITHREADING → perform suitable work concurrently
+     </div>
+    </section>
+    <section id="activities" class="section">
+     <p class="kicker mono">LXIX–LXXXII. Individual and Group Activities</p>
+     <h2>Apply the architecture</h2>
+     <div class="rule"></div>
+     <article class="activity"><span class="tag mono">Individual Activity 1 · Trace the Action</span>
+      <h3 style="margin-top:16px">The player presses Spacebar to jump.</h3>
+      <p class="copy">Trace the process from Input to Screen. Identify the Input System, Player Controller, Physics System, Animation System, and Rendering System. Then explain what may happen if the Physics System fails.</p><button class="answer-toggle" type="button" aria-expanded="false" aria-controls="a1">Reveal sample answer</button>
+      <div id="a1" class="answer" hidden>
+       Spacebar → Input System → “Jump” action → Player Controller → Physics System changes velocity → gravity and collision update player position → Animation System selects jump animation → Rendering System draws the updated player → Screen. If physics fails, the player may not leave the ground, collide correctly, or fall predictably.
+      </div>
+     </article>
+     <article class="activity" style="margin-top:18px"><span class="tag mono">Individual Activity 2 · Identify the Subsystem</span>
+      <p class="copy">Identify the primary subsystem for: pressing W, gravity affecting a box, a metallic sword appearance, enemy searching, gunshot audio, walking-to-running animation, 3D environment display, loading textures/models, saving progress, and repeatedly updating the game.</p><button class="answer-toggle" type="button" aria-expanded="false" aria-controls="a2">Reveal sample answers</button>
+      <div id="a2" class="answer" hidden>
+       1. Input System · 2. Physics System · 3. Rendering / Material System · 4. AI System · 5. Audio System · 6. Animation System · 7. Rendering System · 8. Asset Management · 9. Save / Serialization System · 10. Game Loop.
+      </div>
+     </article>
+     <article class="activity" style="margin-top:18px"><span class="tag mono">Individual Activity 3 · Build a Mini Engine</span>
+      <p class="copy">Create a diagram for an engine containing Input, Rendering, Physics, Audio, Animation, Game Logic, and Asset Manager. Explain each subsystem, identify which communicates with the GPU, which communicates with input devices, which loads assets, and how the systems communicate.</p>
+     </article>
+     <div class="callout">
+      <h3 style="color:#fff0db">Group Activity: Design a Game Engine</h3>
+      <p>In groups of 4–5, design a simple engine supporting 2D and 3D games. Include Input, Rendering, Physics, Audio, Animation, Scene Management, Asset Management, Game Loop, Scripting, and UI. Trace one action such as jump, shoot, attack, open a door, or collect an item. Identify likely bottlenecks when the game runs at 20 FPS.</p>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">LXXX–LXXXVI. Case Study · Review · Key Takeaways</p>
+     <h2>The Laggy Game</h2>
+     <div class="rule"></div>
+     <p class="copy">A 3D open-world game with 500 enemies, high-resolution textures, a large map, dynamic lighting, physics objects, music, and particle effects runs at 15 FPS. Do not automatically blame graphics. Investigate rendering, physics, AI, memory, asset loading, animation, audio, and game logic.</p>
+     <div class="grid three" style="margin-top:18px">
+      <div class="objective">
+       <strong>Too many visible objects?</strong><br>
+       Culling can avoid rendering objects outside the view.
+      </div>
+      <div class="objective">
+       <strong>Objects far away?</strong><br>
+       LOD can use simpler models at distance.
+      </div>
+      <div class="objective">
+       <strong>500 enemy decisions?</strong><br>
+       AI may need improved scheduling, culling, or data-oriented processing.
+      </div>
+      <div class="objective">
+       <strong>Repeated bullets?</strong><br>
+       Object pooling reuses objects.
+      </div>
+      <div class="objective">
+       <strong>Huge textures?</strong><br>
+       They can pressure memory, loading, and GPU resources.
+      </div>
+      <div class="objective">
+       <strong>Why investigate broadly?</strong><br>
+       CPU, GPU, RAM, storage, and system integration all affect performance.
+      </div>
+     </div>
+     <div class="diagram lime mono">
+      KEY TAKEAWAYS 1. Engines are platforms for creating and running games. 2. Games are built on top of engines. 3. Engines contain integrated subsystems. 4. Rendering creates visuals; physics simulates behavior. 5. Input receives commands; audio manages sound. 6. Animation manages visual movement. 7. The game loop updates and renders repeatedly. 8. Subsystems must communicate to make a game work.
+     </div>
+    </section>
+    <section id="knowledge-check" class="section">
+     <div class="quiz-head">
+      <div>
+       <p class="kicker mono">LXXXIII–LXXXIV. Quick Knowledge Check</p>
+       <h2>Test your engine architecture knowledge</h2>
+       <div class="rule"></div>
+       <p class="copy">Choose one answer for each question. Feedback appears immediately.</p>
+      </div>
+      <div class="score">
+       <p class="kicker mono" style="color:#e8ffc0">Your score</p>
+       <p id="score-value" class="mono" aria-live="polite">0 / 5</p>
+      </div>
+     </div>
+     <article class="question" data-correct="b">
+      <h3>1. What does a game engine provide?</h3>
+      <div class="options">
+       <button class="option" type="button" data-answer="a">Only graphics</button><button class="option" type="button" data-answer="b">Reusable systems and tools for creating and running games</button><button class="option" type="button" data-answer="c">Only finished game levels</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+     </article>
+     <article class="question" data-correct="c">
+      <h3>2. Which subsystem primarily simulates gravity and collision?</h3>
+      <div class="options">
+       <button class="option" type="button" data-answer="a">Audio</button><button class="option" type="button" data-answer="b">Rendering</button><button class="option" type="button" data-answer="c">Physics</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+     </article>
+     <article class="question" data-correct="a">
+      <h3>3. What is the game loop?</h3>
+      <div class="options">
+       <button class="option" type="button" data-answer="a">The repeating process that updates the game and produces frames</button><button class="option" type="button" data-answer="b">A stored game asset</button><button class="option" type="button" data-answer="c">A type of collider</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+     </article>
+     <article class="question" data-correct="b">
+      <h3>4. What does ECS stand for?</h3>
+      <div class="options">
+       <button class="option" type="button" data-answer="a">Engine Control Scene</button><button class="option" type="button" data-answer="b">Entity-Component-System</button><button class="option" type="button" data-answer="c">Editor Code Script</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+     </article>
+     <article class="question" data-correct="c">
+      <h3>5. Which technique reduces unnecessary rendering work for objects outside the camera view?</h3>
+      <div class="options">
+       <button class="option" type="button" data-answer="a">Serialization</button><button class="option" type="button" data-answer="b">Object pooling</button><button class="option" type="button" data-answer="c">Culling</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+     </article>
+     <div class="actions">
+      <button id="retry-quiz" class="btn secondary" type="button">↻ Retry quiz</button>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">LXXXVII–LXXXIX. Final Challenge</p>
+     <h2>Design the engine before the game</h2>
+     <div class="rule"></div>
+     <p class="copy">Imagine your team is developing <span class="term">GDevEngine</span>. It must support 2D games, 3D games, input, physics, rendering, audio, animation, AI, scenes, assets, scripting, an editor, runtime, and UI.</p>
+     <div class="diagram lime mono">
+      GDevEngine ├── Editor ├── Runtime ├── Game Loop ├── Input ├── Rendering ├── Physics ├── Audio ├── Animation ├── AI ├── Scene Management ├── Asset Management ├── Scripting └── UI
+     </div>
+     <div class="callout">
+      <h3 style="color:#fff0db">Final message for students</h3>
+      <p>Do not think of a game engine as a magic tool that creates a game for you. It is a large integrated software system. When a player moves, shoots, collides, hears sound, or loads a level, multiple subsystems cooperate. Understanding how they work together is the foundation of Game Engine Architecture.</p>
+     </div>
+     <p class="copy">Suggested resources: Unity Documentation and Unity Learn, Unreal Engine Documentation, Godot Documentation, and further study on rendering pipelines, physics engines, ECS, asset management, object pooling, LOD, culling, CPU vs. GPU, networking, and multithreading.</p>
+    </section>
+   </main>
+   <footer class="footer">
+    <div class="wrap">
+     System Integration and Architecture — BSIT 3 Major in Game Development · Midterm Lesson 3 · Game Engine Architecture
+    </div>
+   </footer>
+  </div>
+  <script>
+    document.querySelectorAll(".answer-toggle").forEach(function(button){
+      button.addEventListener("click",function(){
+        var panel=document.getElementById(button.getAttribute("aria-controls"));
+        var opening=panel.hidden;
+        panel.hidden=!opening;
+        button.setAttribute("aria-expanded",String(opening));
+        button.textContent=opening ? "Hide sample answer" : "Reveal sample answer";
+      });
+    });
+
+    var questions=Array.from(document.querySelectorAll(".question"));
+    var score=document.getElementById("score-value");
+
+    function updateScore(){
+      var correct=questions.filter(function(question){return question.dataset.answered==="correct"}).length;
+      score.textContent=correct+" / "+questions.length;
+    }
+
+    questions.forEach(function(question){
+      var correctAnswer=question.dataset.correct;
+      var options=Array.from(question.querySelectorAll(".option"));
+      var feedback=question.querySelector(".feedback");
+      options.forEach(function(option){
+        option.addEventListener("click",function(){
+          if(question.dataset.answered)return;
+          var isCorrect=option.dataset.answer===correctAnswer;
+          question.dataset.answered=isCorrect?"correct":"incorrect";
+          options.forEach(function(choice){
+            choice.disabled=true;
+            if(choice.dataset.answer===correctAnswer)choice.classList.add("correct");
+          });
+          if(isCorrect){
+            feedback.textContent="Correct — well done.";
+            feedback.style.color="#d5ff5f";
+          }else{
+            option.classList.add("incorrect");
+            feedback.textContent="Not quite — the highlighted option is correct.";
+            feedback.style.color="#ffbd70";
+          }
+          updateScore();
+        });
+      });
+    });
+
+    document.getElementById("retry-quiz").addEventListener("click",function(){
+      questions.forEach(function(question){
+        delete question.dataset.answered;
+        var feedback=question.querySelector(".feedback");
+        feedback.textContent="";
+        feedback.style.color="";
+        question.querySelectorAll(".option").forEach(function(option){
+          option.disabled=false;
+          option.classList.remove("correct","incorrect");
+        });
+      });
+      updateScore();
+    });
+  </script>
+ </body>
+</html>
