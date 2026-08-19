@@ -1,0 +1,1216 @@
+<!doctype html>
+<html lang="en">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260818-23-8d3f73f","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architectural Patterns | Game Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root{
+      --ink:#06131d;
+      --panel:#0c2030;
+      --panel-2:#102b3f;
+      --line:rgba(181,230,255,.17);
+      --cyan:#62e8f5;
+      --lime:#d5ff5f;
+      --orange:#ffad4d;
+      --soft:#b9cad6;
+      --white:#eef8ff;
+      --danger:#ff8d7b;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--white);
+      background:var(--ink);
+      font-family:"DM Sans",sans-serif;
+    }
+
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{font:inherit}
+    button:focus-visible,a:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+
+    .app-shell{
+      width:100%;
+      min-height:100%;
+      overflow-x:hidden;
+      background:
+        linear-gradient(rgba(98,232,245,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(98,232,245,.035) 1px,transparent 1px),
+        radial-gradient(circle at 90% 3%,rgba(36,141,166,.36),transparent 32%),
+        radial-gradient(circle at 5% 48%,rgba(40,110,92,.16),transparent 28%),
+        var(--ink);
+      background-size:28px 28px,28px 28px,auto,auto;
+    }
+
+    .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+    .mono{font-family:"Space Mono",monospace}
+
+    .topbar{
+      border-bottom:1px solid rgba(181,230,255,.12);
+      background:rgba(6,19,29,.9);
+      backdrop-filter:blur(12px);
+    }
+
+    .topbar-inner{
+      min-height:88px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:14px 0;
+    }
+
+    .brand{display:flex;align-items:center;gap:13px}
+    .mark{
+      width:43px;
+      height:43px;
+      display:grid;
+      place-items:center;
+      color:var(--cyan);
+      border:1px solid rgba(181,230,255,.25);
+      border-radius:12px;
+      background:rgba(98,232,245,.1);
+    }
+
+    .eyebrow,.kicker{
+      margin:0;
+      color:#8fbbca;
+      font-size:11px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      line-height:1.5;
+    }
+
+    .kicker{color:var(--cyan)}
+    h1{margin:2px 0 0;font-size:25px;line-height:1.1}
+    h2{margin:8px 0 0;font-size:30px;line-height:1.2}
+    h3{margin:0;font-size:20px;line-height:1.25}
+    h4{margin:0;font-size:16px}
+
+    .badges{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{
+      padding:8px 12px;
+      color:#baf8ff;
+      font-size:13px;
+      font-weight:700;
+      border:1px solid rgba(181,230,255,.22);
+      border-radius:99px;
+      background:rgba(98,232,245,.09);
+    }
+    .badge.lime{
+      color:#e7ffac;
+      border-color:rgba(213,255,95,.24);
+      background:rgba(213,255,95,.1);
+    }
+
+    main{padding:28px 0 42px}
+
+    .hero{
+      position:relative;
+      min-height:440px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:#0a1f2d;
+      box-shadow:0 20px 55px rgba(0,0,0,.22);
+    }
+
+    .hero img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:.3;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg,rgba(6,19,29,.99),rgba(6,19,29,.85) 48%,rgba(6,19,29,.25));
+    }
+
+    .hero-content{position:relative;z-index:1;max-width:820px;padding:56px}
+    .tag{
+      display:inline-block;
+      padding:8px 11px;
+      color:var(--lime);
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      border:1px solid rgba(213,255,95,.24);
+      border-radius:99px;
+      background:rgba(6,19,29,.64);
+    }
+
+    .hero h2{margin:20px 0 0;font-size:clamp(38px,6vw,66px);line-height:1.03}
+    .hero p{max-width:690px;margin:20px 0 0;color:#d7e7ef;font-size:18px;line-height:1.65}
+
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:13px 18px;
+      color:#edfaff;
+      font-size:15px;
+      font-weight:700;
+      text-decoration:none;
+      cursor:pointer;
+      border:1px solid transparent;
+      border-radius:12px;
+      transition:.18s ease;
+    }
+
+    .btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+    .primary{color:#06202b;background:var(--cyan)}
+    .secondary{border-color:rgba(181,230,255,.25);background:rgba(6,19,29,.52)}
+
+    .section{
+      margin-top:30px;
+      padding:28px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:rgba(10,31,45,.9);
+      box-shadow:0 20px 55px rgba(0,0,0,.18);
+    }
+
+    .rule{width:74px;height:4px;margin:14px 0 18px;border-radius:20px;background:var(--cyan)}
+    .copy{color:#c5d7e1;line-height:1.7}
+    .grid{display:grid;gap:16px}
+    .two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+
+    .objective,.mini-card,.activity{
+      padding:17px;
+      color:#d9edf5;
+      line-height:1.58;
+      border:1px solid rgba(181,230,255,.16);
+      border-radius:14px;
+      background:rgba(255,255,255,.035);
+    }
+
+    .objective{background:rgba(98,232,245,.055)}
+    .lime-card{border-color:rgba(213,255,95,.19);background:rgba(213,255,95,.075)}
+    .orange-card{border-color:rgba(255,173,77,.21);background:rgba(255,173,77,.07)}
+
+    .callout{
+      margin-top:18px;
+      padding:20px;
+      color:#ffe1bc;
+      border:1px solid rgba(255,173,77,.28);
+      border-radius:16px;
+      background:rgba(255,173,77,.08);
+    }
+
+    .callout p{line-height:1.65}
+    .list{margin:14px 0 0;padding-left:20px;color:#c5d7e1;line-height:1.85}
+    .term{color:#eaf7ff;font-weight:700}
+
+    .diagram{
+      margin-top:20px;
+      padding:25px 18px;
+      color:#c9f9ff;
+      text-align:center;
+      white-space:pre-wrap;
+      line-height:1.75;
+      border:1px solid rgba(98,232,245,.2);
+      border-radius:16px;
+      background:rgba(98,232,245,.05);
+    }
+
+    .diagram.lime{
+      color:#e8ffc0;
+      border-color:rgba(213,255,95,.24);
+      background:rgba(213,255,95,.06);
+    }
+
+    .table-wrap{margin-top:18px;overflow-x:auto}
+    table{width:100%;min-width:680px;border-collapse:collapse;text-align:left}
+    th{padding:13px;color:var(--cyan);border-bottom:1px solid rgba(181,230,255,.17)}
+    td{padding:13px;color:#c5d7e1;vertical-align:top;border-bottom:1px solid rgba(181,230,255,.09)}
+    td:first-child{color:#eaf7ff;font-weight:700}
+
+    .pattern-grid{display:grid;gap:15px;margin-top:20px}
+    .pattern-card{
+      padding:20px;
+      border-left:3px solid var(--cyan);
+      background:rgba(255,255,255,.025);
+    }
+    .pattern-card h3{color:#eaf7ff;font-size:19px}
+
+    .answer-toggle{
+      margin-top:16px;
+      padding:10px 13px;
+      color:#d9faff;
+      font-weight:700;
+      cursor:pointer;
+      border:1px solid rgba(98,232,245,.35);
+      border-radius:9px;
+      background:transparent;
+    }
+
+    .answer{
+      margin-top:14px;
+      padding:15px;
+      color:#e8ffc0;
+      line-height:1.65;
+      border:1px solid rgba(213,255,95,.21);
+      border-radius:11px;
+      background:rgba(213,255,95,.08);
+    }
+
+    [hidden]{display:none!important}
+
+    .quiz-head{display:flex;align-items:start;justify-content:space-between;gap:16px}
+    .score{
+      min-width:112px;
+      padding:13px 17px;
+      text-align:center;
+      border:1px solid rgba(213,255,95,.25);
+      border-radius:15px;
+      background:rgba(213,255,95,.1);
+    }
+
+    .score p{margin:0}
+    .score .mono{margin-top:4px;color:var(--lime);font-size:23px;font-weight:700}
+
+    .question{
+      margin-top:18px;
+      padding:20px;
+      border:1px solid rgba(181,230,255,.16);
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+    }
+
+    .options{display:grid;gap:8px;margin-top:14px}
+    .option{
+      width:100%;
+      padding:12px 14px;
+      color:#eaf7ff;
+      text-align:left;
+      cursor:pointer;
+      border:1px solid rgba(185,202,214,.25);
+      border-radius:11px;
+      background:rgba(255,255,255,.035);
+      transition:.18s ease;
+    }
+
+    .option:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.1)}
+    .option.correct{color:#efffdc;border-color:#98e852;background:rgba(128,214,71,.17)}
+    .option.incorrect{color:#ffe4df;border-color:var(--danger);background:rgba(255,102,91,.14)}
+    .feedback{min-height:22px;margin:12px 0 0;font-size:14px;font-weight:700}
+
+    .footer{
+      padding:22px 0;
+      color:#8fabb9;
+      font-size:14px;
+      border-top:1px solid rgba(181,230,255,.1);
+    }
+
+    @media(max-width:800px){
+      .topbar-inner,.split{display:block}
+      .badges{margin-top:13px}
+      .hero-content{padding:34px 25px}
+      .hero::after{background:linear-gradient(0deg,rgba(6,19,29,.98),rgba(6,19,29,.75) 60%,rgba(6,19,29,.2))}
+      .two,.three{grid-template-columns:1fr}
+      .section{padding:22px}
+      .quiz-head{display:block}
+      .score{width:max-content;margin-top:16px}
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
+  <script src="/_sdk/d97541380e824b1a.editing_sdk.js" type="text/javascript" integrity="sha512-iBVkuiyctyjmaqUwrsoYSc/nxwymdEKZMKPeBCNj6uN/7hFPTiMVeunYJjJVnUh1GNECKEyCerl7IHtlqhzSYQ=="></script>
+  <script src="/_sdk/eba18683f23e5798.resizing_sdk.js" type="text/javascript" integrity="sha512-E0UWUllhwPXaNJtjyTKXWKrIE+FruPfFpO4mRmMDP2LI+U9bOizy5npCq6xx/JyWcvSK7D3TFf2wFR2Mha9kbA=="></script>
+ </head>
+ <body>
+  <div class="app-shell">
+   <header class="topbar">
+    <div class="wrap topbar-inner">
+     <div class="brand">
+      <div class="mark" aria-hidden="true">
+       <i data-lucide="network"></i>
+      </div>
+      <div>
+       <p class="eyebrow mono">Course · System Integration and Architecture — Game Development</p>
+       <h1>Midterm Lesson 2: Architectural Patterns</h1>
+      </div>
+     </div>
+     <div class="badges"><span class="badge">BSIT 3 Game Development</span> <span class="badge lime">Midterm Lesson</span>
+     </div>
+    </div>
+   </header>
+   <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title"><img src="https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="Abstract green matrix code background with binary style" loading="lazy">
+     <div class="hero-content"><span class="tag mono">Architecture lab · game development</span>
+      <h2 id="hero-title">Choose structures that fit the game you need to build.</h2>
+      <p>Explore the architectural patterns that help game teams organize systems, reduce unnecessary coupling, support multiplayer features, and build games that can evolve over time.</p>
+      <div class="actions"><a class="btn primary" href="#lesson"><i data-lucide="play" aria-hidden="true"></i> Start the lesson</a> <a class="btn secondary" href="#knowledge-check"><i data-lucide="circle-help" aria-hidden="true"></i> Knowledge check</a>
+      </div>
+     </div>
+    </section>
+    <section id="lesson" class="section">
+     <p class="kicker mono">I. Learning Objectives</p>
+     <h2>What you should be able to do</h2>
+     <div class="rule"></div>
+     <p class="copy">At the end of this lesson, students should be able to:</p>
+     <div class="grid three" style="margin-top:20px">
+      <div class="objective">
+       Define architectural patterns in simple terms.
+      </div>
+      <div class="objective">
+       Explain why architectural patterns are important in software and game development.
+      </div>
+      <div class="objective">
+       Differentiate architecture, architectural patterns, design patterns, and frameworks.
+      </div>
+      <div class="objective">
+       Explain common architectural patterns used in software systems.
+      </div>
+      <div class="objective">
+       Identify an appropriate pattern for a game-development problem.
+      </div>
+      <div class="objective">
+       Explain the advantages and disadvantages of different patterns.
+      </div>
+      <div class="objective">
+       Apply architectural patterns to game-development scenarios.
+      </div>
+      <div class="objective">
+       Design a simple game architecture using an appropriate pattern.
+      </div>
+      <div class="objective">
+       Analyze how multiple patterns can work together in one game.
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">II–III. Introduction and Simple Definition</p>
+     <h2>What is an architectural pattern?</h2>
+     <div class="rule"></div>
+     <p class="copy">Software architecture is the overall structure of a software system and the way its major parts communicate with each other. An architectural pattern is a commonly used way of organizing that structure.</p>
+     <div class="split">
+      <div class="mini-card orange-card">
+       <h3 style="color:#fff0db">Think about a house</h3>
+       <p class="copy">A bungalow, apartment, townhouse, and two-story home can all provide shelter, but each organizes rooms and connections differently. Software systems also need a structure that fits their purpose.</p>
+      </div>
+      <div class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Think about a game</h3>
+       <p class="copy">An online multiplayer game might organize communication using clients, a game server, and a database. That reusable organization is called Client-Server Architecture.</p>
+      </div>
+     </div>
+     <div class="callout">
+      <p class="kicker mono" style="color:#ffbd70">Simple definition</p>
+      <h3 style="margin-top:8px;color:#fff0db">Architectural Pattern = a reusable solution for organizing the major parts of a software system and defining how those parts communicate.</h3>
+     </div>
+     <div class="diagram mono">
+      PLAYER ↓ GAME CLIENT ↓ GAME SERVER ↓ DATABASE CLIENT-SERVER ARCHITECTURE
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">IV. Important Jargons</p>
+     <h2>Vocabulary for architectural thinking</h2>
+     <div class="rule"></div>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Term</th>
+         <th>Simple Definition</th>
+         <th>Game Example</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Pattern</td>
+         <td>A proven solution to a recurring problem</td>
+         <td>Client-Server</td>
+        </tr>
+        <tr>
+         <td>Architecture</td>
+         <td>Overall structure of a system</td>
+         <td>Structure of an RPG</td>
+        </tr>
+        <tr>
+         <td>Architectural Pattern</td>
+         <td>A reusable way to organize a system</td>
+         <td>Layered Architecture</td>
+        </tr>
+        <tr>
+         <td>Design Pattern</td>
+         <td>A reusable solution to a smaller design problem</td>
+         <td>Observer Pattern</td>
+        </tr>
+        <tr>
+         <td>Framework</td>
+         <td>A reusable software foundation</td>
+         <td>Unity, Laravel</td>
+        </tr>
+        <tr>
+         <td>Component</td>
+         <td>A major part of a system</td>
+         <td>Inventory System</td>
+        </tr>
+        <tr>
+         <td>Module</td>
+         <td>A smaller organized part of software</td>
+         <td>Weapon Module</td>
+        </tr>
+        <tr>
+         <td>Layer</td>
+         <td>A level of responsibility in an architecture</td>
+         <td>Presentation Layer</td>
+        </tr>
+        <tr>
+         <td>Client</td>
+         <td>Software requesting a service</td>
+         <td>Game application</td>
+        </tr>
+        <tr>
+         <td>Server</td>
+         <td>System providing a service</td>
+         <td>Multiplayer server</td>
+        </tr>
+        <tr>
+         <td>Event</td>
+         <td>Something that happens in a system</td>
+         <td>PlayerDied</td>
+        </tr>
+        <tr>
+         <td>Repository</td>
+         <td>Central place for storing or retrieving data</td>
+         <td>Player data repository</td>
+        </tr>
+        <tr>
+         <td>Coupling</td>
+         <td>Degree of dependency between components</td>
+         <td>Combat tightly connected to Inventory</td>
+        </tr>
+        <tr>
+         <td>Cohesion</td>
+         <td>How related a component's responsibilities are</td>
+         <td>Inventory handles inventory tasks</td>
+        </tr>
+        <tr>
+         <td>Scalability</td>
+         <td>Ability to handle growth</td>
+         <td>Supporting more players</td>
+        </tr>
+        <tr>
+         <td>Maintainability</td>
+         <td>Ease of modifying the system</td>
+         <td>Adding a new weapon</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">V–VI. Patterns and Why They Matter</p>
+     <h2>Architectural pattern vs. design pattern</h2>
+     <div class="rule"></div>
+     <div class="grid two">
+      <article class="mini-card">
+       <h3>Architectural Pattern</h3>
+       <p class="copy">Deals with the overall structure of the system: its major parts and their communication.</p>
+       <div class="diagram mono">
+        CLIENT ↓ SERVER ↓ DATABASE
+       </div>
+       <p class="copy"><strong>Easy memory tip:</strong> Architectural Pattern = big picture.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Design Pattern</h3>
+       <p class="copy">Deals with a smaller programming or design problem inside the larger system.</p>
+       <div class="diagram mono">
+        ENEMY DIES ↓ OBSERVER ├── Score ├── Quest └── UI
+       </div>
+       <p class="copy"><strong>Easy memory tip:</strong> Design Pattern = smaller solution inside the system.</p>
+      </article>
+     </div>
+     <div class="callout">
+      <h3 style="color:#fff0db">Good architectural choices make systems easier to understand, maintain, test, debug, expand, and integrate.</h3>
+      <p>Without planned responsibilities, changing inventory may break combat, changing UI may break saving, and changing the database may affect player features.</p>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">VII. Major Architectural Patterns</p>
+     <h2>Nine patterns for this lesson</h2>
+     <div class="rule"></div>
+     <div class="grid three">
+      <div class="objective">
+       <strong>Layered</strong><br>
+       Divide responsibilities into levels.
+      </div>
+      <div class="objective">
+       <strong>Client-Server</strong><br>
+       Clients request services from a server.
+      </div>
+      <div class="objective">
+       <strong>MVC</strong><br>
+       Separate Model, View, and Controller.
+      </div>
+      <div class="objective">
+       <strong>Component-Based</strong><br>
+       Build objects from reusable components.
+      </div>
+      <div class="objective">
+       <strong>Event-Driven</strong><br>
+       Systems respond to events.
+      </div>
+      <div class="objective">
+       <strong>Microservices</strong><br>
+       Divide a large platform into services.
+      </div>
+      <div class="objective">
+       <strong>Repository</strong><br>
+       Separate data access from game logic.
+      </div>
+      <div class="objective">
+       <strong>Pipe-and-Filter</strong><br>
+       Process data through sequential stages.
+      </div>
+      <div class="objective">
+       <strong>Peer-to-Peer</strong><br>
+       Peers communicate directly.
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">VIII–XV. Pattern 1</p>
+     <h2>Layered Architecture</h2>
+     <div class="rule"></div>
+     <p class="copy">Layered Architecture divides software into different layers. Each layer has a focused responsibility and usually communicates with nearby layers instead of directly accessing everything.</p>
+     <div class="diagram mono">
+      ┌──────────────────────────────┐ │ Presentation Layer │ ├──────────────────────────────┤ │ Business Logic │ ├──────────────────────────────┤ │ Data Access Layer │ ├──────────────────────────────┤ │ Data Storage │ └──────────────────────────────┘
+     </div>
+     <div class="grid two" style="margin-top:18px">
+      <div class="mini-card">
+       <h3>Presentation Layer</h3>
+       <p class="copy">Handles what players see and interact with: menus, HUD, inventory screens, settings, pause menus, and character screens.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Business Logic</h3>
+       <p class="copy">Handles game rules such as calculating damage, reducing HP, checking death, validating purchases, or completing a quest.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Data Access</h3>
+       <p class="copy">Loads and saves player data, inventories, leaderboards, and other stored records.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Data Storage</h3>
+       <p class="copy">Contains actual information in MySQL, SQLite, JSON files, local files, or cloud databases.</p>
+      </div>
+     </div>
+     <div class="diagram lime mono">
+      PLAYER ↓ SHOP UI ↓ SHOP LOGIC ↓ INVENTORY SERVICE ↓ DATA ACCESS ↓ DATABASE
+     </div>
+     <div class="split" style="margin-top:18px">
+      <div class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Advantages</h3>
+       <ul class="list">
+        <li>Easy to understand</li>
+        <li>Clear responsibilities</li>
+        <li>Easier maintenance and testing</li>
+        <li>Components can change independently</li>
+       </ul>
+      </div>
+      <div class="mini-card orange-card">
+       <h3 style="color:#fff0db">Disadvantages</h3>
+       <ul class="list">
+        <li>Can become rigid</li>
+        <li>Many layers can complicate communication</li>
+        <li>May add overhead for very small games</li>
+       </ul>
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">XVI–XX. Pattern 2</p>
+     <h2>Client-Server Architecture</h2>
+     <div class="rule"></div>
+     <p class="copy">Client-Server Architecture divides a system into clients that request services and servers that provide services. It is one of the most important patterns for online and multiplayer games.</p>
+     <div class="diagram mono">
+      PLAYER 1 ──┐ PLAYER 2 ──┼──→ GAME SERVER ──→ DATABASE PLAYER 3 ──┘
+     </div>
+     <div class="split">
+      <article class="mini-card">
+       <h3>Client</h3>
+       <p class="copy">The client is the game application used by the player on a PC, phone, console, or web browser. It may handle graphics, input, UI, animation, and local gameplay processing.</p>
+      </article>
+      <article class="mini-card">
+       <h3>Server</h3>
+       <p class="copy">The server manages shared services such as player accounts, multiplayer state, matchmaking, sessions, leaderboards, authentication, and database communication.</p>
+      </article>
+     </div>
+     <div class="diagram lime mono">
+      PLAYER A ATTACKS PLAYER B ↓ ATTACK REQUEST ↓ SERVER VALIDATES ATTACK ↓ UPDATE GAME STATE ↓ PLAYER B HP = 50 ↓ SEND RESULT TO CLIENTS
+     </div>
+     <p class="copy"><span class="term">Authority</span> means deciding which information is correct. In many competitive games, the server is authoritative: it decides whether an attack really hit and whether the result is valid.</p>
+    </section>
+    <section class="section">
+     <p class="kicker mono">XXI–XXIV. Pattern 3</p>
+     <h2>MVC: Model, View, Controller</h2>
+     <div class="rule"></div>
+     <div class="grid three">
+      <article class="mini-card">
+       <h3>Model</h3>
+       <p class="copy">Contains data and data-related rules.</p>
+       <div class="diagram mono">
+        PLAYER ├── Name ├── Level ├── HP └── XP
+       </div>
+      </article>
+      <article class="mini-card">
+       <h3>View</h3>
+       <p class="copy">Displays information to the player.</p>
+       <div class="diagram mono">
+        PLAYER STATUS Name: Aria Level: 10 HP: 80 / 100 XP: 500
+       </div>
+      </article>
+      <article class="mini-card">
+       <h3>Controller</h3>
+       <p class="copy">Receives input and coordinates actions.</p>
+       <div class="diagram mono">
+        CLICK EQUIP ↓ CONTROLLER ↓ MODEL ↓ UPDATE VIEW
+       </div>
+      </article>
+     </div>
+     <p class="copy">MVC is useful for game launchers, account systems, inventories, leaderboards, online game portals, administrative systems, and UI-heavy applications. It may be less suitable for the real-time gameplay loop of a small game.</p>
+    </section>
+    <section class="section">
+     <p class="kicker mono">XXV–XXIX. Pattern 4</p>
+     <h2>Component-Based Architecture</h2>
+     <div class="rule"></div>
+     <p class="copy">Component-Based Architecture is extremely important in game development. Instead of creating one huge object, developers divide functionality into reusable components.</p>
+     <div class="diagram mono">
+      PLAYER │ ├── Transform ├── Movement ├── Health ├── Combat ├── Inventory ├── Animation └── Audio
+     </div>
+     <div class="grid three" style="margin-top:18px">
+      <div class="mini-card">
+       <h3>Health Component</h3>
+       <p class="copy">Manages current HP, maximum HP, damage, healing, and death.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Movement Component</h3>
+       <p class="copy">Manages movement, jumping, sprinting, and movement state.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Inventory Component</h3>
+       <p class="copy">Adds, removes, finds, and organizes game items.</p>
+      </div>
+     </div>
+     <div class="diagram lime mono">
+      PLAYER ────────┐ ENEMY ─────────┤ BOSS ──────────┼──→ HEALTH COMPONENT NPC ───────────┘
+     </div>
+     <p class="copy">A chest may use Transform, Interactable, Inventory, Animation, and Audio components. An enemy may use Transform, Health, AI, Combat, Animation, and Audio. Components can be combined according to the needs of each object.</p>
+    </section>
+    <section class="section">
+     <p class="kicker mono">XXX–XXXIII. Pattern 5</p>
+     <h2>Event-Driven Architecture</h2>
+     <div class="rule"></div>
+     <p class="copy">An event is something that happens in a system. In Event-Driven Architecture, systems announce events and other interested systems respond independently.</p>
+     <div class="split">
+      <article class="mini-card">
+       <h3>Coin collected</h3>
+       <div class="diagram mono">
+        PLAYER COLLECTS COIN ↓ CoinCollected EVENT ↓ SCORE · AUDIO · UI +10 SOUND UPDATE
+       </div>
+      </article>
+      <article class="mini-card">
+       <h3>Player dies</h3>
+       <div class="diagram mono">
+        PLAYER HP = 0 ↓ PlayerDied EVENT ↓ UI · AUDIO · SAVE · GAME MANAGER
+       </div>
+      </article>
+     </div>
+     <div class="split" style="margin-top:18px">
+      <div class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Advantages</h3>
+       <ul class="list">
+        <li>Loose coupling</li>
+        <li>Multiple systems can respond</li>
+        <li>Easy to add listeners</li>
+        <li>Useful for complex games</li>
+       </ul>
+      </div>
+      <div class="mini-card orange-card">
+       <h3 style="color:#fff0db">Disadvantages</h3>
+       <ul class="list">
+        <li>Harder to trace actions</li>
+        <li>Too many events can confuse teams</li>
+        <li>Requires good event management</li>
+       </ul>
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">XXXIV–XLV. Patterns 6–9</p>
+     <h2>More patterns for larger systems</h2>
+     <div class="rule"></div>
+     <div class="pattern-grid">
+      <article class="pattern-card">
+       <h3>Microservices Architecture</h3>
+       <p class="copy">A platform is divided into small independent services with focused responsibilities. An online game platform may use separate Authentication, Matchmaking, Leaderboard, Payment, and Game services.</p>
+       <div class="diagram mono">
+        GAME PLATFORM │ ┌────┼─────┐ ↓ ↓ ↓ AUTH MATCH LEADERBOARD ↓ GAME SERVICES
+       </div>
+       <p class="copy"><strong>Use it carefully:</strong> Microservices may help a huge online platform, but they are usually unnecessary for a small student project or offline RPG.</p>
+      </article>
+      <article class="pattern-card">
+       <h3>Repository Pattern</h3>
+       <p class="copy">A Repository lets application code access data without directly depending on a database implementation. This makes it easier to replace MySQL, local files, or a cloud database later.</p>
+       <div class="diagram mono">
+        PLAYER SERVICE ↓ PLAYER REPOSITORY ↓ DATABASE
+       </div>
+      </article>
+      <article class="pattern-card">
+       <h3>Pipe-and-Filter Architecture</h3>
+       <p class="copy">Data passes through a series of processing stages. Each filter processes information and sends it to the next stage.</p>
+       <div class="diagram mono">
+        KEYBOARD INPUT ↓ INPUT FILTER ↓ MOVEMENT FILTER ↓ COLLISION FILTER ↓ ANIMATION FILTER ↓ PLAYER MOVEMENT
+       </div>
+      </article>
+      <article class="pattern-card">
+       <h3>Peer-to-Peer Architecture</h3>
+       <p class="copy">Computers communicate directly with each other rather than relying entirely on a central server. It can reduce central-server dependence but creates security, cheating, synchronization, and connection-quality concerns.</p>
+       <div class="diagram mono">
+        PLAYER A ←→ PLAYER B ↕ ↕ PLAYER C ←→ PLAYER D
+       </div>
+      </article>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">XLVI–L. Comparison and Selection</p>
+     <h2>Choose the pattern that fits the problem</h2>
+     <div class="rule"></div>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Pattern</th>
+         <th>Main Idea</th>
+         <th>Game Use</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Layered</td>
+         <td>Divide a system into responsibility levels</td>
+         <td>Game management systems, save systems</td>
+        </tr>
+        <tr>
+         <td>Client-Server</td>
+         <td>Clients communicate with a central server</td>
+         <td>Multiplayer games</td>
+        </tr>
+        <tr>
+         <td>MVC</td>
+         <td>Separate Model, View, and Controller</td>
+         <td>UI-heavy applications</td>
+        </tr>
+        <tr>
+         <td>Component-Based</td>
+         <td>Build objects from reusable components</td>
+         <td>Gameplay objects</td>
+        </tr>
+        <tr>
+         <td>Event-Driven</td>
+         <td>Components respond to events</td>
+         <td>Game events and notifications</td>
+        </tr>
+        <tr>
+         <td>Microservices</td>
+         <td>Divide a large platform into services</td>
+         <td>Large online platforms</td>
+        </tr>
+        <tr>
+         <td>Repository</td>
+         <td>Separate data access from logic</td>
+         <td>Save and data systems</td>
+        </tr>
+        <tr>
+         <td>Pipe-and-Filter</td>
+         <td>Process data through stages</td>
+         <td>Input and rendering pipelines</td>
+        </tr>
+        <tr>
+         <td>Peer-to-Peer</td>
+         <td>Peers communicate directly</td>
+         <td>Some multiplayer systems</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <div class="split" style="margin-top:20px">
+      <article class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Scenario A: Small offline platformer</h3>
+       <p class="copy">One player, no database, no multiplayer, and ten levels.</p>
+       <p class="copy"><strong>Possible choice:</strong> Component-Based Architecture because reusable gameplay components can organize players, enemies, pickups, and level objects.</p>
+      </article>
+      <article class="mini-card orange-card">
+       <h3 style="color:#fff0db">Scenario B: Online MMORPG</h3>
+       <p class="copy">Thousands of players, accounts, multiplayer, database, chat, and leaderboards.</p>
+       <p class="copy"><strong>Possible choice:</strong> Client-Server + Layered + Component-Based + Event-Driven + Microservices.</p>
+      </article>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">LI. Game Development Case Study</p>
+     <h2>Case Study: Battle Arena</h2>
+     <div class="rule"></div>
+     <p class="copy">Your team is creating a 5v5 multiplayer battle arena with player accounts, character selection, weapons, skills, health, matchmaking, leaderboards, database support, game UI, sound effects, and player statistics.</p>
+     <div class="grid two" style="margin-top:20px">
+      <div class="mini-card">
+       <h3>Communication between players?</h3>
+       <p class="copy"><strong>Client-Server Architecture.</strong> A central server can validate actions and maintain shared state.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Gameplay functionality?</h3>
+       <p class="copy"><strong>Component-Based Architecture.</strong> A player may have Health, Movement, Combat, Weapon, and Skill components.</p>
+      </div>
+      <div class="mini-card">
+       <h3>What happens when a player dies?</h3>
+       <p class="copy"><strong>Event-Driven Architecture.</strong> UI, Audio, Score, Respawn, and Statistics systems can react to PlayerDied.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Separate UI, logic, and data?</h3>
+       <p class="copy"><strong>Layered Architecture.</strong> It provides clear responsibility boundaries between presentation, rules, services, and storage.</p>
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">LII–LIII. Individual Activities</p>
+     <h2>Practice identifying architecture patterns</h2>
+     <div class="rule"></div>
+     <article class="activity"><span class="tag mono">Activity 1 · Choose the Pattern</span>
+      <p class="copy">Identify the most appropriate architectural pattern for each scenario.</p>
+      <ol class="list">
+       <li>A multiplayer RPG needs a central server that manages players and game state.</li>
+       <li>A game object needs Health, Movement, Audio, and AI as separate reusable components.</li>
+       <li>Several systems need to react whenever a player completes a quest.</li>
+       <li>A system needs to separate its user interface, data, and input-handling logic.</li>
+       <li>A large platform has separate authentication, matchmaking, payment, and leaderboard services.</li>
+       <li>A system needs to separate game logic from database implementation.</li>
+       <li>Data must pass through processing stages before final output.</li>
+       <li>Computers communicate directly without entirely relying on a central server.</li>
+      </ol><button class="answer-toggle" type="button" aria-expanded="false" aria-controls="activity-one-answer">Reveal sample answers</button>
+      <div id="activity-one-answer" class="answer" hidden>
+       1. Client-Server Architecture<br>
+        2. Component-Based Architecture<br>
+        3. Event-Driven Architecture<br>
+        4. MVC Architecture<br>
+        5. Microservices Architecture<br>
+        6. Repository Pattern<br>
+        7. Pipe-and-Filter Architecture<br>
+        8. Peer-to-Peer Architecture
+      </div>
+     </article>
+     <article class="activity" style="margin-top:18px"><span class="tag mono">Activity 2 · Architecture Analysis</span>
+      <h3 style="margin-top:17px">Scenario: Horror Game</h3>
+      <p class="copy">You are developing a horror game with a Player, Monster, Inventory, Health, Flashlight, Doors, Audio, Save System, and UI.</p>
+      <ol class="list">
+       <li>Identify five components.</li>
+       <li>Give each component a responsibility.</li>
+       <li>Choose a pattern for organizing game objects and explain why.</li>
+       <li>The monster dies and Score, Audio, and Quest systems need to respond. Which pattern is appropriate?</li>
+       <li>Draw a simple architecture diagram.</li>
+      </ol><button class="answer-toggle" type="button" aria-expanded="false" aria-controls="activity-two-answer">Reveal sample guidance</button>
+      <div id="activity-two-answer" class="answer" hidden>
+       Possible components: Movement, Health, Inventory, Flashlight, Monster AI, Door Interaction, Audio, Save, and UI. Component-Based Architecture is appropriate because each game object can combine reusable behaviors. Event-Driven Architecture is appropriate for MonsterDied because Score, Audio, and Quest systems can respond without direct tight coupling.
+      </div>
+     </article>
+    </section>
+    <section class="section">
+     <p class="kicker mono">LIV–LIX. Group Activity</p>
+     <h2>You are the game architects</h2>
+     <div class="rule"></div>
+     <p class="copy">Form groups of four to five students. Choose one game concept: Multiplayer FPS, Open-World RPG, Horror Survival Game, Racing Game, or Mobile Strategy Game.</p>
+     <div class="grid two">
+      <div class="mini-card">
+       <h3>Group Task 1: Requirements</h3>
+       <p class="copy">Write at least five functional requirements, such as attacking enemies, saving progress, joining matches, earning rewards, or viewing leaderboards.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Group Task 2: Components</h3>
+       <p class="copy">Identify at least ten components. Examples include Player, Combat, Inventory, Quest, Enemy AI, UI, Audio, Save, Authentication, and Leaderboard.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Group Task 3: Select Patterns</h3>
+       <p class="copy">Choose at least two patterns and explain why each pattern fits the game requirements.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Group Task 4: Architecture Diagram</h3>
+       <p class="copy">Show the player, game client, gameplay systems, UI, server if needed, database if needed, and communication paths.</p>
+      </div>
+     </div>
+     <div class="callout">
+      <h3 style="color:#fff0db">Architecture defense questions</h3>
+      <p>Why did you choose this architecture? What happens when the player dies? What happens when saving fails? Which component has the most dependencies? How can unnecessary coupling be reduced? How can the game support future features?</p>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">LX–LXIII. Rubric and Design Thinking</p>
+     <h2>Think like a game architect</h2>
+     <div class="rule"></div>
+     <div class="split">
+      <div class="mini-card">
+       <h3>Group Rubric</h3>
+       <div class="table-wrap">
+        <table style="min-width:0">
+         <thead>
+          <tr>
+           <th>Criteria</th>
+           <th>Points</th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>Identification of components</td>
+           <td>20</td>
+          </tr>
+          <tr>
+           <td>Appropriate architectural patterns</td>
+           <td>20</td>
+          </tr>
+          <tr>
+           <td>Explanation and justification</td>
+           <td>20</td>
+          </tr>
+          <tr>
+           <td>Architecture diagram</td>
+           <td>20</td>
+          </tr>
+          <tr>
+           <td>Game-development relevance</td>
+           <td>10</td>
+          </tr>
+          <tr>
+           <td>Presentation and teamwork</td>
+           <td>10</td>
+          </tr>
+          <tr>
+           <td><strong>Total</strong></td>
+           <td><strong>100</strong></td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+      <div class="mini-card">
+       <h3>Questions to ask</h3>
+       <ol class="list">
+        <li>What are the major components?</li>
+        <li>What is each component responsible for?</li>
+        <li>How do components communicate?</li>
+        <li>Which components depend on each other?</li>
+        <li>Can each component be reused?</li>
+        <li>What happens when something fails?</li>
+        <li>Can new features be added easily?</li>
+        <li>Is the architecture more complex than the actual problem requires?</li>
+       </ol>
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">LXIV. Quick Review</p>
+     <h2>The essential ideas to remember</h2>
+     <div class="rule"></div>
+     <div class="grid three">
+      <div class="objective">
+       <strong>Layered</strong><br>
+       Separates software into responsibility layers.
+      </div>
+      <div class="objective">
+       <strong>Client-Server</strong><br>
+       Separates clients from central servers.
+      </div>
+      <div class="objective">
+       <strong>MVC</strong><br>
+       Separates Model, View, and Controller.
+      </div>
+      <div class="objective">
+       <strong>Component-Based</strong><br>
+       Builds functionality from reusable components.
+      </div>
+      <div class="objective">
+       <strong>Event-Driven</strong><br>
+       Lets systems react to events.
+      </div>
+      <div class="objective">
+       <strong>Microservices</strong><br>
+       Divides large applications into services.
+      </div>
+      <div class="objective">
+       <strong>Repository</strong><br>
+       Separates application logic from data access.
+      </div>
+      <div class="objective">
+       <strong>Pipe-and-Filter</strong><br>
+       Processes data in sequential stages.
+      </div>
+      <div class="objective">
+       <strong>Peer-to-Peer</strong><br>
+       Lets systems communicate directly.
+      </div>
+     </div>
+    </section>
+    <section id="knowledge-check" class="section">
+     <div class="quiz-head">
+      <div>
+       <p class="kicker mono">LXV. Quick Check</p>
+       <h2>Test your architecture knowledge</h2>
+       <div class="rule"></div>
+       <p class="copy">Choose one answer for each question. Feedback appears immediately.</p>
+      </div>
+      <div class="score">
+       <p class="kicker mono" style="color:#e8ffc0">Your score</p>
+       <p id="score-value" class="mono" aria-live="polite">0 / 5</p>
+      </div>
+     </div>
+     <article class="question" data-correct="a">
+      <h3>1. Which pattern is usually most appropriate for a multiplayer game with a central game server?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Client-Server Architecture</button> <button class="option" type="button" data-answer="b">Peer-to-Peer Architecture only</button> <button class="option" type="button" data-answer="c">Repository Pattern only</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: Client-Server Architecture. It supports shared state, multiplayer communication, authority, accounts, and server-side services.</p>
+     </article>
+     <article class="question" data-correct="c">
+      <h3>2. A player has separate Health, Movement, Combat, and Inventory features. Which pattern does this demonstrate?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Layered Architecture</button> <button class="option" type="button" data-answer="b">Microservices Architecture</button> <button class="option" type="button" data-answer="c">Component-Based Architecture</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: Component-Based Architecture. It organizes objects through focused, reusable behaviors or components.</p>
+     </article>
+     <article class="question" data-correct="b">
+      <h3>3. When an enemy dies, Score, Audio, Quest, and UI systems all react. Which pattern is useful?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">MVC</button> <button class="option" type="button" data-answer="b">Event-Driven Architecture</button> <button class="option" type="button" data-answer="c">Pipe-and-Filter Architecture</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: Event-Driven Architecture. The game can announce an EnemyDied event and independent systems can respond.</p>
+     </article>
+     <article class="question" data-correct="a">
+      <h3>4. Which pattern separates Presentation, Business Logic, Data Access, and Data Storage?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Layered Architecture</button> <button class="option" type="button" data-answer="b">Peer-to-Peer Architecture</button> <button class="option" type="button" data-answer="c">Component-Based Architecture</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: Layered Architecture. Each layer has a focused responsibility and communicates through defined boundaries.</p>
+     </article>
+     <article class="question" data-correct="c">
+      <h3>5. Why should architecture be selected based on game requirements?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">The most complicated pattern is always the best.</button> <button class="option" type="button" data-answer="b">Every game must use exactly one pattern.</button> <button class="option" type="button" data-answer="c">Different game sizes, features, teams, and data needs require different solutions.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: Different requirements need different approaches. A small offline game may not need microservices, while a huge online platform may need several combined patterns.</p>
+     </article>
+     <div class="actions"><button id="retry-quiz" class="btn secondary" type="button"><i data-lucide="rotate-ccw" aria-hidden="true"></i> Retry quiz</button> <button id="review-answers" class="btn primary" type="button"><i data-lucide="list-checks" aria-hidden="true"></i> Show answer review</button>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">LXVI–LXVII. Final Challenge and Summary</p>
+     <h2>Architect before you code</h2>
+     <div class="rule"></div>
+     <p class="copy">Before beginning a game project, do not immediately start writing detailed code. First determine the game type, target users, major systems, responsibilities, communication paths, data storage requirements, multiplayer needs, and patterns that fit the requirements.</p>
+     <div class="diagram lime mono">
+      GAME │ ├── COMPONENTS ├── EVENTS ├── CLIENT │ ↓ │ SERVER │ ↓ └──── DATA ↓ DATABASE THE BEST ARCHITECTURE IS NOT THE MOST COMPLICATED ONE. THE BEST ARCHITECTURE APPROPRIATELY SOLVES THE PROJECT'S PROBLEMS.
+     </div>
+     <div class="callout">
+      <h3 style="color:#fff0db">Final takeaway</h3>
+      <p>Architectural patterns are tools, not rules that developers must blindly follow. Choose structures that make the game easier to build, maintain, test, integrate, scale, and improve.</p>
+     </div>
+     <p class="copy">Suggested resources: Microsoft Architecture Center, Unity Learn, Unreal Engine Documentation, Godot Documentation, Object Management Group resources, and software architecture references.</p>
+    </section>
+   </main>
+   <footer class="footer">
+    <div class="wrap">
+     System Integration and Architecture — BSIT Major in Game Development · Midterm Lesson 2 · Architectural Patterns
+    </div>
+   </footer>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      lucide.createIcons();
+
+      document.querySelectorAll(".answer-toggle").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const panel = document.getElementById(button.getAttribute("aria-controls"));
+          const opening = panel.hidden;
+          panel.hidden = !opening;
+          button.setAttribute("aria-expanded", String(opening));
+          button.textContent = opening ? "Hide sample guidance" : button.textContent.replace("Hide", "Reveal");
+        });
+      });
+
+      const questions = Array.from(document.querySelectorAll(".question"));
+      const score = document.getElementById("score-value");
+
+      function updateScore() {
+        const correct = questions.filter(function (question) {
+          return question.dataset.answered === "correct";
+        }).length;
+        score.textContent = correct + " / " + questions.length;
+      }
+
+      questions.forEach(function (question) {
+        const correctAnswer = question.dataset.correct;
+        const options = Array.from(question.querySelectorAll(".option"));
+        const feedback = question.querySelector(".feedback");
+
+        options.forEach(function (option) {
+          option.addEventListener("click", function () {
+            if (question.dataset.answered) return;
+
+            const isCorrect = option.dataset.answer === correctAnswer;
+            question.dataset.answered = isCorrect ? "correct" : "incorrect";
+
+            options.forEach(function (choice) {
+              choice.disabled = true;
+              if (choice.dataset.answer === correctAnswer) {
+                choice.classList.add("correct");
+              }
+            });
+
+            if (isCorrect) {
+              feedback.textContent = "Correct — well done.";
+              feedback.style.color = "#d5ff5f";
+            } else {
+              option.classList.add("incorrect");
+              feedback.textContent = "Not quite — the highlighted option is correct.";
+              feedback.style.color = "#ffbd70";
+            }
+
+            updateScore();
+          });
+        });
+      });
+
+      document.getElementById("retry-quiz").addEventListener("click", function () {
+        questions.forEach(function (question) {
+          delete question.dataset.answered;
+          question.querySelector(".feedback").textContent = "";
+          question.querySelector(".feedback").style.color = "";
+          question.querySelector(".quiz-review").hidden = true;
+
+          question.querySelectorAll(".option").forEach(function (option) {
+            option.disabled = false;
+            option.classList.remove("correct", "incorrect");
+          });
+        });
+        updateScore();
+      });
+
+      document.getElementById("review-answers").addEventListener("click", function () {
+        document.querySelectorAll(".quiz-review").forEach(function (review) {
+          review.hidden = false;
+        });
+      });
+    });
+  </script>
+ </body>
+</html>
