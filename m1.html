@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="en">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260818-23-8d3f73f","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Architecture Fundamentals | Game Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root{
+      --ink:#06131d;
+      --panel:#0c2030;
+      --panel-2:#102b3f;
+      --line:rgba(181,230,255,.17);
+      --cyan:#62e8f5;
+      --lime:#d5ff5f;
+      --orange:#ffad4d;
+      --soft:#b9cad6;
+      --white:#eef8ff;
+      --danger:#ff8d7b;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;color:var(--white);background:var(--ink);
+      font-family:"DM Sans",sans-serif;
+    }
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{font:inherit}
+    button:focus-visible,a:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+    .app-shell{
+      width:100%;min-height:100%;overflow-x:hidden;
+      background:
+        linear-gradient(rgba(98,232,245,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(98,232,245,.035) 1px,transparent 1px),
+        radial-gradient(circle at 90% 3%,rgba(36,141,166,.36),transparent 32%),
+        radial-gradient(circle at 5% 48%,rgba(40,110,92,.16),transparent 28%),
+        var(--ink);
+      background-size:28px 28px,28px 28px,auto,auto;
+    }
+    .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+    .mono{font-family:"Space Mono",monospace}
+    .topbar{
+      border-bottom:1px solid rgba(181,230,255,.12);
+      background:rgba(6,19,29,.88);backdrop-filter:blur(12px)
+    }
+    .topbar-inner{
+      min-height:88px;display:flex;align-items:center;justify-content:space-between;
+      gap:18px;padding:14px 0
+    }
+    .brand{display:flex;align-items:center;gap:13px}
+    .mark{
+      width:43px;height:43px;display:grid;place-items:center;color:var(--cyan);
+      border:1px solid rgba(181,230,255,.25);border-radius:12px;background:rgba(98,232,245,.1)
+    }
+    .eyebrow,.kicker{
+      margin:0;color:#8fbbca;font-size:11px;letter-spacing:.1em;text-transform:uppercase;line-height:1.5
+    }
+    .kicker{color:var(--cyan)}
+    h1{margin:2px 0 0;font-size:25px;line-height:1.1}
+    h2{margin:8px 0 0;font-size:30px;line-height:1.2}
+    h3{margin:0;font-size:20px;line-height:1.25}
+    h4{margin:0;font-size:16px}
+    .badges{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{
+      padding:8px 12px;color:#baf8ff;font-size:13px;font-weight:700;border:1px solid rgba(181,230,255,.22);
+      border-radius:99px;background:rgba(98,232,245,.09)
+    }
+    .badge.lime{color:#e7ffac;border-color:rgba(213,255,95,.24);background:rgba(213,255,95,.1)}
+    main{padding:28px 0 42px}
+    .hero{
+      position:relative;min-height:440px;overflow:hidden;border:1px solid var(--line);
+      border-radius:26px;background:#0a1f2d;box-shadow:0 20px 55px rgba(0,0,0,.22)
+    }
+    .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.36}
+    .hero::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(90deg,rgba(6,19,29,.98),rgba(6,19,29,.86) 48%,rgba(6,19,29,.24))
+    }
+    .hero-content{position:relative;z-index:1;max-width:800px;padding:56px}
+    .tag{
+      display:inline-block;padding:8px 11px;color:var(--lime);font-size:11px;letter-spacing:.12em;
+      text-transform:uppercase;border:1px solid rgba(213,255,95,.24);border-radius:99px;background:rgba(6,19,29,.64)
+    }
+    .hero h2{margin:20px 0 0;font-size:clamp(38px,6vw,66px);line-height:1.03}
+    .hero p{max-width:670px;margin:20px 0 0;color:#d7e7ef;font-size:18px;line-height:1.65}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;color:#edfaff;
+      font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;border:1px solid transparent;
+      border-radius:12px;transition:.18s ease
+    }
+    .btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+    .primary{color:#06202b;background:var(--cyan)}
+    .secondary{border-color:rgba(181,230,255,.25);background:rgba(6,19,29,.52)}
+    .section{
+      margin-top:30px;padding:28px;border:1px solid var(--line);border-radius:20px;background:rgba(10,31,45,.9);
+      box-shadow:0 20px 55px rgba(0,0,0,.18)
+    }
+    .rule{width:74px;height:4px;margin:14px 0 18px;border-radius:20px;background:var(--cyan)}
+    .copy{color:#c5d7e1;line-height:1.7}
+    .grid{display:grid;gap:16px}
+    .two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+    .objective,.mini-card,.activity{
+      padding:17px;color:#d9edf5;line-height:1.58;border:1px solid rgba(181,230,255,.16);
+      border-radius:14px;background:rgba(255,255,255,.035)
+    }
+    .objective{background:rgba(98,232,245,.055)}
+    .lime-card{border-color:rgba(213,255,95,.19);background:rgba(213,255,95,.075)}
+    .orange-card{border-color:rgba(255,173,77,.21);background:rgba(255,173,77,.07)}
+    .callout{
+      margin-top:18px;padding:20px;color:#ffe1bc;border:1px solid rgba(255,173,77,.28);
+      border-radius:16px;background:rgba(255,173,77,.08)
+    }
+    .callout p{line-height:1.65}
+    .list{margin:14px 0 0;padding-left:20px;color:#c5d7e1;line-height:1.85}
+    .term{color:#eaf7ff;font-weight:700}
+    .diagram{
+      margin-top:20px;padding:25px 18px;color:#c9f9ff;text-align:center;white-space:pre-wrap;
+      line-height:1.75;border:1px solid rgba(98,232,245,.2);border-radius:16px;background:rgba(98,232,245,.05)
+    }
+    .diagram.lime{color:#e8ffc0;border-color:rgba(213,255,95,.24);background:rgba(213,255,95,.06)}
+    .table-wrap{margin-top:18px;overflow-x:auto}
+    table{width:100%;min-width:650px;border-collapse:collapse;text-align:left}
+    th{padding:13px;color:var(--cyan);border-bottom:1px solid rgba(181,230,255,.17)}
+    td{padding:13px;color:#c5d7e1;vertical-align:top;border-bottom:1px solid rgba(181,230,255,.09)}
+    td:first-child{color:#eaf7ff;font-weight:700}
+    .numbered{display:grid;gap:12px;margin-top:20px}
+    .numbered article{padding:17px;border-left:3px solid var(--cyan);background:rgba(255,255,255,.025)}
+    .numbered h3{color:#eaf7ff;font-size:18px}
+    .answer-toggle{
+      margin-top:16px;padding:10px 13px;color:#d9faff;font-weight:700;cursor:pointer;border:1px solid rgba(98,232,245,.35);
+      border-radius:9px;background:transparent
+    }
+    .answer{
+      margin-top:14px;padding:15px;color:#e8ffc0;line-height:1.65;border:1px solid rgba(213,255,95,.21);
+      border-radius:11px;background:rgba(213,255,95,.08)
+    }
+    [hidden]{display:none!important}
+    .quiz-head{display:flex;align-items:start;justify-content:space-between;gap:16px}
+    .score{
+      min-width:112px;padding:13px 17px;text-align:center;border:1px solid rgba(213,255,95,.25);
+      border-radius:15px;background:rgba(213,255,95,.1)
+    }
+    .score p{margin:0}.score .mono{margin-top:4px;color:var(--lime);font-size:23px;font-weight:700}
+    .question{margin-top:18px;padding:20px;border:1px solid rgba(181,230,255,.16);border-radius:16px;background:rgba(255,255,255,.03)}
+    .options{display:grid;gap:8px;margin-top:14px}
+    .option{
+      width:100%;padding:12px 14px;color:#eaf7ff;text-align:left;cursor:pointer;border:1px solid rgba(185,202,214,.25);
+      border-radius:11px;background:rgba(255,255,255,.035);transition:.18s ease
+    }
+    .option:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.1)}
+    .option.correct{color:#efffdc;border-color:#98e852;background:rgba(128,214,71,.17)}
+    .option.incorrect{color:#ffe4df;border-color:var(--danger);background:rgba(255,102,91,.14)}
+    .feedback{min-height:22px;margin:12px 0 0;font-size:14px;font-weight:700}
+    .footer{padding:22px 0;color:#8fabb9;font-size:14px;border-top:1px solid rgba(181,230,255,.1)}
+    @media(max-width:800px){
+      .topbar-inner,.split{display:block}.badges{margin-top:13px}.hero-content{padding:34px 25px}
+      .hero::after{background:linear-gradient(0deg,rgba(6,19,29,.98),rgba(6,19,29,.75) 60%,rgba(6,19,29,.2))}
+      .two,.three{grid-template-columns:1fr}.section{padding:22px}.quiz-head{display:block}.score{width:max-content;margin-top:16px}
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
+  <script src="/_sdk/d97541380e824b1a.editing_sdk.js" type="text/javascript" integrity="sha512-iBVkuiyctyjmaqUwrsoYSc/nxwymdEKZMKPeBCNj6uN/7hFPTiMVeunYJjJVnUh1GNECKEyCerl7IHtlqhzSYQ=="></script>
+  <script src="/_sdk/eba18683f23e5798.resizing_sdk.js" type="text/javascript" integrity="sha512-E0UWUllhwPXaNJtjyTKXWKrIE+FruPfFpO4mRmMDP2LI+U9bOizy5npCq6xx/JyWcvSK7D3TFf2wFR2Mha9kbA=="></script>
+ </head>
+ <body data-template-id="__page-root">
+  <div class="app-shell">
+   <header class="topbar">
+    <div class="wrap topbar-inner">
+     <div class="brand">
+      <div class="mark" aria-hidden="true">
+       <i data-lucide="network"></i>
+      </div>
+      <div>
+       <p class="eyebrow mono">Course · System Integration and Architecture — Game Development</p>
+       <h1>Midterm Lesson 1: Software Architecture Fundamentals</h1>
+      </div>
+     </div>
+     <div class="badges"><span class="badge">Game Development</span> <span class="badge lime">Midterm Lesson</span>
+     </div>
+    </div>
+   </header>
+   <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title"><img src="https://images.pexels.com/photos/6615086/pexels-photo-6615086.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="A compass resting on architectural blueprints and planning drawings" loading="lazy">
+     <div class="hero-content"><span class="tag mono">Architecture lab · game development</span>
+      <h2 id="hero-title">A game is more than a collection of scripts.</h2>
+      <p>Learn how software architecture gives game systems clear responsibilities, reliable communication, and room to grow from a simple prototype into a maintainable game.</p>
+      <div class="actions"><a class="btn primary" href="#lesson"><i data-lucide="play" aria-hidden="true"></i> Start the lesson</a> <a class="btn secondary" href="#knowledge-check"><i data-lucide="circle-help" aria-hidden="true"></i> Knowledge check</a>
+      </div>
+     </div>
+    </section>
+    <section id="lesson" class="section">
+     <p class="kicker mono">1. Learning Objectives</p>
+     <h2>What you should be able to do</h2>
+     <div class="rule"></div>
+     <p class="copy">At the end of this lesson, students should be able to:</p>
+     <div class="grid three" style="margin-top:20px">
+      <div class="objective">
+       Define software architecture and explain why it is important.
+      </div>
+      <div class="objective">
+       Differentiate software architecture, software design, and software implementation.
+      </div>
+      <div class="objective">
+       Identify the major components of a software system.
+      </div>
+      <div class="objective">
+       Explain Layered, Client-Server, MVC, Component-Based, and Event-Driven Architecture.
+      </div>
+      <div class="objective">
+       Explain how software architecture is applied specifically to game development.
+      </div>
+      <div class="objective">
+       Identify relationships among the game engine, game logic, UI, database, assets, and external services.
+      </div>
+      <div class="objective">
+       Analyze a simple game system and identify its architectural components.
+      </div>
+      <div class="objective">
+       Create a basic architecture diagram for a proposed game.
+      </div>
+      <div class="objective">
+       Explain why good architecture improves maintenance, testing, modification, and expansion.
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part I · Introduction to Software Architecture</p>
+     <h2>2. What is software architecture?</h2>
+     <div class="rule"></div>
+     <p class="copy">Software architecture is the overall structure or blueprint of a software system. It is similar to a house blueprint: before construction begins, an architect decides where rooms, electrical systems, plumbing, connections, and pathways belong.</p>
+     <p class="copy">Before developers build a large software system, they decide what major components it will have, what each component will do, how components communicate, where data is stored, how users interact, how external systems connect, and how the system can grow later.</p>
+     <div class="callout">
+      <p class="kicker mono" style="color:#ffbd70">Simple definition</p>
+      <h3 style="margin-top:8px;color:#fff0db">Software Architecture = the high-level structure of a software system and the way its major parts work together.</h3>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">3. Why architecture matters</p>
+     <h2>Growth reveals architecture problems</h2>
+     <div class="rule"></div>
+     <div class="split">
+      <div class="mini-card orange-card">
+       <h3 style="color:#fff0db">At first, a game feels simple</h3>
+       <ul class="list">
+        <li>1 player</li>
+        <li>3 enemies</li>
+        <li>1 map</li>
+        <li>5 weapons</li>
+       </ul>
+       <p class="copy">It may seem reasonable to put almost everything into one large script.</p>
+      </div>
+      <div class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Then the game grows</h3>
+       <ul class="list">
+        <li>50 enemies and 20 maps</li>
+        <li>Multiplayer and online accounts</li>
+        <li>Inventory, quests, and customization</li>
+        <li>Save/load, leaderboards, and purchases</li>
+       </ul>
+       <p class="copy">Changing one feature can suddenly break three others. That is an architecture problem.</p>
+      </div>
+     </div>
+     <div class="grid three" style="margin-top:18px">
+      <div class="mini-card">
+       <h4>Maintainability</h4>
+       <p>Make the system easier to modify and repair.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Scalability</h4>
+       <p>Allow the game to grow without a complete rewrite.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Reusability</h4>
+       <p>Reuse components in different parts of the game.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Testability</h4>
+       <p>Test individual parts independently.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Performance</h4>
+       <p>Identify systems consuming too many resources.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Teamwork</h4>
+       <p>Let different developers work on different components.</p>
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">4. Important terms and jargon</p>
+     <h2>Vocabulary for system integration</h2>
+     <div class="rule"></div>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Term</th>
+         <th>Simple Definition</th>
+         <th>Game Development Example</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Architecture</td>
+         <td>Overall structure of a software system</td>
+         <td>Structure of an RPG game</td>
+        </tr>
+        <tr>
+         <td>Component</td>
+         <td>A major part of a system</td>
+         <td>Inventory System</td>
+        </tr>
+        <tr>
+         <td>Module</td>
+         <td>A smaller functional part</td>
+         <td>Weapon Module</td>
+        </tr>
+        <tr>
+         <td>Interface / API</td>
+         <td>A defined way for components to communicate</td>
+         <td>Inventory API or game server API</td>
+        </tr>
+        <tr>
+         <td>Dependency</td>
+         <td>Something a component needs to work</td>
+         <td>Player depends on Health System</td>
+        </tr>
+        <tr>
+         <td>Integration</td>
+         <td>Connecting different systems</td>
+         <td>Game connected to a database</td>
+        </tr>
+        <tr>
+         <td>Database</td>
+         <td>Organized storage for data</td>
+         <td>Player accounts and scores</td>
+        </tr>
+        <tr>
+         <td>Framework</td>
+         <td>Reusable software structure or tools</td>
+         <td>Laravel</td>
+        </tr>
+        <tr>
+         <td>Game Engine</td>
+         <td>Software used to create and run games</td>
+         <td>Godot, Unity, Unreal Engine</td>
+        </tr>
+        <tr>
+         <td>Repository</td>
+         <td>Place where code or data is stored and managed</td>
+         <td>Git repository</td>
+        </tr>
+        <tr>
+         <td>Modularity</td>
+         <td>Dividing software into separate parts</td>
+         <td>Combat, Inventory, Quest modules</td>
+        </tr>
+        <tr>
+         <td>Coupling</td>
+         <td>How dependent components are on each other</td>
+         <td>Combat tightly connected to Inventory</td>
+        </tr>
+        <tr>
+         <td>Cohesion</td>
+         <td>How closely related responsibilities are inside one component</td>
+         <td>Inventory focuses only on inventory tasks</td>
+        </tr>
+        <tr>
+         <td>Refactoring</td>
+         <td>Improving structure without changing behavior</td>
+         <td>Cleaning up game scripts</td>
+        </tr>
+        <tr>
+         <td>Deployment / Runtime / Persistence</td>
+         <td>Publishing, running, and retaining data</td>
+         <td>Publishing a game, playing it, saving progress</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part II · Architecture vs. Design vs. Implementation</p>
+     <h2>5–7. Three related but different concepts</h2>
+     <div class="rule"></div>
+     <div class="grid three">
+      <article class="mini-card">
+       <h3>Architecture</h3>
+       <p class="copy">Answers: <strong>“What are the major parts of the system and how do they communicate?”</strong></p>
+       <div class="diagram mono">
+        PLAYER ↓ GAME UI ↓ GAME LOGIC ↓ DATABASE
+       </div>
+      </article>
+      <article class="mini-card">
+       <h3>Design</h3>
+       <p class="copy">Answers: <strong>“How will each component work internally?”</strong></p>
+       <div class="diagram mono">
+        INVENTORY ├── AddItem() ├── RemoveItem() ├── FindItem() └── CalculateWeight()
+       </div>
+      </article>
+      <article class="mini-card">
+       <h3>Implementation</h3>
+       <p class="copy">Means actually writing the code that makes the design work.</p>
+       <div class="diagram mono">
+        public void AddItem(Item item) { inventory.Add(item); }
+       </div>
+      </article>
+     </div>
+     <div class="callout">
+      <h3 style="color:#fff0db">Remember: Architecture = what major parts exist. Design = how parts are organized internally. Implementation = how the code is written.</h3>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part III · Software System Components</p>
+     <h2>8–10. Components, responsibilities, and modularity</h2>
+     <div class="rule"></div>
+     <p class="copy">A component is a major part of a software system with a specific responsibility. A game may include Player, Combat, Inventory, Quest, Enemy AI, Save, Audio, UI, and Database systems.</p>
+     <div class="split">
+      <div class="mini-card orange-card">
+       <h3 style="color:#fff0db">Bad architecture: one giant script</h3>
+       <p class="copy">A single <span class="term">Player.cs</span> script handles movement, combat, inventory, saving, audio, dialogue, quests, and UI. This becomes difficult to maintain.</p>
+      </div>
+      <div class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Better architecture: separate responsibilities</h3>
+       <div class="diagram lime mono">
+        PLAYER CONTROLLER │ ├── Movement System ├── Combat System ├── Inventory System ├── Quest System └── Save System
+       </div>
+      </div>
+     </div>
+     <p class="copy">Modularity means dividing a system into smaller independent modules. If an Inventory System needs replacement, a modular game can swap the old module for a new one without rewriting the entire game.</p>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part IV · Common Architectural Patterns</p>
+     <h2>11–19. Patterns for organizing software</h2>
+     <div class="rule"></div>
+     <div class="numbered">
+      <article>
+       <h3>12. Layered Architecture</h3>
+       <p class="copy">Layered Architecture divides software into levels. The UI should not directly manipulate the database; requests should flow through game logic and data access layers.</p>
+       <div class="diagram mono">
+        ┌─────────────────────────────┐ │ Presentation · Game UI / HUD│ ├─────────────────────────────┤ │ Business Logic · Game Rules │ ├─────────────────────────────┤ │ Data Access · Save / Load │ ├─────────────────────────────┤ │ Data Storage · Files / MySQL│ └─────────────────────────────┘
+       </div>
+      </article>
+      <article>
+       <h3>14. Client-Server Architecture</h3>
+       <p class="copy">The client is the player’s software, such as a PC or mobile game. A server provides shared services such as multiplayer state, databases, accounts, cloud saves, and leaderboards.</p>
+       <div class="diagram mono">
+        INTERNET │ ┌─────▼─────┐ │ SERVER │ └─────┬─────┘ │ ┌───────┼────────┐ ↓ ↓ ↓ Player Player Player Client Client Client
+       </div>
+       <p class="copy">In a multiplayer battle game, a client sends an attack request to the server. The server validates the action, updates the target’s HP, and sends the result back. This reduces cheating and keeps game state synchronized.</p>
+      </article>
+      <article>
+       <h3>16. MVC Architecture</h3>
+       <p class="copy">MVC means <strong>Model – View – Controller</strong>. The Model handles data and rules, the View handles what the user sees, and the Controller receives input and coordinates the system.</p>
+       <div class="diagram mono">
+        PLAYER │ ▼ ┌──────────┐ │Controller│ └────┬─────┘ │ ┌────┴────┐ ▼ ▼ Model View Data UI
+       </div>
+       <p class="copy">If a player clicks “Save Game,” the Controller receives the request, the Model provides current game data, and the View displays “Game Saved!” MVC is useful for launchers, leaderboards, inventories, account systems, and web-based game tools.</p>
+      </article>
+      <article>
+       <h3>18. Component-Based Architecture</h3>
+       <p class="copy">Game objects are made from reusable components rather than one giant object. A player can have Transform, Movement, Health, Combat, Inventory, Audio, and Animation components.</p>
+       <div class="diagram mono">
+        PLAYER │ ├── Transform ├── Movement ├── Health ├── Combat ├── Inventory ├── Audio └── Animation
+       </div>
+       <p class="copy">The Health Component handles current HP, maximum HP, damage, healing, and death. Enemies and bosses can reuse the same Health Component while adding their own AI or special attack components.</p>
+      </article>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part V · Event-Driven Architecture</p>
+     <h2>20–22. Let systems respond to events</h2>
+     <div class="rule"></div>
+     <p class="copy">An event is something that happens in a system: a player dies, an enemy is defeated, an item is collected, a quest is completed, a button is clicked, or the game is paused.</p>
+     <div class="split">
+      <div class="mini-card">
+       <h3>Enemy defeated</h3>
+       <div class="diagram mono">
+        ENEMY DIES ↓ EnemyDied Event ↓ Score · Quest · Audio · UI Systems respond independently
+       </div>
+      </div>
+      <div class="mini-card">
+       <h3>Coin collected</h3>
+       <div class="diagram mono">
+        PLAYER TOUCHES COIN ↓ CoinCollected Event ↓ Score +10 · Play SFX · Update UI
+       </div>
+      </div>
+     </div>
+     <div class="callout">
+      <h3 style="color:#fff0db">The enemy does not need to directly control every other system. It announces “EnemyDied!” and interested systems decide how to respond.</h3>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part VI–VII · Game Architecture and Engines</p>
+     <h2>23–28. Major systems inside a game</h2>
+     <div class="rule"></div>
+     <div class="diagram mono">
+      GAME │ ┌─────────────┼─────────────┐ ↓ ↓ ↓ INPUT GAMEPLAY UI │ ┌────────┼────────┐ ↓ ↓ ↓ Combat AI Quest │ ↓ DATA ┌───────┴───────┐ ↓ ↓ Save Database
+     </div>
+     <div class="grid three" style="margin-top:18px">
+      <div class="mini-card">
+       <h4>Input System</h4>
+       <p>Handles keyboard, mouse, controller, and touchscreen input.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Player System</h4>
+       <p>Handles movement, health, attributes, equipment, and player state.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Combat System</h4>
+       <p>Handles attacks, damage, weapons, skills, hit detection, and critical hits.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Enemy AI</h4>
+       <p>Handles enemy movement, attacks, NPC behavior, and decision-making.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Inventory and Quest</h4>
+       <p>Manage items, equipment, objectives, rewards, progress, and completion.</p>
+      </div>
+      <div class="mini-card">
+       <h4>Save, Audio, and UI</h4>
+       <p>Store progress, play music/SFX, and present menus, HUDs, maps, and trackers.</p>
+      </div>
+     </div>
+     <p class="copy">A game engine is a platform that provides rendering, physics, animation, audio, input, scene management, scripting, and asset management. Examples include Unity, Unreal Engine, and Godot.</p>
+     <div class="diagram lime mono">
+      GAME │ ┌──────────┼──────────┐ ↓ ↓ ↓ Graphics Physics Audio │ │ │ └──────────┼──────────┘ ↓ Game Logic ↓ Game Objects ↓ Assets
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part VIII · Architectural Quality</p>
+     <h2>29–32. Coupling, cohesion, scalability, maintainability</h2>
+     <div class="rule"></div>
+     <div class="grid two">
+      <div class="mini-card orange-card">
+       <h3 style="color:#fff0db">Coupling</h3>
+       <p class="copy">Coupling describes how strongly components depend on each other. High coupling makes changes risky because everything depends on everything else. Prefer lower coupling when practical.</p>
+      </div>
+      <div class="mini-card lime-card">
+       <h3 style="color:#e8ffc0">Cohesion</h3>
+       <p class="copy">Cohesion describes how closely related responsibilities are inside a component. An Inventory System should add, remove, find, and count items—not play music or control enemy AI.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Scalability</h3>
+       <p class="copy">Scalability is the ability to handle growth, such as moving from 100 to 10,000 players without rebuilding the entire system.</p>
+      </div>
+      <div class="mini-card">
+       <h3>Maintainability</h3>
+       <p class="copy">Maintainability is how easily developers can fix bugs, add features, replace components, and improve performance. A good architecture lets a new weapon be added mainly through the Weapon System.</p>
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part IX–XII · RPG and Integration Examples</p>
+     <h2>33–39. Architecture of a simple RPG</h2>
+     <div class="rule"></div>
+     <p class="copy">A simple RPG may contain a player, enemies, weapons, inventory, quests, NPCs, levels, save/load, and UI.</p>
+     <div class="diagram mono">
+      RPG GAME │ ┌─────────────────┼──────────────────┐ ↓ ↓ ↓ UI GAMEPLAY DATA │ │ ┌──────────┼──────────┐ │ ↓ ↓ ↓ │ Combat AI Quest │ │ │ │ │ └──────────┼──────────┘ │ ↓ │ Inventory │ ↓ │ └──────── Save System ──────────┘ ↓ Database
+     </div>
+     <div class="split">
+      <div class="mini-card">
+       <h3>Scenario: Player dies</h3>
+       <div class="diagram mono">
+        Health System detects HP = 0 ↓ PlayerDied Event ↓ Animation → death animation Audio → death sound UI → game over screen Save → current state Game Manager → stop gameplay
+       </div>
+      </div>
+      <div class="mini-card">
+       <h3>System integration</h3>
+       <p class="copy">System integration connects different software components so they can work together. A game can connect with a game engine, database, authentication service, payment service, online server, and APIs.</p>
+       <div class="diagram mono">
+        GAME → API → SERVER → DATABASE
+       </div>
+      </div>
+     </div>
+     <p class="copy">An architecture diagram is a visual representation of major components and their communication. It helps developers, teachers, clients, and team members understand a system quickly.</p>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part XIII · Individual Activity</p>
+     <h2>Activity 1: Analyze the architecture</h2>
+     <div class="rule"></div>
+     <article class="activity"><span class="tag mono">Individual activity · 2D RPG</span>
+      <h3 style="margin-top:17px">Scenario</h3>
+      <p class="copy">You are developing a 2D RPG containing Player, Enemies, NPCs, Inventory, Weapons, Quests, Health System, Game UI, and Save System.</p>
+      <h3>Tasks</h3>
+      <ol class="list">
+       <li>What is the purpose of software architecture?</li>
+       <li>Identify at least five components of the game.</li>
+       <li>Give the responsibility of each component.</li>
+       <li>Which component should manage player health, inventory, quests, and UI?</li>
+       <li>Why should the Inventory System not be responsible for enemy AI?</li>
+       <li>Draw a simple architecture diagram.</li>
+       <li>Identify one possible dependency between two components.</li>
+      </ol>
+      <p class="copy"><strong>Expected output:</strong> Part A: answers to Questions 1–10. Part B: an architecture diagram.</p><button class="answer-toggle" type="button" aria-expanded="false" aria-controls="activity-one-answer">Reveal sample guidance</button>
+      <div id="activity-one-answer" class="answer" hidden>
+       Sample guidance: Components can include Player, Health, Inventory, Quest, Enemy AI, UI, Combat, and Save Systems. Each should have one responsibility. For example, the Health System manages HP and damage; Inventory manages items and equipment; Quest manages objectives and rewards; UI manages screens and HUD information. The Inventory System should not manage AI because these concerns are unrelated and would reduce cohesion.
+      </div>
+     </article>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part XIV–XV · Design and Team Challenge</p>
+     <h2>Activities 2 and 3: Design a game architecture</h2>
+     <div class="rule"></div>
+     <div class="split">
+      <article class="activity"><span class="tag mono">Individual design activity</span>
+       <h3 style="margin-top:17px">Activity 2: Design your own game architecture</h3>
+       <p class="copy">Choose an RPG, horror game, racing game, fighting game, platformer, adventure game, simulation game, or strategy game.</p>
+       <p class="copy">Create a basic architecture containing Player, Game Logic, UI, Audio, at least three gameplay systems, and a Save/Data System.</p>
+       <div class="diagram mono">
+        MY GAME │ ┌────────────┼─────────────┐ ↓ ↓ ↓ UI GAME LOGIC AUDIO │ ┌───────────┼───────────┐ ↓ ↓ ↓ Combat Inventory Quest │ ↓ Save
+       </div>
+      </article>
+      <article class="activity"><span class="tag mono">Group activity · 4–5 students</span>
+       <h3 style="margin-top:17px">Activity 3: Multiplayer Fantasy RPG</h3>
+       <p class="copy">Your independent game studio must design a Multiplayer Fantasy RPG with player accounts, character creation, inventory, weapons, quests, NPCs, AI, leaderboards, save/load, multiplayer, and UI.</p>
+       <ol class="list">
+        <li>Identify at least ten major components.</li>
+        <li>Create a responsibility table.</li>
+        <li>Select appropriate patterns: Layered, Client-Server, MVC, Component-Based, and/or Event-Driven.</li>
+        <li>Create an architecture diagram showing the game client, API, server, database, and communication.</li>
+       </ol>
+      </article>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">40. Group Presentation and Discussion</p>
+     <h2>Explain your architecture decisions</h2>
+     <div class="rule"></div>
+     <div class="grid two">
+      <div class="mini-card">
+       <h3>Presentation checklist</h3>
+       <ul class="list">
+        <li>Game concept</li>
+        <li>Major components and responsibilities</li>
+        <li>Selected architecture patterns</li>
+        <li>Architecture diagram</li>
+        <li>How components communicate</li>
+       </ul>
+      </div>
+      <div class="mini-card">
+       <h3>Discussion questions</h3>
+       <ol class="list">
+        <li>Why did your team choose that architecture?</li>
+        <li>Which component has the highest number of dependencies?</li>
+        <li>How can your design prevent one change from breaking everything?</li>
+        <li>How would the design change for multiplayer or 100,000 players?</li>
+        <li>What happens if the Inventory System is removed?</li>
+       </ol>
+      </div>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part XVII · Quick Recap</p>
+     <h2>Twelve ideas to remember</h2>
+     <div class="rule"></div>
+     <div class="grid three">
+      <div class="objective">
+       <strong>1. Architecture</strong><br>
+       The overall structure of a system.
+      </div>
+      <div class="objective">
+       <strong>2. Component</strong><br>
+       A major part with a specific responsibility.
+      </div>
+      <div class="objective">
+       <strong>3. Modularity</strong><br>
+       Dividing software into manageable parts.
+      </div>
+      <div class="objective">
+       <strong>4. Coupling</strong><br>
+       How strongly components depend on one another.
+      </div>
+      <div class="objective">
+       <strong>5. Cohesion</strong><br>
+       How closely responsibilities inside a component relate.
+      </div>
+      <div class="objective">
+       <strong>6. Scalability</strong><br>
+       The ability to handle growth.
+      </div>
+      <div class="objective">
+       <strong>7. Maintainability</strong><br>
+       How easy a system is to modify and repair.
+      </div>
+      <div class="objective">
+       <strong>8. API</strong><br>
+       A defined way for systems to communicate.
+      </div>
+      <div class="objective">
+       <strong>9. Client-Server</strong><br>
+       Clients request services from a server.
+      </div>
+      <div class="objective">
+       <strong>10. Event-Driven</strong><br>
+       Components respond to events.
+      </div>
+      <div class="objective">
+       <strong>11. Component-Based</strong><br>
+       Functionality is divided into reusable components.
+      </div>
+      <div class="objective">
+       <strong>12. Layered Architecture</strong><br>
+       Responsibilities are separated into layers.
+      </div>
+     </div>
+    </section>
+    <section id="knowledge-check" class="section">
+     <div class="quiz-head">
+      <div>
+       <p class="kicker mono">Part XVIII · Check Your Understanding</p>
+       <h2>Test your architecture knowledge</h2>
+       <div class="rule"></div>
+       <p class="copy">Choose one answer for each question. Feedback appears immediately.</p>
+      </div>
+      <div class="score">
+       <p class="kicker mono" style="color:#e8ffc0">Your score</p>
+       <p id="score-value" class="mono" aria-live="polite">0 / 5</p>
+      </div>
+     </div>
+     <article class="question" data-correct="b">
+      <h3>1. What is software architecture?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">The color palette and artwork used in a game.</button> <button class="option" type="button" data-answer="b">The high-level structure of a system and how its major parts work together.</button> <button class="option" type="button" data-answer="c">Only the final code written by a programmer.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: B. Architecture describes the major parts of a system, their responsibilities, and their communication.</p>
+     </article>
+     <article class="question" data-correct="c">
+      <h3>2. Which statement best describes modularity?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Putting all game features into a single script.</button> <button class="option" type="button" data-answer="b">Making every system depend directly on every other system.</button> <button class="option" type="button" data-answer="c">Dividing a system into smaller independent modules.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: C. Modularity separates systems into manageable modules, making replacement, testing, and reuse easier.</p>
+     </article>
+     <article class="question" data-correct="a">
+      <h3>3. In an event-driven game, what might happen after an EnemyDied event?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Score, quest, audio, and UI systems can independently respond.</button> <button class="option" type="button" data-answer="b">The enemy must directly rewrite every other system.</button> <button class="option" type="button" data-answer="c">The database must always be deleted.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: A. Events allow multiple systems to react without tightly connecting every component to every other component.</p>
+     </article>
+     <article class="question" data-correct="b">
+      <h3>4. Which architecture is especially important for multiplayer games, accounts, leaderboards, and cloud saves?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Layered Architecture only.</button> <button class="option" type="button" data-answer="b">Client-Server Architecture.</button> <button class="option" type="button" data-answer="c">A single giant script.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: B. Client-server systems let game clients communicate with shared server-side services and data.</p>
+     </article>
+     <article class="question" data-correct="c">
+      <h3>5. Why should an Inventory System not control enemy AI?</h3>
+      <div class="options"><button class="option" type="button" data-answer="a">Because inventory data cannot be saved.</button> <button class="option" type="button" data-answer="b">Because enemies do not use components.</button> <button class="option" type="button" data-answer="c">Because those responsibilities are unrelated and would reduce cohesion.</button>
+      </div>
+      <p class="feedback" aria-live="polite"></p>
+      <p class="answer quiz-review" hidden>Correct answer: C. Components should have clear, closely related responsibilities. Inventory and AI are separate concerns.</p>
+     </article>
+     <div class="actions"><button id="retry-quiz" class="btn secondary" type="button"><i data-lucide="rotate-ccw" aria-hidden="true"></i> Retry quiz</button> <button id="review-answers" class="btn primary" type="button"><i data-lucide="list-checks" aria-hidden="true"></i> Show answer review</button>
+     </div>
+    </section>
+    <section class="section">
+     <p class="kicker mono">Part XIX · Mini Case Study</p>
+     <h2>The Impossible Game</h2>
+     <div class="rule"></div>
+     <p class="copy">Imagine a team creates a game using one giant <span class="term">Game.cs</span> file containing Player, Enemy, Weapons, Inventory, Quests, Audio, UI, Saving, Database, Multiplayer, and AI. After six months, the game has 30,000 lines of code in one file.</p>
+     <div class="callout">
+      <h3 style="color:#fff0db">One developer changes the Weapon System. Suddenly inventory stops working, enemy AI crashes, save data fails, and the UI displays incorrect information.</h3>
+      <p>The problem is not simply too many features. The problem is that the architecture does not separate responsibilities properly.</p>
+     </div>
+     <div class="diagram lime mono">
+      GAME │ ├── Player System ├── Combat System ├── Enemy AI ├── Inventory ├── Quest ├── UI ├── Audio ├── Save └── Multiplayer
+     </div>
+    </section>
+    <section class="section" style="margin-bottom:10px">
+     <p class="kicker mono">Part XX · End-of-Lesson Takeaway</p>
+     <h2>Build systems that can survive growth and change</h2>
+     <div class="rule"></div>
+     <p class="copy">Game Development students are not only learning to create characters, environments, scripts, animations, and gameplay. They are also learning to build software systems that can grow, accept new features, support more players, and remain maintainable.</p>
+     <div class="diagram lime mono">
+      GOOD SOFTWARE ARCHITECTURE = Clear Components + Clear Responsibilities + Good Communication + Low Unnecessary Dependencies + High Cohesion + Maintainability + Scalability
+     </div>
+     <p class="copy">Suggested resources for further study: Microsoft Architecture Center, Unity Learn, Unreal Engine Documentation, Godot Documentation, Object Management Group UML resources, and NIST systems engineering references.</p>
+    </section>
+   </main>
+   <footer class="footer">
+    <div class="wrap">
+     System Integration and Architecture — Game Development · Midterm Lesson 1 · Software Architecture Fundamentals
+    </div>
+   </footer>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      lucide.createIcons();
+
+      document.querySelectorAll(".answer-toggle").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const panel = document.getElementById(button.getAttribute("aria-controls"));
+          const opening = panel.hidden;
+          panel.hidden = !opening;
+          button.setAttribute("aria-expanded", String(opening));
+          button.textContent = opening ? "Hide sample guidance" : "Reveal sample guidance";
+        });
+      });
+
+      const questions = Array.from(document.querySelectorAll(".question"));
+      const score = document.getElementById("score-value");
+
+      function updateScore() {
+        const correct = questions.filter(function (question) {
+          return question.dataset.answered === "correct";
+        }).length;
+        score.textContent = correct + " / " + questions.length;
+      }
+
+      questions.forEach(function (question) {
+        const correctAnswer = question.dataset.correct;
+        const options = Array.from(question.querySelectorAll(".option"));
+        const feedback = question.querySelector(".feedback");
+
+        options.forEach(function (option) {
+          option.addEventListener("click", function () {
+            if (question.dataset.answered) return;
+
+            const isCorrect = option.dataset.answer === correctAnswer;
+            question.dataset.answered = isCorrect ? "correct" : "incorrect";
+
+            options.forEach(function (choice) {
+              choice.disabled = true;
+              if (choice.dataset.answer === correctAnswer) choice.classList.add("correct");
+            });
+
+            if (isCorrect) {
+              feedback.textContent = "Correct — well done.";
+              feedback.style.color = "#d5ff5f";
+            } else {
+              option.classList.add("incorrect");
+              feedback.textContent = "Not quite — the highlighted option is correct.";
+              feedback.style.color = "#ffbd70";
+            }
+            updateScore();
+          });
+        });
+      });
+
+      document.getElementById("retry-quiz").addEventListener("click", function () {
+        questions.forEach(function (question) {
+          delete question.dataset.answered;
+          question.querySelector(".feedback").textContent = "";
+          question.querySelector(".feedback").style.color = "";
+          question.querySelector(".quiz-review").hidden = true;
+          question.querySelectorAll(".option").forEach(function (option) {
+            option.disabled = false;
+            option.classList.remove("correct", "incorrect");
+          });
+        });
+        updateScore();
+      });
+
+      document.getElementById("review-answers").addEventListener("click", function () {
+        document.querySelectorAll(".quiz-review").forEach(function (review) {
+          review.hidden = false;
+        });
+      });
+    });
+  </script>
+ </body>
+</html>
