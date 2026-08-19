@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260819-01-6858913","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midterm Lesson 5 — Networking and Online Systems</title>
+  <style>
+    :root{
+      --ink:#ecfbff;--muted:#a6bdc8;--cyan:#40eaff;--teal:#3be0ba;--blue:#5797ff;
+      --violet:#b18cff;--navy:#06111e;--panel:rgba(10,28,46,.78);--panel2:rgba(7,19,34,.92);
+      --line:rgba(89,228,245,.22);--warn:#ffd278;--danger:#ff9ba8;--shadow:0 18px 50px rgba(0,0,0,.38)
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;min-width:320px;color:var(--ink);background:
+      radial-gradient(circle at 90% 5%,rgba(111,64,203,.25),transparent 28rem),
+      radial-gradient(circle at 8% 21%,rgba(1,211,193,.15),transparent 25rem),
+      radial-gradient(circle at 72% 65%,rgba(47,125,255,.10),transparent 28rem),var(--navy);
+      font-family:"Fira Sans","Segoe UI",sans-serif;line-height:1.68
+    }
+    body:before{
+      content:"";position:fixed;z-index:-1;inset:0;pointer-events:none;opacity:.34;
+      background-image:linear-gradient(rgba(64,234,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(64,234,255,.05) 1px,transparent 1px);
+      background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 90%)
+    }
+    body:after{
+      content:"";position:fixed;z-index:-1;width:420px;height:420px;right:-170px;top:190px;border:1px solid rgba(64,234,255,.16);
+      border-radius:50%;box-shadow:0 0 0 55px rgba(64,234,255,.025),0 0 0 110px rgba(64,234,255,.018)
+    }
+    .progress{position:fixed;z-index:30;top:0;left:0;width:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--cyan),var(--violet));box-shadow:0 0 18px var(--cyan)}
+    .site-header{width:100%;border-bottom:1px solid var(--line);background:rgba(4,13,24,.82);backdrop-filter:blur(18px)}
+    .header-inner,.lesson-layout{width:min(1180px,calc(100% - 40px));margin:auto}
+    .header-inner{padding:42px 0 36px}
+    .eyebrow,.section-label,.diagram-title{font:700 .77rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase}
+    .eyebrow{margin:0 0 10px;color:var(--cyan)}
+    h1,h2,h3{line-height:1.16} h1{max-width:900px;margin:0;font-size:clamp(2.2rem,6vw,4.7rem);letter-spacing:-.055em}
+    h2{margin:0 0 18px;font-size:clamp(1.65rem,3.4vw,2.45rem);letter-spacing:-.035em}
+    h3{margin:28px 0 10px;color:#e2fbff;font-size:1.18rem}
+    .lede{max-width:810px;margin:18px 0 0;color:#c9e4eb;font-size:clamp(1rem,2vw,1.18rem)}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.chip{padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(21,59,76,.48);color:#c4e2ea;font-size:.84rem}
+    .lesson-layout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:40px}
+    .toc{position:sticky;top:22px;align-self:start;margin-top:36px;padding:17px 14px;border:1px solid var(--line);border-radius:16px;background:rgba(5,19,33,.76);box-shadow:var(--shadow);backdrop-filter:blur(12px)}
+    .toc h2{margin:0 8px 9px;color:var(--teal);font:700 .78rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}
+    .toc a{display:block;padding:7px 8px;margin:2px 0;border-left:2px solid transparent;color:var(--muted);text-decoration:none;font-size:.87rem;transition:.2s}
+    .toc a:hover,.toc a:focus-visible,.toc a.active{border-left-color:var(--cyan);background:rgba(64,234,255,.08);color:var(--ink);outline:none}
+    main{min-width:0;padding:38px 0 80px}section{scroll-margin-top:24px;margin-bottom:47px}.section-label{display:block;margin-bottom:8px;color:var(--cyan)}
+    p,li{color:#cadde3}li+li{margin-top:7px}strong{color:#f4ffff}a{color:var(--cyan)}a:focus-visible,summary:focus-visible{outline:3px solid var(--warn);outline-offset:3px}
+    .panel,.callout,.diagram,.activity{border:1px solid var(--line);border-radius:17px;background:var(--panel);box-shadow:var(--shadow)}
+    .panel{padding:23px}.callout{position:relative;overflow:hidden;margin:20px 0;padding:17px 20px 17px 24px}.callout:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cyan)}
+    .callout.violet:before{background:var(--violet)}.callout.warning:before{background:var(--warn)}.callout p{margin:0}
+    .diagram{margin:20px 0;padding:19px;overflow:auto;background:rgba(2,13,25,.88)}.diagram-title{margin:0 0 11px;color:var(--violet)}
+    pre{margin:0;color:#b2fbf6;font: .84rem/1.72 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px}table{width:100%;min-width:610px;border-collapse:collapse;background:rgba(4,18,31,.67)}
+    th,td{padding:14px;border-bottom:1px solid rgba(91,222,238,.15);text-align:left;vertical-align:top}th{background:rgba(28,78,91,.36);color:var(--teal);font-size:.79rem;letter-spacing:.08em;text-transform:uppercase}tr:last-child td{border:0}td:first-child{color:#f1ffff;font-weight:700}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.cards h3{margin-top:0;color:var(--cyan)}
+    .activity{padding:23px;background:linear-gradient(135deg,rgba(25,75,91,.58),rgba(48,20,84,.5))}.activity h3{margin-top:0}.activity-number{display:inline-grid;place-items:center;width:29px;height:29px;margin-right:7px;border-radius:50%;background:var(--teal);color:#04131d;font:800 .85rem ui-monospace,monospace}
+    details{margin-top:14px;border:1px solid rgba(177,140,255,.38);border-radius:11px;background:rgba(4,15,29,.55);overflow:hidden}summary{cursor:pointer;padding:11px 14px;color:#dfd3ff;font-weight:700}details p,details ul{margin:0;padding:0 14px 14px}
+    .quiz-item{padding:15px 16px;margin:10px 0;border:1px solid var(--line);border-radius:12px;background:rgba(5,19,33,.72)}
+    .takeaway{padding:29px;border:1px solid rgba(64,234,255,.44);border-radius:20px;background:linear-gradient(135deg,rgba(5,54,66,.9),rgba(42,20,75,.9));box-shadow:0 0 50px rgba(64,234,255,.1)}.takeaway p{font-size:1.07rem;color:#e1f8fb}
+    footer{padding:24px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.88rem}
+    @media(max-width:850px){.lesson-layout{display:block}.toc{position:sticky;z-index:5;top:0;margin:0 -20px;padding:8px 20px;border-width:0 0 1px;border-radius:0;overflow:auto;white-space:nowrap;box-shadow:none}.toc h2{display:none}.toc nav{display:flex;gap:4px}.toc a{display:inline-block;border-left:0;border-bottom:2px solid transparent}.toc a:hover,.toc a:focus-visible,.toc a.active{border-left:0;border-bottom-color:var(--cyan)}main{padding-top:30px}}
+    @media(max-width:590px){.header-inner,.lesson-layout{width:min(100% - 28px,1180px)}.header-inner{padding:31px 0 27px}.cards{grid-template-columns:1fr}.panel,.activity{padding:18px}pre{font-size:.74rem}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
+  <script src="/_sdk/d97541380e824b1a.editing_sdk.js" type="text/javascript" integrity="sha512-iBVkuiyctyjmaqUwrsoYSc/nxwymdEKZMKPeBCNj6uN/7hFPTiMVeunYJjJVnUh1GNECKEyCerl7IHtlqhzSYQ=="></script>
+  <script src="/_sdk/eba18683f23e5798.resizing_sdk.js" type="text/javascript" integrity="sha512-E0UWUllhwPXaNJtjyTKXWKrIE+FruPfFpO4mRmMDP2LI+U9bOizy5npCq6xx/JyWcvSK7D3TFf2wFR2Mha9kbA=="></script>
+ </head>
+ <body data-template-id="__page-root" style="background: rgb(6, 17, 30);">
+  <div class="progress" id="progress"></div>
+  <header class="site-header">
+   <div class="header-inner">
+    <p class="eyebrow" data-template-id="course-name" style="color: rgb(64, 234, 255); font-weight: 700; font-style: normal; font-size: 12px;">System Integration and Architecture — Game Development</p>
+    <h1 data-template-id="lesson-title" style="color: rgb(236, 251, 255); font-weight: 700; font-style: normal; font-size: 32px;">MIDTERM LESSON 5: NETWORKING AND ONLINE SYSTEMS</h1>
+    <p class="lede">System Integration and Architecture — BSIT 3 Game Development</p>
+    <div class="meta" aria-label="Lesson details"><span class="chip">Course: System Integration and Architecture</span> <span class="chip">Program: BSIT 3 – Game Development</span> <span class="chip">Format: Long-form digital lesson</span>
+    </div>
+   </div>
+  </header>
+  <div class="lesson-layout">
+   <aside class="toc" aria-label="Lesson table of contents">
+    <h2>Navigate</h2>
+    <nav><a href="#overview">Overview</a><a href="#objectives">Objectives</a><a href="#networking">Networking</a> <a href="#jargon">Jargon</a><a href="#architecture">Architecture</a><a href="#transport">TCP &amp; UDP</a> <a href="#sync">Synchronization</a><a href="#online-services">Online systems</a><a href="#security">Security</a> <a href="#activities">Activities</a><a href="#case-study">Case study</a><a href="#quiz">Quiz</a> <a href="#takeaways">Takeaways</a><a href="#challenge">Challenge</a><a href="#resources">Resources</a>
+    </nav>
+   </aside>
+   <main>
+    <section id="overview"><span class="section-label">I · Lesson Overview</span>
+     <h2>Networking and Online Systems in Game Development</h2>
+     <p>In the previous lessons, students learned:</p>
+     <div class="cards">
+      <article class="panel">
+       <h3>Lesson 1 — Software Architecture Fundamentals</h3>
+       <p>How software systems are structured and how components communicate.</p>
+      </article>
+      <article class="panel">
+       <h3>Lesson 2 — Architectural Patterns</h3>
+       <p>How patterns such as Layered Architecture, Client-Server, MVC, and other approaches organize software.</p>
+      </article>
+      <article class="panel">
+       <h3>Lesson 3 — Game Engine Architecture</h3>
+       <p>How a game engine integrates rendering, physics, audio, input, animation, and game logic.</p>
+      </article>
+      <article class="panel">
+       <h3>Lesson 4 — Middleware Integration</h3>
+       <p>How external software such as networking, audio, analytics, and cloud services can be integrated into a game.</p>
+      </article>
+     </div>
+     <div class="callout violet">
+      <p><strong>Now we move into one of the most important areas of modern game development:</strong> Networking and Online Systems.</p>
+     </div>
+     <p>Modern games can allow players to play with other people, join online matches, communicate with teammates, save progress online, view leaderboards, purchase digital items, download updates, connect to game servers, and synchronize game states. All of these require some form of network communication.</p>
+    </section>
+    <section id="objectives"><span class="section-label">II · Learning Objectives</span>
+     <h2>At the end of this lesson, students should be able to:</h2>
+     <ul>
+      <li>Define computer networking in the context of game development and explain why it is important for modern games.</li>
+      <li>Differentiate between client, server, and peer-to-peer architectures.</li>
+      <li>Explain basic data transmission, IP address, port, packet, protocol, latency, bandwidth, jitter, and packet loss.</li>
+      <li>Explain TCP and UDP at a basic level.</li>
+      <li>Describe multiplayer synchronization, client-server game architecture, game servers, dedicated servers, and matchmaking.</li>
+      <li>Explain authentication, identify common multiplayer networking problems, and explain basic server-side validation.</li>
+      <li>Design a basic online game architecture and apply networking concepts to practical game-development scenarios.</li>
+     </ul>
+    </section>
+    <section id="networking"><span class="section-label">III–V · Foundations</span>
+     <h2>What is networking?</h2>
+     <h3>Simple Definition</h3>
+     <p>Networking is the process of allowing computers and software systems to communicate and exchange information. In game development, game networking allows different game clients and online systems to exchange game-related information.</p>
+     <div class="diagram">
+      <p class="diagram-title">Player-to-player communication</p>
+      <pre>Player A
+   ↓
+Internet
+   ↓
+Game Server
+   ↓
+Internet
+   ↓
+Player B</pre>
+     </div>
+     <p>Player A's computer and Player B's computer do not usually communicate completely independently. A server may coordinate the game.</p>
+     <h3>IV. Simple Real-Life Example</h3>
+     <p>Imagine playing basketball. You have Player A, Player B, a referee, and a scoreboard. The referee keeps track of what happens.</p>
+     <div class="diagram">
+      <p class="diagram-title">Server as referee</p>
+      <pre>Player A scores
+       ↓
+Referee confirms
+       ↓
+Scoreboard updates
+
+Player A
+    ↓
+ Server
+    ↓
+Player B</pre>
+     </div>
+     <p>In an online multiplayer game, the server can act somewhat like the referee. The server helps determine and distribute the official game state.</p>
+     <h3>V. What is an Online System?</h3>
+     <p>An online system is a system that communicates with other computers or services through a network, usually the Internet.</p>
+     <div class="diagram">
+      <p class="diagram-title">Modern online game system</p>
+      <pre>Game Client
+     │
+     ↓
+Game Server
+     │
+ ┌───┼───────────┐
+ ↓   ↓           ↓
+Auth Database   Matchmaking
+Server
+ │
+ ↓
+Cloud Services</pre>
+     </div>
+    </section>
+    <section id="jargon"><span class="section-label">VI · Important Networking Jargons</span>
+     <h2>Core networking vocabulary</h2>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Term</th>
+         <th>Simple Definition</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Network</td>
+         <td>A group of connected computers/devices.</td>
+        </tr>
+        <tr>
+         <td>Internet</td>
+         <td>A global network of interconnected networks.</td>
+        </tr>
+        <tr>
+         <td>Client</td>
+         <td>A program/device that requests or uses a service.</td>
+        </tr>
+        <tr>
+         <td>Server</td>
+         <td>A computer/program that provides a service.</td>
+        </tr>
+        <tr>
+         <td>Host</td>
+         <td>A device or system participating in a network.</td>
+        </tr>
+        <tr>
+         <td>IP Address</td>
+         <td>Address used to identify a device on a network.</td>
+        </tr>
+        <tr>
+         <td>Port</td>
+         <td>A logical communication endpoint used by network applications.</td>
+        </tr>
+        <tr>
+         <td>Packet</td>
+         <td>A small unit of data transmitted over a network.</td>
+        </tr>
+        <tr>
+         <td>Protocol</td>
+         <td>Rules governing communication between systems.</td>
+        </tr>
+        <tr>
+         <td>TCP</td>
+         <td>Reliable, connection-oriented transport protocol.</td>
+        </tr>
+        <tr>
+         <td>UDP</td>
+         <td>Lightweight transport protocol commonly used where speed is important.</td>
+        </tr>
+        <tr>
+         <td>Latency</td>
+         <td>Delay between sending and receiving data.</td>
+        </tr>
+        <tr>
+         <td>Bandwidth</td>
+         <td>Amount of data that can be transmitted over a connection.</td>
+        </tr>
+        <tr>
+         <td>Jitter</td>
+         <td>Variation in packet delivery timing.</td>
+        </tr>
+        <tr>
+         <td>Packet Loss</td>
+         <td>Packets that fail to reach their destination.</td>
+        </tr>
+        <tr>
+         <td>Ping</td>
+         <td>Measurement commonly used to estimate network round-trip time.</td>
+        </tr>
+        <tr>
+         <td>Server Tick</td>
+         <td>A server's repeated update cycle.</td>
+        </tr>
+        <tr>
+         <td>Synchronization</td>
+         <td>Keeping different systems' game states consistent.</td>
+        </tr>
+        <tr>
+         <td>Matchmaking</td>
+         <td>Finding players and placing them into an appropriate match.</td>
+        </tr>
+        <tr>
+         <td>Dedicated Server</td>
+         <td>Server primarily dedicated to hosting the game.</td>
+        </tr>
+        <tr>
+         <td>Peer-to-Peer (P2P)</td>
+         <td>Players communicate directly without a central dedicated game server.</td>
+        </tr>
+        <tr>
+         <td>Client-Server</td>
+         <td>Clients communicate with a central server.</td>
+        </tr>
+        <tr>
+         <td>Authentication</td>
+         <td>Verifying a user's identity.</td>
+        </tr>
+        <tr>
+         <td>Authorization</td>
+         <td>Determining what an authenticated user is allowed to do.</td>
+        </tr>
+        <tr>
+         <td>Replication</td>
+         <td>Sending relevant state information between systems.</td>
+        </tr>
+        <tr>
+         <td>Prediction</td>
+         <td>Estimating future game state before confirmation arrives.</td>
+        </tr>
+        <tr>
+         <td>Interpolation</td>
+         <td>Smoothly displaying movement between received states.</td>
+        </tr>
+        <tr>
+         <td>Server Authority</td>
+         <td>Server is responsible for determining the official game state.</td>
+        </tr>
+        <tr>
+         <td>Disconnect</td>
+         <td>Loss of network connection.</td>
+        </tr>
+        <tr>
+         <td>Timeout</td>
+         <td>Failure to receive an expected response within a defined period.</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </section>
+    <section id="architecture"><span class="section-label">VII–XVI · Multiplayer Architecture</span>
+     <h2>Why does a game need networking?</h2>
+     <p>Consider an online FPS. Player A shoots Player B. The game needs to communicate Player A position, rotation, weapon used, shot fired, shot direction, and time of shot. The server may then determine: Was Player A allowed to shoot? Did the weapon have ammunition? Did the shot hit Player B? How much damage should be applied?</p>
+     <div class="diagram">
+      <p class="diagram-title">VIII. Basic multiplayer communication</p>
+      <pre>PLAYER A
+   │ Input
+   ↓
+CLIENT A
+   │ Network Message
+   ↓
+SERVER
+   │ Game State
+   ↓
+CLIENT B
+   ↓
+PLAYER B</pre>
+     </div>
+     <h3>IX. Client</h3>
+     <p>A client is the software running on the player's device that communicates with an online service. Examples include PC, mobile, and console games. The client usually handles graphics, input, local UI, audio, some game logic, sending player actions, and receiving game-state information.</p>
+     <h3>X. Server</h3>
+     <p>A server provides services to clients. A game server may manage players, game rules, match state, player positions, scores, health, inventory, and match results.</p>
+     <h3>XI–XIII. Client-Server Architecture and Dedicated Servers</h3>
+     <div class="diagram">
+      <p class="diagram-title">Centralized game coordination</p>
+      <pre>            GAME SERVER
+          /      |      \
+      Client   Client   Client
+       A         B        C
+
+        DEDICATED SERVER
+              │
+      ┌───────┼────────┐
+      ↓       ↓        ↓
+   Player A Player B Player C</pre>
+     </div>
+     <p>Client-server architecture uses a central server to coordinate the game. Advantages include centralized game state, easier management, better control over game rules, easier player management, server-side validation, and better protection against some forms of cheating. However, servers cost money and must be maintained.</p>
+     <h3>XIV. Listen Server</h3>
+     <p>A listen server is hosted by one of the players. Player A acts as both player and host/server.</p>
+     <div class="diagram">
+      <pre>Player A
+  │
+  └── Hosts Game
+       │
+   ┌───┼───┐
+   ↓   ↓   ↓
+  B    C    D</pre>
+     </div>
+     <h3>XV. Peer-to-Peer</h3>
+     <p>Peer-to-peer networking allows participants to communicate directly rather than relying entirely on a dedicated central game server.</p>
+     <div class="diagram">
+      <pre>Player A ←→ Player B
+   ↕           ↕
+Player C ←→ Player D</pre>
+     </div>
+     <div class="cards">
+      <article class="panel">
+       <h3>P2P Advantages</h3>
+       <ul>
+        <li>Can reduce dedicated-server requirements.</li>
+        <li>Can be useful for certain applications.</li>
+       </ul>
+      </article>
+      <article class="panel">
+       <h3>P2P Disadvantages</h3>
+       <ul>
+        <li>More difficult security considerations.</li>
+        <li>Host migration problems.</li>
+        <li>One player's connection may affect others.</li>
+        <li>Greater exposure to cheating or manipulation depending on design.</li>
+       </ul>
+      </article>
+     </div>
+     <h3>XVI. Client-Server vs. P2P</h3>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Feature</th>
+         <th>Client-Server</th>
+         <th>P2P</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Central server</td>
+         <td>Yes</td>
+         <td>Not necessarily</td>
+        </tr>
+        <tr>
+         <td>Server authority</td>
+         <td>Easier</td>
+         <td>More difficult</td>
+        </tr>
+        <tr>
+         <td>Server cost</td>
+         <td>Higher</td>
+         <td>Potentially lower</td>
+        </tr>
+        <tr>
+         <td>Security control</td>
+         <td>Generally easier</td>
+         <td>More challenging</td>
+        </tr>
+        <tr>
+         <td>Host dependency</td>
+         <td>Low</td>
+         <td>Can be high</td>
+        </tr>
+        <tr>
+         <td>Scalability</td>
+         <td>Strong with proper infrastructure</td>
+         <td>More difficult for some games</td>
+        </tr>
+        <tr>
+         <td>Common use</td>
+         <td>Competitive online games</td>
+         <td>Some smaller/cooperative systems</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </section>
+    <section id="transport"><span class="section-label">XVII–XXXII · Data Transmission</span>
+     <h2>IP address, ports, packets, protocols, TCP, and UDP</h2>
+     <h3>XVII. IP Address</h3>
+     <p>An IP address identifies a device or network interface using the Internet Protocol. Example: <strong>192.168.1.20</strong>, a private IPv4 address. A networked system needs an address so other systems know where to send data.</p>
+     <h3>XVIII. Port</h3>
+     <p>An IP address identifies the destination device or interface. A port identifies the application or service on that device. Think of it as: <strong>IP Address = Building Address; Port = Room Number.</strong> Example: <strong>192.168.1.20 : 7777</strong>.</p>
+     <h3>XIX–XX. Packets and Protocols</h3>
+     <p>Network data is typically divided into small pieces called packets. A protocol is a set of rules for communication: how data is formatted, sent, received, and how errors are handled. Examples include TCP, UDP, HTTP, and WebSocket.</p>
+     <div class="diagram">
+      <pre>Game Data
+   ↓
+Packets
+   ↓
+Network
+   ↓
+Packets
+   ↓
+Game</pre>
+     </div>
+     <h3>XXI. TCP</h3>
+     <p>TCP means Transmission Control Protocol. It is designed for reliable, ordered communication. It is connection-oriented, supports reliable delivery, ordered data, error checking, and retransmission of lost data. TCP is useful when correctness matters more than extremely low latency.</p>
+     <h3>XXII. UDP</h3>
+     <p>UDP means User Datagram Protocol. It is lightweight and does not provide the same built-in reliability and ordering guarantees as TCP. It can be useful when speed and timely updates are more important than receiving every packet. Some multiplayer systems use UDP-based communication or protocols built around UDP.</p>
+     <h3>XXIII. TCP vs UDP</h3>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Feature</th>
+         <th>TCP</th>
+         <th>UDP</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Connection-oriented</td>
+         <td>Yes</td>
+         <td>No</td>
+        </tr>
+        <tr>
+         <td>Reliability</td>
+         <td>Built-in</td>
+         <td>Not built-in</td>
+        </tr>
+        <tr>
+         <td>Ordering</td>
+         <td>Yes</td>
+         <td>Not guaranteed</td>
+        </tr>
+        <tr>
+         <td>Retransmission</td>
+         <td>Yes</td>
+         <td>Not built-in</td>
+        </tr>
+        <tr>
+         <td>Overhead</td>
+         <td>Higher</td>
+         <td>Lower</td>
+        </tr>
+        <tr>
+         <td>Typical use</td>
+         <td>Reliable data transfer</td>
+         <td>Real-time applications</td>
+        </tr>
+        <tr>
+         <td>Game networking</td>
+         <td>Some uses</td>
+         <td>Common in real-time networking</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <div class="callout warning">
+      <p><strong>Important:</strong> Do not simply think “UDP is always better for games.” The correct choice depends on the system's requirements.</p>
+     </div>
+     <h3>XXIV–XXV. Examples</h3>
+     <p>A chat message such as “Hello team!” should arrive correctly, so reliability is important. For player positions such as X=100, 101, 102, 103, and 104, an old lost update can become unnecessary when a newer update arrives. This is one reason UDP-based networking is common in real-time games.</p>
+     <h3>XXVI–XXXII. Latency, Ping, Bandwidth, Packet Loss, and Jitter</h3>
+     <p>Latency is delay between sending information and receiving a response. Ping is commonly used to describe round-trip time, such as <strong>30 ms</strong>. Bandwidth is the amount of data that can be transmitted through a connection over time—the width of the network pipe. Packet loss occurs when packets fail to reach their destination. Jitter is variation in packet arrival time.</p>
+     <div class="diagram">
+      <pre>Packet 1 → 20 ms
+Packet 2 → 22 ms
+Packet 3 → 80 ms
+Packet 4 → 25 ms</pre>
+     </div>
+     <div class="callout">
+      <p><strong>The four major network problems:</strong> 1. High Latency — data takes too long. 2. Packet Loss — some data does not arrive. 3. Jitter — data arrives inconsistently. 4. Limited Bandwidth — too much data is being transmitted for the available capacity.</p>
+     </div>
+    </section>
+    <section id="sync"><span class="section-label">XXXIII–XLVI · Game State and Synchronization</span>
+     <h2>Keeping multiplayer games consistent and responsive</h2>
+     <h3>Game State and Synchronization</h3>
+     <p>The game state is the current condition of the game: player positions, health, scores, inventory, and other relevant values. Synchronization means keeping different systems consistent with each other.</p>
+     <div class="diagram">
+      <pre>SERVER
+Player Position = 100
+       ↓
+CLIENT A: Position = 100
+       ↓
+CLIENT B: Position = 100</pre>
+     </div>
+     <h3>Server Authority and Validation</h3>
+     <p>Server authority means the server determines the official game state. If a client says, “I shot the enemy,” the server verifies the action, calculates the result, and distributes the official update. This is safer than blindly trusting clients that may claim unrealistic health, money, weapon damage, or movement values.</p>
+     <div class="diagram">
+      <pre>CLIENT
+"I want to shoot."
+      ↓
+SERVER
+"Is that action valid?"
+      ↓
+SERVER
+"Yes."
+      ↓
+CLIENTS
+"Display the result."</pre>
+     </div>
+     <h3>Client-Side Prediction and Reconciliation</h3>
+     <p>Client-side prediction lets a client immediately predict an action instead of waiting for server confirmation. This makes controls feel responsive. If the client predicts position 100 but the server says 95, the client corrects itself using <strong>reconciliation</strong>.</p>
+     <h3>Interpolation and Extrapolation</h3>
+     <p>Interpolation smoothly transitions between known states, such as displaying 100, 102, 104, 106, 108, and 110 instead of jumping directly from 100 to 110. Extrapolation estimates a likely future state based on movement, but may be incorrect when direction changes.</p>
+     <h3>Server Tick and Tick Rate</h3>
+     <p>A server tick is one update cycle. A server running at 60 ticks per second updates approximately 60 times per second. Higher tick rates provide more frequent updates but may need more CPU, network processing, and bandwidth. Higher is not automatically better.</p>
+     <h3>Replication and Interest Management</h3>
+     <p>Replication shares relevant state information between systems. Interest management, also called relevancy filtering, sends players only information relevant to them—such as nearby players—rather than every update from all 999 other players in a large multiplayer game. This reduces bandwidth, processing, and unnecessary data.</p>
+    </section>
+    <section id="online-services"><span class="section-label">XLVII–LXV · Online Systems</span>
+     <h2>Matchmaking, identity, backend services, and scalability</h2>
+     <h3>Matchmaking and Lobby</h3>
+     <p>Matchmaking finds suitable players and places them into a game session. It may consider region, ping, skill, game mode, party size, and availability. A lobby is an area where players gather before entering a game, inviting friends and becoming ready.</p>
+     <div class="diagram">
+      <pre>Player searches for match
+          ↓
+   Matchmaking Service
+          ↓
+Find suitable players
+          ↓
+Create / assign match
+          ↓
+Game Server
+          ↓
+Players connect</pre>
+     </div>
+     <h3>Authentication and Authorization</h3>
+     <p>Authentication answers <strong>“Who are you?”</strong> Authorization answers <strong>“What are you allowed to do?”</strong> An authenticated player may access their own profile, inventory, and saves, but should not access another player's private data.</p>
+     <h3>Database and Backend</h3>
+     <p>Online games may store player accounts, profiles, inventory, achievements, statistics, progress, and purchases in a database. The client should not directly access the database. A safer architecture is Game Client → Game Server → Backend Service → Database. The backend is the server-side portion of an application and performs many server-side operations.</p>
+     <h3>Persistent Data, Session, and Heartbeat</h3>
+     <p>Persistent data remains after the game closes: level progress, inventory, achievements, profiles, and account information. A session is the time a player is connected. A heartbeat is a small periodic message showing that a connection is still active. If heartbeats stop, the server may detect a disconnect.</p>
+     <h3>Disconnection and Reconnection</h3>
+     <div class="diagram">
+      <pre>Connection Lost
+      ↓
+Attempt Reconnect
+      ↓
+Success?
+ ↓          ↓
+YES        NO
+ ↓          ↓
+Resume    Return to Menu</pre>
+     </div>
+     <p>Online games must handle Internet loss, crashes, closing the game, timeouts, and network changes without simply crashing. Reconnection may follow CONNECTED → DISCONNECTED → RECONNECTING → CONNECTED.</p>
+     <h3>Scalability, Load Balancing, and Regional Servers</h3>
+     <p>Scalability is the ability to handle growing workloads: 100 players, 10,000 players, or 1,000,000 players. Load balancing distributes traffic across multiple servers. Regional servers allow players to use nearby infrastructure, such as Philippines and Japan connecting to Asia servers, reducing latency compared with distant routes.</p>
+     <div class="diagram">
+      <pre>             Load Balancer
+                  │
+       ┌──────────┼──────────┐
+       ↓          ↓          ↓
+   Server A   Server B   Server C</pre>
+     </div>
+    </section>
+    <section id="security"><span class="section-label">LXVI–LXX · Security and Architecture</span>
+     <h2>Security, cheating, validation, and DDoS</h2>
+     <p>Online systems must consider account security, authentication, authorization, data validation, encryption, cheating, abuse, DDoS attacks, and API security.</p>
+     <h3>Cheating and Server-Side Validation</h3>
+     <p>A cheater may try to manipulate position, health, money, inventory, weapon damage, or movement speed. A key defense is: <strong>Do not trust the client with critical game decisions.</strong></p>
+     <div class="diagram">
+      <pre>Player says:
+"I purchased an item for 100 coins."
+       ↓
+Server checks:
+Does player have 100 coins?
+       ↓
+YES → Complete transaction
+NO  → Reject transaction</pre>
+     </div>
+     <h3>DDoS</h3>
+     <p>DDoS means Distributed Denial-of-Service. It overwhelms a service with high traffic or requests, making access difficult for legitimate users. Game servers can be targets, so developers and infrastructure providers need appropriate network and security protections.</p>
+     <h3>LXX. Network Architecture Example — Online RPG</h3>
+     <div class="diagram">
+      <pre>                         PLAYERS
+                      /     |     \
+                    CLIENT CLIENT CLIENT
+                       \     |     /
+                        MATCHMAKING
+                             │
+                        GAME SERVER
+                             │
+             ┌───────────────┼───────────────┐
+             ↓               ↓               ↓
+        GAME LOGIC      AUTH SERVICE     ANALYTICS
+             └───────────────┼───────────────┘
+                             ↓
+                        BACKEND API
+                             │
+                 ┌───────────┼───────────┐
+                 ↓           ↓           ↓
+              Database      Cloud     Monitoring</pre>
+     </div>
+    </section>
+    <section id="activities"><span class="section-label">LXXI–LXXXIV · Activities</span>
+     <h2>Individual, group, and practical activities</h2>
+     <article class="activity">
+      <h3><span class="activity-number">1</span>Networking Terminology Matching</h3>
+      <p>Match Client, Server, Packet, Latency, Bandwidth, Jitter, Packet Loss, Protocol, TCP, and UDP with the correct definitions: A. Variation in packet arrival times; B. A system that provides services; C. Rules governing communication; D. A unit of transmitted data; E. Delay in communication; F. A program/device using a service; G. Data capacity of a connection; H. Reliable connection-oriented transport protocol; I. Lightweight transport protocol without built-in reliability; J. Data that fails to reach its destination.</p>
+      <details>
+       <summary>Answer Key</summary>
+       <p>1—F, 2—B, 3—D, 4—E, 5—G, 6—A, 7—J, 8—C, 9—H, 10—I.</p>
+      </details>
+     </article>
+     <article class="activity">
+      <h3><span class="activity-number">2</span>“What is Wrong with the Game?”</h3>
+      <p>Identify the likely problem: characters react seconds after input; characters jump locations; updates never arrive; game slows from 20 to 500 players; hacked clients modify money.</p>
+      <details>
+       <summary>Suggested Answers</summary>
+       <p>High latency; packet loss/jitter/synchronization issues; packet loss or unreliable communication; scalability/performance problem; insufficient server-side validation or client trust.</p>
+      </details>
+     </article>
+     <article class="activity">
+      <h3><span class="activity-number">3</span>Design a Client-Server System</h3>
+      <p>You are creating a multiplayer racing game. Identify what belongs on the CLIENT and SERVER, then explain why each component belongs there.</p>
+     </article>
+     <article class="activity">
+      <h3><span class="activity-number">4</span>Trace the Data</h3>
+      <p>Player A fires a weapon. Create a sequence diagram: Player → Client → Network → Server → Game Logic → Other Clients. Identify what is sent, what the server verifies, what result it produces, and what other players receive.</p>
+     </article>
+     <article class="activity">
+      <h3>Group Activity — “Design an Online Multiplayer Game”</h3>
+      <p>Groups of 4–5 students act as a game-development studio designing a 4-player cooperative survival game. Players must create an account, log in, invite friends, join a lobby, start a match, fight enemies, collect items, save progress, and view statistics.</p>
+      <ol>
+       <li><strong>Identify components:</strong> Client, Game Server, Authentication, Matchmaking, Database, Backend, and Analytics.</li>
+       <li><strong>Create architecture:</strong> Draw Players → Clients → Matchmaking → Game Server → Game Logic/Auth/Analytics → Backend API → Database.</li>
+       <li><strong>Data flow:</strong> Trace a player collecting a rare sword through validation, inventory update, database, response, and client.</li>
+       <li><strong>Network failure:</strong> Design detection, waiting period, reconnection, character behavior, and failed-reconnect outcome.</li>
+       <li><strong>Cheating scenario:</strong> Decide whether “My character has 999,999 gold” should be accepted, then design database validation.</li>
+      </ol>
+     </article>
+     <article class="panel">
+      <h3>Group Presentation and Rubric</h3>
+      <p>Each group presents Architecture (3 minutes), Data Flow (2 minutes), Network Problem (2 minutes), Security/Anti-Cheat Solution (2 minutes), and Questions (1–2 minutes), for a total of 10–12 minutes.</p>
+      <div class="table-wrap">
+       <table>
+        <thead>
+         <tr>
+          <th>Criteria</th>
+          <th>Points</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>Network architecture</td>
+          <td>25</td>
+         </tr>
+         <tr>
+          <td>Client/server separation</td>
+          <td>15</td>
+         </tr>
+         <tr>
+          <td>Data flow</td>
+          <td>15</td>
+         </tr>
+         <tr>
+          <td>Handling network problems</td>
+          <td>15</td>
+         </tr>
+         <tr>
+          <td>Security/validation</td>
+          <td>10</td>
+         </tr>
+         <tr>
+          <td>Scalability</td>
+          <td>10</td>
+         </tr>
+         <tr>
+          <td>Presentation</td>
+          <td>5</td>
+         </tr>
+         <tr>
+          <td>Teamwork</td>
+          <td>5</td>
+         </tr>
+         <tr>
+          <td>TOTAL</td>
+          <td>100</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </article>
+     <article class="panel">
+      <h3>Practical Activity and Optional Lab Exercise</h3>
+      <p>Build a simple networked game concept: Multiplayer Pong, Tic-Tac-Toe, 2D Battle Arena, Cooperative Platformer, Racing Game, or Simple FPS concept. Identify CLIENT → NETWORK → SERVER → GAME STATE → CLIENTS, including player input, network message, server processing, state, response, and client display.</p>
+      <p>For Godot, Unity, or Unreal Engine: demonstrate Client A → Server → Client B. Player A moves: Input → Client A → Network Message → Server → Validate/Update State → Client B → Display Player A.</p>
+     </article>
+    </section>
+    <section id="case-study"><span class="section-label">LXXXV–LXXXVI · Mini Case Study</span>
+     <h2>Online FPS</h2>
+     <p>Imagine developing a competitive FPS. Player A shoots Player B.</p>
+     <ol>
+      <li><strong>Input:</strong> Player presses the mouse button. Input → Client.</li>
+      <li><strong>Network:</strong> The client sends an action to the server.</li>
+      <li><strong>Validation:</strong> Server checks whether the player is alive, weapon exists, ammunition is available, the shot is possible, and the target is valid.</li>
+      <li><strong>Result:</strong> Server calculates Hit = TRUE and Damage = 40.</li>
+      <li><strong>State update:</strong> Player B Health changes from 100 → 60.</li>
+      <li><strong>Replication:</strong> Result is replicated to relevant clients.</li>
+     </ol>
+     <div class="callout violet">
+      <p><strong>Important concept: “The client shows; the server decides.”</strong> The client is responsible for the player's experience. The server should make important authoritative decisions. Actual game architectures vary, but this is a useful conceptual model.</p>
+     </div>
+    </section>
+    <section id="quiz"><span class="section-label">LXXXVII–LXXXVIII · Knowledge Check</span>
+     <h2>20-Item True or False</h2>
+     <div class="quiz-item">
+      1. Networking allows computers and software systems to communicate.
+     </div>
+     <div class="quiz-item">
+      2. A client is a system that can request or use services.
+     </div>
+     <div class="quiz-item">
+      3. A server can provide services to clients.
+     </div>
+     <div class="quiz-item">
+      4. A packet is a unit of network data.
+     </div>
+     <div class="quiz-item">
+      5. Latency refers to the delay in communication.
+     </div>
+     <div class="quiz-item">
+      6. Bandwidth and latency mean exactly the same thing.
+     </div>
+     <div class="quiz-item">
+      7. Packet loss occurs when network data fails to reach its destination.
+     </div>
+     <div class="quiz-item">
+      8. Jitter refers to variation in packet arrival timing.
+     </div>
+     <div class="quiz-item">
+      9. TCP provides reliable and ordered communication.
+     </div>
+     <div class="quiz-item">
+      10. UDP provides the same built-in reliability guarantees as TCP.
+     </div>
+     <div class="quiz-item">
+      11. Client-server architecture uses a central server to coordinate clients.
+     </div>
+     <div class="quiz-item">
+      12. A dedicated server is primarily used to host the multiplayer game.
+     </div>
+     <div class="quiz-item">
+      13. P2P always requires a dedicated central game server.
+     </div>
+     <div class="quiz-item">
+      14. Server authority means the server determines the official game state.
+     </div>
+     <div class="quiz-item">
+      15. Game clients should always be fully trusted with critical game-state decisions.
+     </div>
+     <div class="quiz-item">
+      16. Client-side prediction can help make controls feel more responsive.
+     </div>
+     <div class="quiz-item">
+      17. Interpolation can make remote movement appear smoother.
+     </div>
+     <div class="quiz-item">
+      18. Matchmaking is used to find and organize players into game sessions.
+     </div>
+     <div class="quiz-item">
+      19. Authentication and authorization have exactly the same meaning.
+     </div>
+     <div class="quiz-item">
+      20. Scalability is the ability of a system to handle increasing workloads.
+     </div>
+     <details>
+      <summary>Show Answer Key</summary>
+      <div class="table-wrap">
+       <table>
+        <thead>
+         <tr>
+          <th>Item</th>
+          <th>Answer</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>1–5</td>
+          <td>True, True, True, True, True</td>
+         </tr>
+         <tr>
+          <td>6–10</td>
+          <td>False, True, True, True, False</td>
+         </tr>
+         <tr>
+          <td>11–15</td>
+          <td>True, True, False, True, False</td>
+         </tr>
+         <tr>
+          <td>16–20</td>
+          <td>True, True, True, False, True</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </details>
+     <h3>LXXXIX. Discussion Questions</h3>
+     <ol>
+      <li>Why can't a multiplayer game simply trust information sent by the player?</li>
+      <li>Why might a competitive FPS prefer server authority?</li>
+      <li>Why does high latency make multiplayer games difficult to play?</li>
+      <li>Why might a game use UDP-based networking instead of relying only on TCP?</li>
+      <li>What happens when the server crashes?</li>
+      <li>How can a game support thousands of players?</li>
+      <li>Why should a game server validate important transactions?</li>
+      <li>What information should be stored in a database?</li>
+      <li>Why is synchronization important?</li>
+      <li>What would happen if every player received every piece of information about every other player?</li>
+     </ol>
+    </section>
+    <section id="takeaways"><span class="section-label">XC–XCI · Key Takeaways</span>
+     <h2>Ten concepts to remember</h2>
+     <ol>
+      <li><strong>Client:</strong> The player's game application.</li>
+      <li><strong>Server:</strong> Provides services and may manage authoritative game state.</li>
+      <li><strong>Packet:</strong> A unit of network data.</li>
+      <li><strong>Protocol:</strong> Rules used for communication.</li>
+      <li><strong>Latency:</strong> Communication delay.</li>
+      <li><strong>Packet Loss:</strong> Data that does not successfully arrive.</li>
+      <li><strong>Synchronization:</strong> Keeping relevant game states consistent.</li>
+      <li><strong>Server Authority:</strong> Server determines official state.</li>
+      <li><strong>Prediction:</strong> Client estimates what will happen to reduce perceived delay.</li>
+      <li><strong>Scalability:</strong> Ability to support increasing players and workloads.</li>
+     </ol>
+     <h3>Connection to Previous Lessons</h3>
+     <p>This lesson connects directly to Middleware Integration. Networking expands the Lesson 4 architecture into a game-development environment:</p>
+     <div class="diagram">
+      <pre>GAME CLIENT
+     │
+NETWORK API
+     │
+NETWORK SERVICE
+     │
+GAME SERVER
+     │
+ ┌───┼─────────────┐
+ ↓   ↓             ↓
+Game Logic  Authentication  Matchmaking
+     │
+BACKEND API
+     │
+Database · Cloud · Analytics</pre>
+     </div>
+    </section>
+    <section id="challenge"><span class="section-label">XCII–XCIV · Final Challenge</span>
+     <h2>You are the Network Architect</h2>
+     <p>Your company is developing a 4-player online survival game requiring player accounts, login, lobby, matchmaking, game server, player synchronization, inventory, cloud save, leaderboards, and analytics. It must support players from different countries, survive network problems, prevent basic client-side cheating, and support more players in the future.</p>
+     <p>Your team must design client architecture, server architecture, network communication, authentication, matchmaking, database, cloud services, security, reconnection, and scalability.</p>
+     <div class="diagram">
+      <p class="diagram-title">Final architecture challenge</p>
+      <pre>                         PLAYERS
+                    /       |       \
+                CLIENT    CLIENT    CLIENT
+                   \        |        /
+                     NETWORK
+                        │
+                  MATCHMAKING
+                        │
+                  GAME SERVER
+                        │
+          ┌─────────────┼──────────────┐
+          ↓             ↓              ↓
+      GAME LOGIC   AUTHENTICATION   ANALYTICS
+          └─────────────┼──────────────┘
+                        ↓
+                    BACKEND API
+                        │
+              DATABASE · CLOUD · LEADERBOARD</pre>
+     </div>
+     <p><strong>Then answer:</strong> Why did you place each component where you did?</p>
+     <h3>Exit Ticket</h3>
+     <ol>
+      <li>What is the difference between a client and a server?</li>
+      <li>What is latency?</li>
+      <li>Why is server authority important?</li>
+      <li>What is the difference between TCP and UDP?</li>
+      <li>Draw one simple architecture for a multiplayer game.</li>
+     </ol>
+    </section>
+    <section id="resources"><span class="section-label">XCV · Resources for Students</span>
+     <h2>Continue learning</h2>
+     <div class="panel">
+      <h3>Game Engines</h3>
+      <ul>
+       <li><a href="https://docs.unity3d.com/?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">Unity Documentation</a></li>
+       <li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">Unreal Engine Documentation</a></li>
+       <li><a href="https://docs.godotengine.org/?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">Godot Documentation</a></li>
+      </ul>
+      <h3>Networking Fundamentals</h3>
+      <ul>
+       <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">MDN Web Docs — WebSockets</a></li>
+       <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">MDN Web Docs — HTTP</a></li>
+       <li><a href="https://www.cloudflare.com/learning/?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">Cloudflare Learning Center — Networking</a></li>
+      </ul>
+      <h3>Topics Students Should Research</h3>
+      <p>Client-Server Architecture, Peer-to-Peer Networking, TCP and UDP, IP Addresses and Ports, Network Packets, Latency, Packet Loss, Jitter, Server Tick Rate, Game State Synchronization, Replication, Client-Side Prediction, Server Reconciliation, Interpolation, Matchmaking, Dedicated Servers, Authentication, Authorization, Server-Side Validation, and Online Game Scalability.</p>
+     </div>
+    </section>
+    <section class="takeaway"><span class="section-label" style="color:#9affef">XCVI · One-Sentence Takeaway</span>
+     <h2 data-template-id="takeaway-heading" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 24px;">Networking and online systems make multiplayer games possible.</h2>
+     <p>Networking and online systems allow game clients, servers, and online services to communicate and work together, while good game architecture ensures that multiplayer gameplay remains synchronized, responsive, secure, scalable, and maintainable.</p>
+    </section>
+   </main>
+  </div>
+  <footer>
+   System Integration and Architecture — BSIT 3 Game Development · Midterm Lesson 5
+  </footer>
+  <script>
+    (function () {
+      const progress = document.getElementById("progress");
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+      function updateReadingState() {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + "%";
+        let current = sections[0];
+        sections.forEach(section => { if (section.getBoundingClientRect().top <= 145) current = section; });
+        links.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + current.id));
+      }
+      addEventListener("scroll", updateReadingState, {passive:true});
+      addEventListener("resize", updateReadingState);
+      updateReadingState();
+    }());
+  </script>
+ 
+</body></html>
