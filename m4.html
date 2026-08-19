@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260819-01-6858913","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Middleware Integration | Architecture Learning</title>
+  <style>
+    :root {
+      --ink: #eafaff;
+      --muted: #95aebb;
+      --cyan: #3ce8ef;
+      --teal: #39d9b4;
+      --violet: #af8cff;
+      --navy: #07111f;
+      --panel: rgba(12, 29, 46, .78);
+      --panel-strong: rgba(15, 39, 60, .9);
+      --line: rgba(111, 222, 236, .2);
+      --danger: #ff9aa6;
+      --warning: #ffcf70;
+      --shadow: 0 18px 48px rgba(0, 0, 0, .3);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 88% 5%, rgba(93, 60, 179, .25), transparent 28rem),
+        radial-gradient(circle at 10% 23%, rgba(0, 211, 190, .13), transparent 26rem),
+        #07111f;
+      font-family: "Fira Sans", "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+      opacity: .33;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(69, 227, 233, .055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(69, 227, 233, .055) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+    }
+
+    .progress {
+      position: fixed;
+      z-index: 20;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--teal), var(--cyan), var(--violet));
+      box-shadow: 0 0 16px var(--cyan);
+    }
+
+    .site-header {
+      width: 100%;
+      border-bottom: 1px solid var(--line);
+      background: rgba(5, 14, 26, .8);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      width: min(1180px, calc(100% - 40px));
+      margin: auto;
+      padding: 40px 0 34px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--cyan);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 { line-height: 1.15; }
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 4.8rem);
+      letter-spacing: -.055em;
+    }
+
+    .lede {
+      max-width: 760px;
+      margin: 17px 0 0;
+      color: #c9e0e8;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 11px;
+      color: #b9dce3;
+      background: rgba(21, 56, 72, .45);
+      font-size: .84rem;
+    }
+
+    .layout {
+      width: min(1180px, calc(100% - 40px));
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 40px;
+      margin: 0 auto;
+    }
+
+    .toc {
+      position: sticky;
+      top: 24px;
+      align-self: start;
+      margin-top: 36px;
+      padding: 18px 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(6, 20, 34, .68);
+      box-shadow: var(--shadow);
+    }
+
+    .toc h2 {
+      margin: 0 8px 10px;
+      color: var(--teal);
+      font-size: .78rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .toc a {
+      display: block;
+      margin: 2px 0;
+      padding: 7px 8px;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .88rem;
+      transition: .2s ease;
+    }
+
+    .toc a:hover, .toc a:focus-visible, .toc a.active {
+      border-left-color: var(--cyan);
+      color: var(--ink);
+      background: rgba(60, 232, 239, .08);
+      outline: none;
+    }
+
+    main { min-width: 0; padding: 38px 0 80px; }
+    section { scroll-margin-top: 26px; margin-bottom: 44px; }
+
+    .section-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--cyan);
+      font-size: .79rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(1.65rem, 3.5vw, 2.45rem);
+      letter-spacing: -.035em;
+    }
+
+    h3 {
+      margin: 30px 0 10px;
+      color: #dbfaff;
+      font-size: 1.18rem;
+    }
+
+    p, li { color: #c8dae0; }
+    strong { color: #f2ffff; }
+    a { color: var(--cyan); }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--warning); outline-offset: 3px; }
+
+    .panel, .callout, .diagram, .activity {
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .panel { padding: 24px; }
+    .callout {
+      position: relative;
+      margin: 22px 0;
+      padding: 17px 19px 17px 23px;
+      overflow: hidden;
+    }
+
+    .callout::before {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      width: 4px;
+      background: var(--cyan);
+    }
+
+    .callout.warning::before { background: var(--warning); }
+    .callout.violet::before { background: var(--violet); }
+    .callout p { margin: 0; }
+    .callout strong { color: var(--cyan); }
+    .warning strong { color: var(--warning); }
+    .violet strong { color: var(--violet); }
+
+    .diagram {
+      margin: 22px 0;
+      padding: 20px;
+      overflow-x: auto;
+      color: #aaf9f4;
+      background: rgba(2, 13, 25, .86);
+    }
+
+    pre {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .87rem;
+      line-height: 1.7;
+      white-space: pre;
+    }
+
+    .diagram-title {
+      margin: 0 0 12px;
+      color: var(--violet);
+      font-size: .73rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .term-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 15px; }
+    table { width: 100%; border-collapse: collapse; min-width: 620px; background: rgba(5, 19, 32, .68); }
+    th, td { padding: 15px; border-bottom: 1px solid rgba(105, 220, 234, .14); text-align: left; vertical-align: top; }
+    th { color: var(--teal); background: rgba(30, 78, 91, .35); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child { color: #f2ffff; font-weight: 700; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .cards .panel h3 { margin-top: 0; color: var(--cyan); }
+    ul, ol { padding-left: 1.28rem; }
+    li + li { margin-top: 8px; }
+
+    .activity { padding: 23px; background: linear-gradient(135deg, rgba(28, 76, 91, .6), rgba(42, 21, 76, .5)); }
+    .activity h3 { margin-top: 0; color: #fff; }
+    .activity-number {
+      display: inline-grid;
+      width: 30px; height: 30px;
+      place-items: center;
+      margin-right: 8px;
+      border-radius: 50%;
+      color: #06101d;
+      background: var(--teal);
+      font-family: ui-monospace, monospace;
+      font-weight: 800;
+    }
+
+    .reveal {
+      margin-top: 14px;
+      border: 1px solid rgba(175, 140, 255, .38);
+      border-radius: 11px;
+      overflow: hidden;
+      background: rgba(5, 15, 29, .52);
+    }
+
+    .reveal summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      color: #d9cdff;
+      font-weight: 700;
+    }
+
+    .reveal p, .reveal ul { padding: 0 14px 14px; margin: 0; }
+
+    .true-false {
+      margin: 10px 0;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(6, 20, 34, .7);
+    }
+
+    .footer-takeaway {
+      padding: 28px;
+      border: 1px solid rgba(60, 232, 239, .42);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(6, 49, 62, .9), rgba(42, 20, 74, .88));
+      box-shadow: 0 0 48px rgba(60, 232, 239, .1);
+    }
+
+    .footer-takeaway h2 { color: white; margin-bottom: 10px; }
+    .footer-takeaway p { margin-bottom: 0; color: #e1f7fb; font-size: 1.08rem; }
+
+    .page-footer {
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .88rem;
+      text-align: center;
+    }
+
+    @media (max-width: 850px) {
+      .layout { display: block; }
+      .toc {
+        position: sticky;
+        z-index: 5;
+        top: 0;
+        margin: 0 -20px;
+        border-width: 0 0 1px;
+        border-radius: 0;
+        padding: 8px 20px;
+        overflow-x: auto;
+        white-space: nowrap;
+        box-shadow: none;
+      }
+      .toc h2 { display: none; }
+      .toc nav { display: flex; gap: 4px; }
+      .toc a { display: inline-block; border-left: 0; border-bottom: 2px solid transparent; }
+      .toc a:hover, .toc a:focus-visible, .toc a.active { border-left: 0; border-bottom-color: var(--cyan); }
+      main { padding-top: 30px; }
+    }
+
+    @media (max-width: 590px) {
+      .header-inner, .layout { width: min(100% - 28px, 1180px); }
+      .header-inner { padding: 30px 0 26px; }
+      .cards { grid-template-columns: 1fr; }
+      .panel, .activity { padding: 18px; }
+      pre { font-size: .76rem; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
+  <script src="/_sdk/d97541380e824b1a.editing_sdk.js" type="text/javascript" integrity="sha512-iBVkuiyctyjmaqUwrsoYSc/nxwymdEKZMKPeBCNj6uN/7hFPTiMVeunYJjJVnUh1GNECKEyCerl7IHtlqhzSYQ=="></script>
+  <script src="/_sdk/eba18683f23e5798.resizing_sdk.js" type="text/javascript" integrity="sha512-E0UWUllhwPXaNJtjyTKXWKrIE+FruPfFpO4mRmMDP2LI+U9bOizy5npCq6xx/JyWcvSK7D3TFf2wFR2Mha9kbA=="></script>
+ </head>
+ <body data-template-id="__page-root" style="background: rgb(7, 17, 31);">
+  <div class="progress" id="progress"></div>
+  <header class="site-header">
+   <div class="header-inner">
+    <p class="eyebrow" data-template-id="course-name" style="color: rgb(60, 232, 239); font-weight: 700; font-style: normal; font-size: 12px;">Architecture Learning · Integration Systems</p>
+    <h1 data-template-id="lesson-title" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 32px;">Middleware Integration: Connecting Systems with Confidence</h1>
+    <p class="lede" data-template-id="lesson-summary" style="color: rgb(201, 224, 232); font-weight: 400; font-style: normal; font-size: 19px;">Learn how middleware coordinates applications, data, messages, and processes across a modern technology landscape.</p>
+    <div class="meta" aria-label="Lesson metadata"><span class="chip" data-template-id="lesson-level" style="background: rgba(21, 56, 72, 0.45); color: rgb(185, 220, 227); font-weight: 400; font-style: normal; font-size: 13px;">Level: Foundation</span> <span class="chip" data-template-id="lesson-topic" style="background: rgba(21, 56, 72, 0.45); color: rgb(185, 220, 227); font-weight: 400; font-style: normal; font-size: 13px;">Topic: Enterprise Architecture</span> <span class="chip" data-template-id="lesson-format" style="background: rgba(21, 56, 72, 0.45); color: rgb(185, 220, 227); font-weight: 400; font-style: normal; font-size: 13px;">Format: Long-form lesson</span>
+    </div>
+   </div>
+  </header>
+  <div class="layout">
+   <aside class="toc" aria-label="Lesson table of contents">
+    <h2>Navigate</h2>
+    <nav><a href="#overview">Overview</a> <a href="#terms">Key terms</a> <a href="#architectures">Architectures</a> <a href="#examples">Examples</a> <a href="#troubleshooting">Troubleshooting</a> <a href="#case-studies">Case studies</a> <a href="#activities">Activities</a> <a href="#knowledge-check">Knowledge check</a> <a href="#resources">Resources</a> <a href="#takeaway">Takeaway</a>
+    </nav>
+   </aside>
+   <main>
+    <section id="overview"><span class="section-label">01 · Foundations</span>
+     <h2 data-template-id="overview-heading" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 24px;">What is middleware integration?</h2>
+     <p>Middleware is software that sits between applications, services, devices, and data stores. It provides the communication, translation, coordination, and control needed when independent systems must work together. Instead of every application building a custom connection to every other application, middleware provides a managed integration layer.</p>
+     <div class="callout">
+      <p><strong>Definition:</strong> Middleware integration is the use of an intermediary platform or service to connect systems, exchange data, orchestrate processes, and enforce integration policies.</p>
+     </div>
+     <p>In a modern architecture, systems are often purchased, built by separate teams, deployed at different times, and optimized for different purposes. A customer relationship system may need to share information with an ecommerce platform, inventory service, payment provider, analytics pipeline, and support tool. Middleware makes that ecosystem manageable.</p>
+     <div class="diagram" aria-label="Basic middleware integration diagram">
+      <p class="diagram-title">Diagram · Integration layer</p>
+      <pre>[Customer App] ──┐
+[Web Store] ─────┼──▶ [ Middleware / Integration Layer ] ──▶ [ERP]
+[Mobile App] ────┤                 │                         [CRM]
+[Partner API] ───┘                 └──▶ [Message Queue] ───▶ [Warehouse]</pre>
+     </div>
+     <div class="callout violet">
+      <p><strong>Why it matters:</strong> Middleware reduces point-to-point complexity, makes change safer, and helps teams observe and govern data moving between systems.</p>
+     </div>
+    </section>
+    <section id="terms"><span class="section-label">02 · Vocabulary</span>
+     <h2 data-template-id="terms-heading" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 24px;">Core integration terms</h2>
+     <p>Architecture conversations become clearer when teams use consistent integration language. The following terms appear throughout this lesson.</p>
+     <div class="term-table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Term</th>
+         <th>Meaning</th>
+         <th>Architecture implication</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>API</td>
+         <td>A defined interface that lets one application request or submit data to another.</td>
+         <td>APIs support synchronous, request-and-response integration.</td>
+        </tr>
+        <tr>
+         <td>Message</td>
+         <td>A self-contained package of information sent from a producer to a consumer.</td>
+         <td>Messages support asynchronous, decoupled communication.</td>
+        </tr>
+        <tr>
+         <td>Queue</td>
+         <td>A buffer that stores messages until a consumer can process them.</td>
+         <td>Queues help absorb traffic spikes and improve resilience.</td>
+        </tr>
+        <tr>
+         <td>Event</td>
+         <td>A record that something meaningful happened, such as an order being placed.</td>
+         <td>Events enable multiple systems to react independently.</td>
+        </tr>
+        <tr>
+         <td>Transformation</td>
+         <td>Converting data from one structure, type, or format to another.</td>
+         <td>Transformations protect systems from incompatible data models.</td>
+        </tr>
+        <tr>
+         <td>Orchestration</td>
+         <td>Central coordination of steps across multiple services.</td>
+         <td>Useful when one business process has a defined flow and owner.</td>
+        </tr>
+        <tr>
+         <td>Idempotency</td>
+         <td>The ability to safely process the same request more than once without changing the result.</td>
+         <td>Critical when retries can produce duplicate messages.</td>
+        </tr>
+        <tr>
+         <td>Dead-letter queue</td>
+         <td>A separate queue for messages that repeatedly fail processing.</td>
+         <td>Preserves failed work for investigation instead of losing it.</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </section>
+    <section id="architectures"><span class="section-label">03 · Architecture patterns</span>
+     <h2 data-template-id="architectures-heading" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 24px;">Choosing an integration architecture</h2>
+     <h3>Point-to-point integration</h3>
+     <p>Each system connects directly to every other system it needs. This can be quick for a small number of applications, but it becomes difficult to maintain as the number of systems grows.</p>
+     <div class="diagram">
+      <p class="diagram-title">Diagram · Point-to-point</p>
+      <pre>       [CRM] ───────── [ERP]
+         │  ╲           ╱ │
+         │   ╲         ╱  │
+         │    ╲       ╱   │
+      [Store] ───── [Warehouse]</pre>
+     </div>
+     <h3>Hub-and-spoke integration</h3>
+     <p>A central middleware hub provides shared connections, transformations, routing, and monitoring. Each application connects to the hub rather than to every other application.</p>
+     <div class="diagram">
+      <p class="diagram-title">Diagram · Hub-and-spoke</p>
+      <pre>              [CRM]
+                │
+[Store] ───▶ [ Integration Hub ] ◀─── [ERP]
+                │
+           [Warehouse]</pre>
+     </div>
+     <h3>Event-driven architecture</h3>
+     <p>Services publish events to a broker. Interested consumers subscribe and respond independently. This approach is highly scalable and works well where several downstream systems need to react to the same change.</p>
+     <div class="diagram">
+      <p class="diagram-title">Diagram · Event-driven flow</p>
+      <pre>[Order Service] ── publishes ──▶ [Event Broker]
+                                    │       │       │
+                                    ▼       ▼       ▼
+                              [Inventory] [Email] [Analytics]</pre>
+     </div>
+     <div class="cards">
+      <article class="panel">
+       <h3>Synchronous integration</h3>
+       <p>A caller waits for an immediate response. Use it for interactive lookups, validation, and actions where a user needs a result now.</p>
+      </article>
+      <article class="panel">
+       <h3>Asynchronous integration</h3>
+       <p>A sender continues without waiting. Use it for long-running work, high-volume transactions, notifications, and resilient processing.</p>
+      </article>
+     </div>
+    </section>
+    <section id="examples"><span class="section-label">04 · Architecture examples</span>
+     <h2 data-template-id="examples-heading" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 24px;">How middleware works in practice</h2>
+     <h3>Example: Order fulfilment</h3>
+     <p>When a customer submits an order, the storefront does not need to know every internal step. It sends an order message to middleware, which validates the payload, assigns a correlation ID, and routes work to the correct services.</p>
+     <div class="diagram">
+      <p class="diagram-title">Flow · Order fulfilment</p>
+      <pre>1. Customer places order in web store
+2. Store sends OrderCreated message to middleware
+3. Middleware validates and transforms order data
+4. Inventory service reserves stock
+5. Payment service confirms payment
+6. ERP receives confirmed sales order
+7. Notification service sends customer update</pre>
+     </div>
+     <h3>Example: Data transformation</h3>
+     <p>One system may identify a customer as <strong>customerId</strong>, while another requires <strong>client_number</strong>. Middleware maps values, formats dates, normalizes currencies, and rejects invalid records before they reach a downstream system.</p>
+     <div class="diagram">
+      <p class="diagram-title">Message transformation</p>
+      <pre>Source payload                     Middleware mapping                 Target payload
+────────────────────────────────   ────────────────────────────────   ──────────────────────────
+{                                  customerId   → client_number       {
+  "customerId": "C-1042",          orderDate    → YYYY-MM-DD            "client_number": "C-1042",
+  "orderDate": "08/19/2026",       totalCents   → total_amount           "order_date": "2026-08-19",
+  "totalCents": 5999               total / 100  → decimal                "total_amount": 59.99
+}                                                                  }</pre>
+     </div>
+     <div class="callout warning">
+      <p><strong>Design note:</strong> Do not treat transformation as simple field renaming. Agree on ownership, validation rules, defaults, error behavior, and versioning for every important data contract.</p>
+     </div>
+    </section>
+    <section id="troubleshooting"><span class="section-label">05 · Operations</span>
+     <h2 data-template-id="troubleshooting-heading" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 24px;">Troubleshooting integration failures</h2>
+     <p>Integration problems are often distributed: the sender can succeed while a message is delayed, transformed incorrectly, rejected by a downstream API, or processed twice. Diagnose failures by tracing the message through the entire path.</p>
+     <div class="term-table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Symptom</th>
+         <th>Likely cause</th>
+         <th>First response</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Message never arrives</td>
+         <td>Routing rule, authentication, network, or endpoint issue.</td>
+         <td>Check message ID, route logs, queue depth, and endpoint health.</td>
+        </tr>
+        <tr>
+         <td>Duplicate order or record</td>
+         <td>Retry after timeout without idempotency protection.</td>
+         <td>Check correlation ID and idempotency key handling.</td>
+        </tr>
+        <tr>
+         <td>Data is incomplete</td>
+         <td>Source field missing, mapping failure, or schema mismatch.</td>
+         <td>Compare source payload, mapping output, and target contract.</td>
+        </tr>
+        <tr>
+         <td>Processing slows down</td>
+         <td>Consumer bottleneck, API rate limit, or queue backlog.</td>
+         <td>Inspect latency, queue depth, retry rates, and consumer capacity.</td>
+        </tr>
+        <tr>
+         <td>Repeated failures</td>
+         <td>Permanent invalid message or downstream change.</td>
+         <td>Move to a dead-letter queue and correct the root cause.</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <h3>Reliable troubleshooting sequence</h3>
+     <ol>
+      <li>Identify the transaction using a correlation ID, order ID, or message ID.</li>
+      <li>Confirm whether the source system emitted the expected request or event.</li>
+      <li>Inspect middleware routing, transformation, validation, and retry records.</li>
+      <li>Verify the downstream service response and its current availability.</li>
+      <li>Decide whether to retry, replay, repair the data, or escalate the incident.</li>
+      <li>Document the root cause and improve monitoring or contract checks.</li>
+     </ol>
+    </section>
+    <section id="case-studies"><span class="section-label">06 · Case studies</span>
+     <h2 data-template-id="case-studies-heading" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 24px;">Case studies</h2>
+     <article class="panel">
+      <h3>Case study 1: Retail inventory visibility</h3>
+      <p>A retailer runs ecommerce, physical stores, and a warehouse system. Stock levels were updated only overnight, causing customers to buy items that were no longer available. The organization introduced event-driven middleware: every stock movement published an event, and store, web, and reporting systems subscribed to updated inventory information.</p>
+      <p><strong>Result:</strong> Near-real-time stock visibility reduced overselling. A message queue absorbed peak activity during promotions, while retries protected against temporary warehouse outages.</p>
+     </article>
+     <article class="panel" style="margin-top:16px;">
+      <h3>Case study 2: Customer onboarding</h3>
+      <p>A financial services team needed to coordinate a web application, identity verification provider, customer relationship platform, and document service. The workflow required a clear sequence and audit trail, so the team used orchestration. Middleware tracked each step and surfaced exceptions for manual review.</p>
+      <p><strong>Result:</strong> The business gained a consistent process while each specialist system retained ownership of its own responsibilities.</p>
+     </article>
+    </section>
+    <section id="activities"><span class="section-label">07 · Activities</span>
+     <h2 data-template-id="activities-heading" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 24px;">Apply what you know</h2>
+     <article class="activity">
+      <h3><span class="activity-number">1</span>Map an integration flow</h3>
+      <p>Choose a familiar process, such as booking a delivery, registering for an event, or placing an online order. Identify the source system, middleware responsibilities, destination systems, message or API calls, and likely failure points.</p>
+      <details class="reveal"><summary>Show activity guidance</summary>
+       <p>Start with the business event. Then identify what data moves, who owns each data item, and whether every step must complete immediately. Use asynchronous messages where work can safely continue in the background.</p>
+      </details>
+     </article>
+     <article class="activity" style="margin-top:16px;">
+      <h3><span class="activity-number">2</span>Choose the pattern</h3>
+      <p>For each scenario, decide whether synchronous API calls, asynchronous messaging, orchestration, or event publishing is most appropriate:</p>
+      <ul>
+       <li>A checkout page must show whether a promo code is valid.</li>
+       <li>A completed payment should notify analytics, loyalty, shipping, and customer email services.</li>
+       <li>A loan application must complete a controlled sequence of verification checks.</li>
+      </ul>
+      <details class="reveal"><summary>Show suggested answers</summary>
+       <ul>
+        <li>Promo validation: synchronous API call, because the shopper needs an immediate response.</li>
+        <li>Completed payment: event publishing, because several independent services can react.</li>
+        <li>Loan application: orchestration, because the process has ordered, auditable steps.</li>
+       </ul>
+      </details>
+     </article>
+    </section>
+    <section id="knowledge-check"><span class="section-label">08 · Knowledge check</span>
+     <h2 data-template-id="quiz-heading" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 24px;">True or false?</h2>
+     <p>Use these items to check your understanding. Expand each note after choosing your answer.</p>
+     <div class="true-false"><strong>1. Middleware is only useful when an organization has hundreds of applications.</strong>
+      <details class="reveal">
+       <summary>Reveal answer</summary>
+       <p><strong>False.</strong> Even a small number of systems can benefit from consistent routing, transformation, monitoring, and error handling.</p>
+      </details>
+     </div>
+     <div class="true-false"><strong>2. A queue can help protect a downstream service during traffic spikes.</strong>
+      <details class="reveal">
+       <summary>Reveal answer</summary>
+       <p><strong>True.</strong> A queue buffers work so consumers can process messages at a sustainable rate.</p>
+      </details>
+     </div>
+     <div class="true-false"><strong>3. Retrying a request is always safe.</strong>
+      <details class="reveal">
+       <summary>Reveal answer</summary>
+       <p><strong>False.</strong> Retries can create duplicates unless the operation is idempotent or protected with a unique key.</p>
+      </details>
+     </div>
+     <div class="true-false"><strong>4. Event-driven architecture allows multiple consumers to respond to the same business event.</strong>
+      <details class="reveal">
+       <summary>Reveal answer</summary>
+       <p><strong>True.</strong> Consumers subscribe independently, reducing direct dependencies between services.</p>
+      </details>
+     </div>
+    </section>
+    <section id="resources"><span class="section-label">09 · Continue learning</span>
+     <h2 data-template-id="resources-heading" style="color: rgb(234, 250, 255); font-weight: 700; font-style: normal; font-size: 24px;">Suggested resources</h2>
+     <div class="panel">
+      <ul>
+       <li><a href="https://www.enterpriseintegrationpatterns.com/" target="_blank" rel="noopener noreferrer">Enterprise Integration Patterns</a> — foundational patterns for messaging and integration design.</li>
+       <li><a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener noreferrer">Microservices resource guide</a> — practical context for service boundaries and communication.</li>
+       <li><a href="https://www.asyncapi.com/" target="_blank" rel="noopener noreferrer">AsyncAPI Initiative</a> — resources for describing event-driven APIs.</li>
+       <li><a href="https://opentelemetry.io/" target="_blank" rel="noopener noreferrer">OpenTelemetry</a> — guidance for tracing distributed requests and messages.</li>
+      </ul>
+     </div>
+    </section>
+    <section id="takeaway" class="footer-takeaway"><span class="section-label" style="color:#8ffff1;">Final takeaway</span>
+     <h2 data-template-id="takeaway-heading" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 24px;">Integration is an architecture capability, not just a connection.</h2>
+     <p>Strong middleware design makes systems easier to evolve. Select patterns based on business timing and failure tolerance, define clear data contracts, trace every important transaction, and design for retries, change, and recovery from the start.</p>
+    </section>
+   </main>
+  </div>
+  <footer class="page-footer">
+   Middleware Integration Lesson · Architecture Learning
+  </footer>
+  <script>
+    (function () {
+      const progress = document.getElementById("progress");
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links.map(function (link) {
+        return document.querySelector(link.getAttribute("href"));
+      }).filter(Boolean);
+
+      function updateReadingState() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.width = (scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0) + "%";
+
+        let current = sections[0];
+        sections.forEach(function (section) {
+          if (section.getBoundingClientRect().top <= 150) current = section;
+        });
+
+        links.forEach(function (link) {
+          link.classList.toggle("active", link.getAttribute("href") === "#" + current.id);
+        });
+      }
+
+      window.addEventListener("scroll", updateReadingState, { passive: true });
+      window.addEventListener("resize", updateReadingState);
+      updateReadingState();
+    })();
+  </script>
+ 
+</body></html>
